@@ -1,0 +1,45 @@
+import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
+import { Integer } from '@/types/integer.js';
+import { expect, describe, test } from 'vitest';
+
+describe('Integer class', () => {
+    test('It sets the default value to 0', () => {
+        expect(new Integer().value).toBe(0);
+    });
+
+    test('It sets the correct value', () => {
+        const values = [Number.MIN_SAFE_INTEGER, -99 - 1, 0, 1, 99, Number.MAX_SAFE_INTEGER];
+
+        for (const value of values) {
+            expect(new Integer(value).value).toBe(value);
+        }
+    });
+
+    test('It throws an error if the value is not a number', () => {
+        const values = ['foo', {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+
+        for (const value of values) {
+            expect(() => new Integer(value as unknown as number)).toThrowError(
+                TypeVaultValidationError
+            );
+        }
+    });
+
+    test('It throws an error if the value is NaN', () => {
+        expect(() => new Integer(NaN)).toThrowError(TypeVaultValidationError);
+        expect(() => new Integer(Number.NaN)).toThrowError(TypeVaultValidationError);
+    });
+
+    test('It throws an error if the value is Infinity', () => {
+        expect(() => new Integer(Infinity)).toThrowError(TypeVaultValidationError);
+        expect(() => new Integer(-Infinity)).toThrowError(TypeVaultValidationError);
+    });
+
+    test('It floors the value', () => {
+        const values = [2, -1.9, -1.1, -1, -0.9, -0.1, 0, 0.1, 0.9, 1, 1.1, 1.9, 2];
+
+        for (const value of values) {
+            expect(new Integer(value).value).toBe(Math.floor(value));
+        }
+    });
+});
