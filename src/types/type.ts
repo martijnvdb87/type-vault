@@ -36,4 +36,16 @@ export abstract class Type<TValue> {
     protected abstract modifier(value: TValue): TValue;
     protected abstract validate(value: unknown): boolean;
     protected abstract default(): TValue;
+
+    public toString(): string {
+        return `${this.value}`;
+    }
+
+    public toJSON(): TValue {
+        return this.value;
+    }
+
+    public valueOf(): TValue {
+        return this.value;
+    }
 }

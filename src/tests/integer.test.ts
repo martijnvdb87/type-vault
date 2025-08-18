@@ -99,4 +99,19 @@ describe('Integer class', () => {
             expect(new Integer(value).value).toBe(Math.floor(value));
         }
     });
+
+    test('It returns a string when toString is called', () => {
+        expect(new Integer().toString()).toBe('0');
+        expect(new Integer(1).toString()).toBe('1');
+    });
+
+    test('It returns a number when valueOf is called', () => {
+        expect(new Integer().valueOf()).toBe(0);
+        expect(new Integer(1).valueOf()).toBe(1);
+    });
+
+    test('It returns a number when toJSON is called', () => {
+        expect(new Integer().toJSON()).toBe(0);
+        expect(new Integer(1).toJSON()).toBe(1);
+    });
 });
