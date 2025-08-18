@@ -7,16 +7,14 @@ describe('Integer class', () => {
         expect(new Integer().value).toBe(0);
     });
 
-    test('It sets the correct value', () => {
-        const values = [Number.MIN_SAFE_INTEGER, -99 - 1, 0, 1, 99, Number.MAX_SAFE_INTEGER];
-
-        for (const value of values) {
-            expect(new Integer(value).value).toBe(value);
-        }
-    });
-
-    test('It sets the correct value from Number', () => {
+    {
         const values = [
+            Number.MIN_SAFE_INTEGER,
+            -99 - 1,
+            0,
+            1,
+            99,
+            Number.MAX_SAFE_INTEGER,
             Number(Number.MIN_SAFE_INTEGER),
             Number(-99),
             Number(-1),
@@ -26,10 +24,18 @@ describe('Integer class', () => {
             Number(Number.MAX_SAFE_INTEGER),
         ];
 
-        for (const value of values) {
-            expect(new Integer(value).value).toBe(value);
-        }
-    });
+        test('It sets the correct value from Integer', () => {
+            for (const value of values) {
+                expect(new Integer(new Integer(value)).value).toBe(value);
+            }
+        });
+
+        test('It sets the correct value', () => {
+            for (const value of values) {
+                expect(new Integer(value).value).toBe(value);
+            }
+        });
+    }
 
     test('It throws an error when the value is out of allowed range', () => {
         const values = [Number.MIN_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER + 1];
