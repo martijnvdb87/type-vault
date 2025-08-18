@@ -1,6 +1,6 @@
 import { Type } from './type.js';
 
-export class BaseNumber extends Type<number> {
+export abstract class BaseNumber extends Type<number> {
     protected default(): number {
         return 0;
     }
@@ -29,7 +29,11 @@ export class BaseNumber extends Type<number> {
         return true;
     }
 
-    protected modifier(value: number): number {
-        return value;
+    protected min(): number {
+        return Number.MIN_SAFE_INTEGER;
+    }
+
+    protected max(): number {
+        return Number.MAX_SAFE_INTEGER;
     }
 }

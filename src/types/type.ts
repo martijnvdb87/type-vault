@@ -33,10 +33,6 @@ export abstract class Type<TValue> {
         this._value = modifiedValue;
     }
 
-    protected abstract modifier(value: TValue): TValue;
-    protected abstract validate(value: unknown): boolean;
-    protected abstract default(): TValue;
-
     public toString(): string {
         return `${this.value}`;
     }
@@ -48,4 +44,11 @@ export abstract class Type<TValue> {
     public valueOf(): TValue {
         return this.value;
     }
+
+    protected modifier(value: TValue): TValue {
+        return value;
+    }
+
+    protected abstract default(): TValue;
+    protected abstract validate(value: unknown): boolean;
 }

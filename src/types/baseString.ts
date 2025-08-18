@@ -1,6 +1,6 @@
 import { Type } from './type.js';
 
-export class BaseString extends Type<string> {
+export abstract class BaseString extends Type<string> {
     protected default(): string {
         return '';
     }
@@ -13,7 +13,11 @@ export class BaseString extends Type<string> {
         return true;
     }
 
-    protected modifier(value: string): string {
-        return value;
+    protected min(): number {
+        return 0;
+    }
+
+    protected max(): number {
+        return Number.MAX_SAFE_INTEGER;
     }
 }
