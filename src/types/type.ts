@@ -34,7 +34,7 @@ export abstract class Type<TValue> {
     }
 
     public toString(): string {
-        return `${this.value}`;
+        return this.value?.toString() ?? '';
     }
 
     public toJSON(): TValue {
