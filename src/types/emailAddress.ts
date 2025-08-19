@@ -1,7 +1,7 @@
 import * as z from 'zod/mini';
 import { BaseString } from './baseString.js';
 
-export class Email extends BaseString {
+export class EmailAddress extends BaseString {
     public constructor(value: string) {
         super(value);
     }
