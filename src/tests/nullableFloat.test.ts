@@ -1,17 +1,17 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
-import { Float } from '@/types/float.js';
+import { NullableFloat } from '@/types/nullableFloat.js';
 import { describe, expect, test } from 'vitest';
 
-describe('Float class', () => {
+describe('NullableFloat class', () => {
     test('It sets the default value to 0', () => {
-        expect(new Float().value).toBe(0);
+        expect(new NullableFloat().value).toBe(null);
     });
 
     test('It sets the correct value', () => {
-        const values = [Number.MIN_SAFE_INTEGER, -99 - 1, 0, 1, 99, Number.MAX_SAFE_INTEGER];
+        const values = [null, Number.MIN_SAFE_INTEGER, -99 - 1, 0, 1, 99, Number.MAX_SAFE_INTEGER];
 
         for (const value of values) {
-            expect(new Float(new Float(value)).value).toBe(value);
+            expect(new NullableFloat(new NullableFloat(value)).value).toBe(value);
         }
     });
 
@@ -59,7 +59,7 @@ describe('Float class', () => {
         ];
 
         for (const value of values) {
-            expect(new Float(value).value).toBe(value);
+            expect(new NullableFloat(value).value).toBe(value);
         }
     });
 
@@ -67,42 +67,42 @@ describe('Float class', () => {
         const values = [Number.MIN_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER + 1];
 
         for (const value of values) {
-            expect(() => new Float(value)).toThrowError(TypeVaultValidationError);
+            expect(() => new NullableFloat(value)).toThrowError(TypeVaultValidationError);
         }
     });
 
     test('It throws an error if the value is not a number', () => {
-        const values = ['foo', {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+        const values = ['foo', {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new Float(value as unknown as number)).toThrowError(
+            expect(() => new NullableFloat(value as unknown as number)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is NaN', () => {
-        expect(() => new Float(NaN)).toThrowError(TypeVaultValidationError);
-        expect(() => new Float(Number.NaN)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableFloat(NaN)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableFloat(Number.NaN)).toThrowError(TypeVaultValidationError);
     });
 
     test('It throws an error if the value is Infinity', () => {
-        expect(() => new Float(Infinity)).toThrowError(TypeVaultValidationError);
-        expect(() => new Float(-Infinity)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableFloat(Infinity)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableFloat(-Infinity)).toThrowError(TypeVaultValidationError);
     });
 
     test('It returns a string when toString is called', () => {
-        expect(new Float().toString()).toBe('0');
-        expect(new Float(1.1).toString()).toBe('1.1');
+        expect(new NullableFloat().toString()).toBe('');
+        expect(new NullableFloat(1.1).toString()).toBe('1.1');
     });
 
     test('It returns a number when valueOf is called', () => {
-        expect(new Float().valueOf()).toBe(0);
-        expect(new Float(1.1).valueOf()).toBe(1.1);
+        expect(new NullableFloat().valueOf()).toBe(null);
+        expect(new NullableFloat(1.1).valueOf()).toBe(1.1);
     });
 
     test('It returns a number when toJSON is called', () => {
-        expect(new Float().toJSON()).toBe(0);
-        expect(new Float(1.1).toJSON()).toBe(1.1);
+        expect(new NullableFloat().toJSON()).toBe(null);
+        expect(new NullableFloat(1.1).toJSON()).toBe(1.1);
     });
 });

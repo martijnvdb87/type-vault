@@ -8,6 +8,7 @@ describe('NullableText class', () => {
     });
 
     test('It sets the correct value', () => {
+        expect(new NullableText(null).value).toBe(null);
         expect(new NullableText('foo').value).toBe('foo');
     });
 

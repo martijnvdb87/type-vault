@@ -1,14 +1,15 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
-import { Integer } from '@/types/integer.js';
+import { NullableInteger } from '@/types/nullableInteger.js';
 import { describe, expect, test } from 'vitest';
 
-describe('Integer class', () => {
+describe('NullableInteger class', () => {
     test('It sets the default value to 0', () => {
-        expect(new Integer().value).toBe(0);
+        expect(new NullableInteger().value).toBe(null);
     });
 
     {
         const values = [
+            null,
             Number.MIN_SAFE_INTEGER,
             -99 - 1,
             0,
@@ -26,13 +27,8 @@ describe('Integer class', () => {
 
         test('It sets the correct value', () => {
             for (const value of values) {
-                expect(new Integer(new Integer(value)).value).toBe(value);
-            }
-        });
-
-        test('It sets the correct value', () => {
-            for (const value of values) {
-                expect(new Integer(value).value).toBe(value);
+                expect(new NullableInteger(value).value).toBe(value);
+                expect(new NullableInteger(new NullableInteger(value)).value).toBe(value);
             }
         });
     }
@@ -41,28 +37,28 @@ describe('Integer class', () => {
         const values = [Number.MIN_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER + 1];
 
         for (const value of values) {
-            expect(() => new Integer(value)).toThrowError(TypeVaultValidationError);
+            expect(() => new NullableInteger(value)).toThrowError(TypeVaultValidationError);
         }
     });
 
     test('It throws an error if the value is not a number', () => {
-        const values = ['foo', {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+        const values = ['foo', {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new Integer(value as unknown as number)).toThrowError(
+            expect(() => new NullableInteger(value as unknown as number)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is NaN', () => {
-        expect(() => new Integer(NaN)).toThrowError(TypeVaultValidationError);
-        expect(() => new Integer(Number.NaN)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableInteger(NaN)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableInteger(Number.NaN)).toThrowError(TypeVaultValidationError);
     });
 
     test('It throws an error if the value is Infinity', () => {
-        expect(() => new Integer(Infinity)).toThrowError(TypeVaultValidationError);
-        expect(() => new Integer(-Infinity)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableInteger(Infinity)).toThrowError(TypeVaultValidationError);
+        expect(() => new NullableInteger(-Infinity)).toThrowError(TypeVaultValidationError);
     });
 
     test('It floors the value', () => {
@@ -96,22 +92,22 @@ describe('Integer class', () => {
         ];
 
         for (const value of values) {
-            expect(new Integer(value).value).toBe(Math.floor(value));
+            expect(new NullableInteger(value).value).toBe(Math.floor(value));
         }
     });
 
     test('It returns a string when toString is called', () => {
-        expect(new Integer().toString()).toBe('0');
-        expect(new Integer(1).toString()).toBe('1');
+        expect(new NullableInteger().toString()).toBe('');
+        expect(new NullableInteger(1).toString()).toBe('1');
     });
 
     test('It returns a number when valueOf is called', () => {
-        expect(new Integer().valueOf()).toBe(0);
-        expect(new Integer(1).valueOf()).toBe(1);
+        expect(new NullableInteger().valueOf()).toBe(null);
+        expect(new NullableInteger(1).valueOf()).toBe(1);
     });
 
     test('It returns a number when toJSON is called', () => {
-        expect(new Integer().toJSON()).toBe(0);
-        expect(new Integer(1).toJSON()).toBe(1);
+        expect(new NullableInteger().toJSON()).toBe(null);
+        expect(new NullableInteger(1).toJSON()).toBe(1);
     });
 });
