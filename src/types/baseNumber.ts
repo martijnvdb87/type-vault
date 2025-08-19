@@ -1,8 +1,8 @@
 import { Type } from './type.js';
 
-export abstract class BaseNumber extends Type<number> {
-    protected default(): number {
-        return 0;
+export abstract class BaseNumber<TValue = number> extends Type<TValue> {
+    protected default(): TValue {
+        return 0 as TValue;
     }
 
     protected validate(value: unknown): boolean {
