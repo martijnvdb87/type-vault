@@ -4,13 +4,13 @@ import { describe, expect, test } from 'vitest';
 
 describe('EmailAddress class', () => {
     test('It sets the value to the given valid email address', () => {
-        expect(new EmailAddress('sdsd@dasd.com').value).toBe('sdsd@dasd.com');
+        expect(new EmailAddress('foo@example.com').value).toBe('foo@example.com');
     });
 
     test('It should throw an error if the value is not a valid email address', () => {
         expect(() => new EmailAddress('foo')).toThrowError(TypeVaultValidationError);
-        expect(() => new EmailAddress('foo@bar')).toThrowError(TypeVaultValidationError);
-        expect(() => new EmailAddress('foo@bar.')).toThrowError(TypeVaultValidationError);
+        expect(() => new EmailAddress('foo@example')).toThrowError(TypeVaultValidationError);
+        expect(() => new EmailAddress('foo@example.')).toThrowError(TypeVaultValidationError);
         expect(() => new EmailAddress(undefined as unknown as string)).toThrowError(
             TypeVaultValidationError
         );
@@ -35,5 +35,17 @@ describe('EmailAddress class', () => {
         expect(() => new EmailAddress(BigInt(1) as unknown as string)).toThrowError(
             TypeVaultValidationError
         );
+    });
+
+    test('It returns a string when toString is called', () => {
+        expect(new EmailAddress('foo@example.com').toString()).toBe('foo@example.com');
+    });
+
+    test('It returns a string when toJSON is called', () => {
+        expect(new EmailAddress('foo@example.com').toJSON()).toBe('foo@example.com');
+    });
+
+    test('It returns a string when valueOf is called', () => {
+        expect(new EmailAddress('foo@example.com').valueOf()).toBe('foo@example.com');
     });
 });
