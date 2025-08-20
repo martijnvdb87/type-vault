@@ -1,4 +1,3 @@
-import { EmailAddress } from '@/types/emailAddress.js';
 import { Type } from '@/types/type.js';
 
 type Value<TType extends typeof Type> = TType['prototype']['value'];
@@ -28,6 +27,3 @@ export class Nullable<TType extends { new (value: Value<TType>): Type<Value<TTyp
         return this._type;
     }
 }
-
-const nullableEmailAddress = new Nullable(EmailAddress);
-nullableEmailAddress.value = null;
