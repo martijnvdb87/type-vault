@@ -8,19 +8,15 @@ export class Nullable<TType extends { new (value: Value<TType>): Type<Value<TTyp
 
     public constructor(type: TType, value: Value<TType> | null = null) {
         this._type = type;
-        this._value = value ? new this._type(value) : null;
+        this._value = value === null ? null : new this._type(value);
     }
 
     public get value(): Value<TType> | null {
-        return this._value ? this._value.value : null;
+        return this._value === null ? null : (this._value?.value ?? null);
     }
 
     public set value(value: Value<TType> | null) {
-        if (value === null) {
-            this._value = null;
-        } else {
-            this._value = new this._type(value);
-        }
+        this._value = value === null ? null : new this._type(value);
     }
 
     public get type(): TType {
