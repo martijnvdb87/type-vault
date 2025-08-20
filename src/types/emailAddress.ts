@@ -6,7 +6,7 @@ export class EmailAddress extends BaseString {
         super(value);
     }
 
-    protected validate(value: unknown): boolean {
+    public validate(value: unknown): boolean {
         return z.email().safeParse(value).success;
     }
 }

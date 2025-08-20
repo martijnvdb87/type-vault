@@ -6,7 +6,7 @@ export class Url extends BaseString {
         super(value);
     }
 
-    protected validate(value: unknown): boolean {
+    public validate(value: unknown): boolean {
         return z.url().safeParse(value).success;
     }
 }

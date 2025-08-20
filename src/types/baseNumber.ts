@@ -5,7 +5,7 @@ export abstract class BaseNumber<TValue = number> extends Type<TValue> {
         return 0 as TValue;
     }
 
-    protected validate(value: unknown): boolean {
+    public validate(value: unknown): boolean {
         if (!(typeof value === 'number' || value instanceof Number)) {
             return false;
         }

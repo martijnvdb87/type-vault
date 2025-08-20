@@ -49,6 +49,6 @@ export abstract class Type<TValue> {
         return value;
     }
 
+    public abstract validate(value: unknown): boolean;
     protected abstract default(): TValue;
-    protected abstract validate(value: unknown): boolean;
 }

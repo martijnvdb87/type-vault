@@ -9,7 +9,6 @@ describe('Url class', () => {
 
     test('It should throw an error if the value is not a valid url', () => {
         expect(() => new Url('example')).toThrowError(TypeVaultValidationError);
-        expect(() => new Url('example')).toThrowError(TypeVaultValidationError);
         expect(() => new Url('example.')).toThrowError(TypeVaultValidationError);
         expect(() => new Url(undefined as unknown as string)).toThrowError(
             TypeVaultValidationError
