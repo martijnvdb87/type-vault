@@ -33,6 +33,10 @@ describe('Uuid class', () => {
             TypeVaultValidationError
         );
     });
+
+    test('It returns a nil UUID', () => {
+        expect(Uuid.nil().value).toBe('00000000-0000-0000-0000-000000000000');
+    });
 });
 
 describe('Uuidv1 class', () => {
