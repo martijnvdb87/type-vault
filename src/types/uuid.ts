@@ -6,7 +6,7 @@ export class Uuid extends BaseString {
         super(value);
     }
 
-    public validate(value: unknown): boolean {
+    protected validate(value: unknown): boolean {
         if (!(typeof value === 'string' || value instanceof String)) {
             return false;
         }

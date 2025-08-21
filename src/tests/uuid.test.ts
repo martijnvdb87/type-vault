@@ -49,6 +49,12 @@ describe('Uuidv1 class', () => {
             expect(() => new Uuidv1(value)).toThrowError(TypeVaultValidationError);
         });
     });
+
+    test('It returns a random UUIDv1', () => {
+        const uuid = Uuidv1.random().value;
+
+        expect(new Uuidv1(uuid).value).toBe(uuid);
+    });
 });
 
 describe('Uuidv3 class', () => {
@@ -64,6 +70,12 @@ describe('Uuidv3 class', () => {
         rest.forEach((value) => {
             expect(() => new Uuidv3(value)).toThrowError(TypeVaultValidationError);
         });
+    });
+
+    test('It returns a random UUIDv3', () => {
+        const uuid = Uuidv3.random('foo', Uuidv4.random()).value;
+
+        expect(new Uuidv3(uuid).value).toBe(uuid);
     });
 });
 
@@ -81,6 +93,12 @@ describe('Uuidv4 class', () => {
             expect(() => new Uuidv4(value)).toThrowError(TypeVaultValidationError);
         });
     });
+
+    test('It returns a random UUIDv4', () => {
+        const uuid = Uuidv4.random().value;
+
+        expect(new Uuidv4(uuid).value).toBe(uuid);
+    });
 });
 
 describe('Uuidv5 class', () => {
@@ -96,6 +114,12 @@ describe('Uuidv5 class', () => {
         rest.forEach((value) => {
             expect(() => new Uuidv5(value)).toThrowError(TypeVaultValidationError);
         });
+    });
+
+    test('It returns a random UUIDv5', () => {
+        const uuid = Uuidv5.random('foo', Uuidv4.random()).value;
+
+        expect(new Uuidv5(uuid).value).toBe(uuid);
     });
 });
 
@@ -113,6 +137,12 @@ describe('Uuidv6 class', () => {
             expect(() => new Uuidv6(value)).toThrowError(TypeVaultValidationError);
         });
     });
+
+    test('It returns a random UUIDv6', () => {
+        const uuid = Uuidv6.random().value;
+
+        expect(new Uuidv6(uuid).value).toBe(uuid);
+    });
 });
 
 describe('Uuidv7 class', () => {
@@ -128,6 +158,12 @@ describe('Uuidv7 class', () => {
         rest.forEach((value) => {
             expect(() => new Uuidv7(value)).toThrowError(TypeVaultValidationError);
         });
+    });
+
+    test('It returns a random UUIDv7', () => {
+        const uuid = Uuidv7.random().value;
+
+        expect(new Uuidv7(uuid).value).toBe(uuid);
     });
 });
 

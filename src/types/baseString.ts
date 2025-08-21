@@ -5,7 +5,7 @@ export abstract class BaseString<TValue = string> extends Type<TValue> {
         return '' as TValue;
     }
 
-    public validate(value: unknown): boolean {
+    protected validate(value: unknown): boolean {
         if (!(typeof value === 'string' || value instanceof String)) {
             return false;
         }

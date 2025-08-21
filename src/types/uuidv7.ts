@@ -2,7 +2,7 @@ import { v7, version } from 'uuid';
 import { Uuid } from './uuid.js';
 
 export class Uuidv7 extends Uuid {
-    public validate(value: unknown): boolean {
+    protected validate(value: unknown): boolean {
         return super.validate(value) && version(String(value)) === 7;
     }
 
