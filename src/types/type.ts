@@ -20,13 +20,9 @@ export abstract class Type<TValue> {
             value = value.value;
         }
 
-        if (!this.validate(value)) {
-            throw new TypeVaultValidationError();
-        }
-
         const modifiedValue = this.modifier(value);
 
-        if (modifiedValue !== value && !this.validate(modifiedValue)) {
+        if (!this.validate(modifiedValue)) {
             throw new TypeVaultValidationError();
         }
 
@@ -45,8 +41,8 @@ export abstract class Type<TValue> {
         return this.value;
     }
 
-    protected modifier(value: TValue): TValue {
-        return value;
+    protected modifier(value: unknown): TValue {
+        return value as TValue;
     }
 
     protected abstract validate(value: unknown): boolean;
