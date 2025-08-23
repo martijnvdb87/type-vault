@@ -1,8 +1,8 @@
 import { Type } from './type.js';
 
-export abstract class BaseNumber<TValue = number> extends Type<TValue> {
-    protected default(): TValue {
-        return 0 as TValue;
+export abstract class BaseNumber<TFrom = number | void> extends Type<number, TFrom> {
+    protected default() {
+        return 0;
     }
 
     protected validate(value: unknown): boolean {
@@ -10,19 +10,21 @@ export abstract class BaseNumber<TValue = number> extends Type<TValue> {
             return false;
         }
 
-        if (Number.isNaN(value)) {
+        const number = Number(value);
+
+        if (Number.isNaN(number)) {
             return false;
         }
 
-        if (!Number.isFinite(value)) {
+        if (!Number.isFinite(number)) {
             return false;
         }
 
-        if ((value as number) < Number.MIN_SAFE_INTEGER) {
+        if (number < Number.MIN_SAFE_INTEGER) {
             return false;
         }
 
-        if ((value as number) > Number.MAX_SAFE_INTEGER) {
+        if (number > Number.MAX_SAFE_INTEGER) {
             return false;
         }
 

@@ -1,17 +1,9 @@
 import { validate } from 'uuid';
 import { BaseString } from './baseString.js';
 
-export class Uuid extends BaseString {
-    public constructor(value: string) {
-        super(value);
-    }
-
+export class Uuid extends BaseString<string> {
     protected validate(value: unknown): boolean {
-        if (!(typeof value === 'string' || value instanceof String)) {
-            return false;
-        }
-
-        return validate(value);
+        return super.validate(value) && validate(value);
     }
 
     public static nil(): Uuid {

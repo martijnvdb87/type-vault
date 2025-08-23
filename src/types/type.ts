@@ -2,26 +2,27 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 
 type TypeOptions = { nullable?: boolean; immutable?: boolean };
 
-export abstract class Type<TValue> {
-    protected _value!: TValue;
+const typeFrom = Symbol('typeFrom');
+
+export abstract class Type<TValue, TFrom = TValue | void> {
+    declare protected _value: TValue;
     protected _nullable: boolean;
     protected _immutable: boolean;
 
-    public constructor(
-        value: Type<TValue> | TValue | undefined = undefined,
-        options: TypeOptions = {}
-    ) {
+    declare public [typeFrom]: TFrom;
+
+    public constructor(value: Type<TValue, TFrom> | TFrom, options?: TypeOptions) {
         this._nullable = Boolean(options?.nullable ?? false);
         this._immutable = Boolean(options?.immutable ?? false);
 
-        this.value = value;
+        this.value = value as TValue;
     }
 
     public get value(): TValue {
         return this._value;
     }
 
-    public set value(value: Type<TValue> | TValue | undefined) {
+    public set value(value: Type<TValue> | TValue | void) {
         if (value === undefined) {
             value = this.default();
         }
@@ -58,22 +59,22 @@ export abstract class Type<TValue> {
     protected abstract validate(value: unknown): boolean;
     protected abstract default(): TValue;
 
-    public static from<TType extends Type<TType['value']>>(
+    public static from<TType extends Type<TType['value'], TType[typeof typeFrom]>>(
         this: new (value: TType['value']) => TType,
-        value: TType['value']
+        value: TType[typeof typeFrom]
     ): TType {
         return new this(value);
     }
 
-    public static options<TType extends Type<TType['value']>>(
-        this: new (value: TType['value'], options?: TypeOptions) => TType,
+    public static options<TType extends Type<TType['value'], TType[typeof typeFrom]>>(
+        this: new (value: TType[typeof typeFrom], options?: TypeOptions) => TType,
         options: {
             nullable?: boolean;
             immutable?: boolean;
         }
     ) {
         return {
-            from: (value: TType['value']) => {
+            from: (value: TType[typeof typeFrom]) => {
                 return new this(value, options);
             },
         };
