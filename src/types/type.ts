@@ -1,9 +1,19 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 
+type TypeOptions = { nullable?: boolean; immutable?: boolean };
+
 export abstract class Type<TValue> {
     protected _value!: TValue;
+    protected _nullable: boolean;
+    protected _immutable: boolean;
 
-    public constructor(value: Type<TValue> | TValue | undefined = undefined) {
+    public constructor(
+        value: Type<TValue> | TValue | undefined = undefined,
+        options: TypeOptions = {}
+    ) {
+        this._nullable = Boolean(options?.nullable ?? false);
+        this._immutable = Boolean(options?.immutable ?? false);
+
         this.value = value;
     }
 
@@ -47,4 +57,25 @@ export abstract class Type<TValue> {
 
     protected abstract validate(value: unknown): boolean;
     protected abstract default(): TValue;
+
+    public static from<TType extends Type<TType['value']>>(
+        this: new (value: TType['value']) => TType,
+        value: TType['value']
+    ): TType {
+        return new this(value);
+    }
+
+    public static options<TType extends Type<TType['value']>>(
+        this: new (value: TType['value'], options?: TypeOptions) => TType,
+        options: {
+            nullable?: boolean;
+            immutable?: boolean;
+        }
+    ) {
+        return {
+            from: (value: TType['value']) => {
+                return new this(value, options);
+            },
+        };
+    }
 }

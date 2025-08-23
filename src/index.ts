@@ -1,5 +1,4 @@
 export { Type } from './types/type.js';
-export { Nullable } from './utils/nullable.js';
 
 export { EmailAddress } from './types/emailAddress.js';
 export { Float } from './types/float.js';
