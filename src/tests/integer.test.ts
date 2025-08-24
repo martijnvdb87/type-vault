@@ -114,4 +114,12 @@ describe('Integer class', () => {
         expect(new Integer().toJSON()).toBe(0);
         expect(new Integer(1).toJSON()).toBe(1);
     });
+
+    test('It throws an error if type if immutable and value is changed', () => {
+        const integer = new Integer(1, { immutable: true });
+
+        expect(() => {
+            integer.value = 2;
+        }).toThrowError(TypeVaultValidationError);
+    });
 });

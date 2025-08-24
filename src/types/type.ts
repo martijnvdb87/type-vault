@@ -23,6 +23,10 @@ export abstract class Type<TValue, TFrom = TValue | void> {
     }
 
     public set value(value: Type<TValue> | TValue | void) {
+        if (this._immutable && this.value !== undefined) {
+            throw new TypeVaultValidationError();
+        }
+
         if (value === undefined) {
             value = this.default();
         }
