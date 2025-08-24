@@ -16,7 +16,6 @@ describe('Url class', () => {
         expect(() => new Url(1 as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Url({} as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Url([] as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url(null as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Url(true as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Url(false as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Url(BigInt(1) as unknown as string)).toThrowError(

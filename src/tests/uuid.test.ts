@@ -26,7 +26,6 @@ describe('Uuid class', () => {
         expect(() => new Uuid(1 as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Uuid({} as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Uuid([] as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(null as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Uuid(true as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Uuid(false as unknown as string)).toThrowError(TypeVaultValidationError);
         expect(() => new Uuid(BigInt(1) as unknown as string)).toThrowError(

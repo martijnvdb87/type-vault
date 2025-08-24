@@ -46,7 +46,7 @@ describe('Integer class', () => {
     });
 
     test('It throws an error if the value is not a number', () => {
-        const values = ['foo', {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+        const values = ['foo', {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
             expect(() => new Integer(value as unknown as number)).toThrowError(
@@ -120,6 +120,16 @@ describe('Integer class', () => {
 
         expect(() => {
             integer.value = 2;
+        }).toThrowError(TypeVaultValidationError);
+    });
+
+    test('It allows null value when nullable is true', () => {
+        expect(new Integer(null, { nullable: true }).valueOf()).toBe(null);
+    });
+
+    test('It throws an error if value is null and nullable is false', () => {
+        expect(() => {
+            new Integer(null, { nullable: false });
         }).toThrowError(TypeVaultValidationError);
     });
 });

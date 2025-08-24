@@ -23,9 +23,6 @@ describe('EmailAddress class', () => {
         expect(() => new EmailAddress([] as unknown as string)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new EmailAddress(null as unknown as string)).toThrowError(
-            TypeVaultValidationError
-        );
         expect(() => new EmailAddress(true as unknown as string)).toThrowError(
             TypeVaultValidationError
         );

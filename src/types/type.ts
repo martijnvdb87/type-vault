@@ -9,10 +9,14 @@ export abstract class Type<TValue, TFrom = TValue | void> {
     protected _nullable: boolean;
     protected _immutable: boolean;
 
-    declare public [typeFrom]: TFrom;
+    declare public [typeFrom]: TFrom | null;
 
-    public constructor(value: Type<TValue, TFrom> | TFrom, options?: TypeOptions) {
-        this._nullable = Boolean(options?.nullable ?? false);
+    public constructor(value: Type<TValue, TFrom> | TFrom | null, options?: TypeOptions) {
+        if (value === null && options?.nullable === false) {
+            throw new TypeVaultValidationError();
+        }
+
+        this._nullable = Boolean(value === null || (options?.nullable ?? false));
         this._immutable = Boolean(options?.immutable ?? false);
 
         this.value = value as TValue;
@@ -25,6 +29,12 @@ export abstract class Type<TValue, TFrom = TValue | void> {
     public set value(value: Type<TValue> | TValue | void) {
         if (this._immutable && this.value !== undefined) {
             throw new TypeVaultValidationError();
+        }
+
+        if (this._nullable && value === null) {
+            this._value = value;
+
+            return;
         }
 
         if (value === undefined) {

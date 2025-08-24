@@ -72,7 +72,7 @@ describe('Float class', () => {
     });
 
     test('It throws an error if the value is not a number', () => {
-        const values = ['foo', {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+        const values = ['foo', {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
             expect(() => new Float(value as unknown as number)).toThrowError(

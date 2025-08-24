@@ -12,7 +12,7 @@ describe('Text class', () => {
     });
 
     test('It throws an error if the value is not a string', () => {
-        const values = [1, {}, null, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
+        const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
             expect(() => new Text(value as unknown as string)).toThrowError(
