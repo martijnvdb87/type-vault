@@ -125,11 +125,18 @@ describe('Integer class', () => {
 
     test('It allows null value when nullable is true', () => {
         expect(new Integer(null, { nullable: true }).valueOf()).toBe(null);
+        expect(Integer.options({ nullable: true }).from(null).valueOf()).toBe(null);
+        expect(Integer.from(null).valueOf()).toBe(null);
+        expect(Integer.options({ nullable: true }).from().valueOf()).toBe(null);
     });
 
     test('It throws an error if value is null and nullable is false', () => {
         expect(() => {
             new Integer(null, { nullable: false });
+        }).toThrowError(TypeVaultValidationError);
+
+        expect(() => {
+            Integer.options({ nullable: false }).from(null);
         }).toThrowError(TypeVaultValidationError);
     });
 });

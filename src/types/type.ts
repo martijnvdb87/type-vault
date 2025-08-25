@@ -5,7 +5,7 @@ type TypeOptions = { nullable?: boolean; immutable?: boolean };
 const typeFrom = Symbol('typeFrom');
 
 export abstract class Type<TValue, TFrom = TValue | void> {
-    declare protected _value: TValue;
+    declare protected _value: TValue | null;
     protected _nullable: boolean;
     protected _immutable: boolean;
 
@@ -23,7 +23,7 @@ export abstract class Type<TValue, TFrom = TValue | void> {
     }
 
     public get value(): TValue {
-        return this._value;
+        return this._value as TValue;
     }
 
     public set value(value: Type<TValue> | TValue | void) {
@@ -33,6 +33,12 @@ export abstract class Type<TValue, TFrom = TValue | void> {
 
         if (this._nullable && value === null) {
             this._value = value;
+
+            return;
+        }
+
+        if (this._nullable && value === undefined) {
+            this._value = null;
 
             return;
         }
