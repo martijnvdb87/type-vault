@@ -16,7 +16,13 @@ describe('Nullable function', () => {
         expect(nullable.value).toBe(null);
     });
 
-    test('It sets the default value to null', () => {
+    test('It does not overwrite the value when the default value is set', () => {
+        const nullable = Nullable(new Integer(0));
+
+        expect(nullable.value).toBe(0);
+    });
+
+    test('It allows to set the value to null', () => {
         const nullable = Nullable(new Integer(1));
         nullable.value = null;
 
