@@ -26,12 +26,6 @@ describe('Integer class', () => {
 
         test('It sets the correct value', () => {
             for (const value of values) {
-                expect(new Integer(new Integer(value)).value).toBe(value);
-            }
-        });
-
-        test('It sets the correct value', () => {
-            for (const value of values) {
                 expect(new Integer(value).value).toBe(value);
             }
         });
@@ -113,30 +107,5 @@ describe('Integer class', () => {
     test('It returns a number when toJSON is called', () => {
         expect(new Integer().toJSON()).toBe(0);
         expect(new Integer(1).toJSON()).toBe(1);
-    });
-
-    test('It throws an error if type if immutable and value is changed', () => {
-        const integer = new Integer(1, { immutable: true });
-
-        expect(() => {
-            integer.value = 2;
-        }).toThrowError(TypeVaultValidationError);
-    });
-
-    test('It allows null value when nullable is true', () => {
-        expect(new Integer(null, { nullable: true }).valueOf()).toBe(null);
-        expect(Integer.options({ nullable: true }).from(null).valueOf()).toBe(null);
-        expect(Integer.from(null).valueOf()).toBe(null);
-        expect(Integer.options({ nullable: true }).from().valueOf()).toBe(null);
-    });
-
-    test('It throws an error if value is null and nullable is false', () => {
-        expect(() => {
-            new Integer(null, { nullable: false });
-        }).toThrowError(TypeVaultValidationError);
-
-        expect(() => {
-            Integer.options({ nullable: false }).from(null);
-        }).toThrowError(TypeVaultValidationError);
     });
 });

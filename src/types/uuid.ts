@@ -1,7 +1,16 @@
+import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { validate } from 'uuid';
 import { BaseString } from './baseString.js';
 
-export class Uuid extends BaseString<string> {
+export class Uuid extends BaseString {
+    public constructor(value: string) {
+        if (!validate(value)) {
+            throw new TypeVaultValidationError();
+        }
+
+        super(value);
+    }
+
     protected validate(value: unknown): boolean {
         return super.validate(value) && validate(value);
     }

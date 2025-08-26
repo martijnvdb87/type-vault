@@ -8,14 +8,6 @@ describe('Float class', () => {
     });
 
     test('It sets the correct value', () => {
-        const values = [Number.MIN_SAFE_INTEGER, -99 - 1, 0, 1, 99, Number.MAX_SAFE_INTEGER];
-
-        for (const value of values) {
-            expect(new Float(new Float(value)).value).toBe(value);
-        }
-    });
-
-    test('It sets the correct value', () => {
         const values = [
             Number.MIN_SAFE_INTEGER,
             -99 - 1,

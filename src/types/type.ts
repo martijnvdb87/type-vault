@@ -1,54 +1,25 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 
-type TypeOptions = { nullable?: boolean; immutable?: boolean };
+export abstract class Type<TValue> {
+    protected _value: TValue | undefined = undefined;
 
-const typeFrom = Symbol('typeFrom');
-
-export abstract class Type<TValue, TFrom = TValue | void> {
-    declare protected _value: TValue | null;
-    protected _nullable: boolean;
-    protected _immutable: boolean;
-
-    declare public [typeFrom]: TFrom | null;
-
-    public constructor(value: Type<TValue, TFrom> | TFrom | null, options?: TypeOptions) {
-        if (value === null && options?.nullable === false) {
-            throw new TypeVaultValidationError();
-        }
-
-        this._nullable = Boolean(value === null || (options?.nullable ?? false));
-        this._immutable = Boolean(options?.immutable ?? false);
-
+    public constructor(value: TValue | void) {
         this.value = value as TValue;
     }
 
     public get value(): TValue {
-        return this._value as TValue;
+        if (this._value === undefined) {
+            return this.default();
+        }
+
+        return this._value;
     }
 
-    public set value(value: Type<TValue> | TValue | void) {
-        if (this._immutable && this.value !== undefined) {
-            throw new TypeVaultValidationError();
-        }
-
-        if (this._nullable && value === null) {
-            this._value = value;
+    public set value(value: TValue) {
+        if (value === undefined || value === null) {
+            this._value = undefined;
 
             return;
-        }
-
-        if (this._nullable && value === undefined) {
-            this._value = null;
-
-            return;
-        }
-
-        if (value === undefined) {
-            value = this.default();
-        }
-
-        if (value instanceof Type) {
-            value = value.value;
         }
 
         const modifiedValue = this.modifier(value);
@@ -58,6 +29,14 @@ export abstract class Type<TValue, TFrom = TValue | void> {
         }
 
         this._value = modifiedValue;
+    }
+
+    public setValue(value: TValue) {
+        this.value = value;
+    }
+
+    public get rawValue(): TValue | undefined {
+        return this._value;
     }
 
     public toString(): string {
@@ -78,25 +57,4 @@ export abstract class Type<TValue, TFrom = TValue | void> {
 
     protected abstract validate(value: unknown): boolean;
     protected abstract default(): TValue;
-
-    public static from<TType extends Type<TType['value'], TType[typeof typeFrom]>>(
-        this: new (value: TType['value']) => TType,
-        value: TType[typeof typeFrom]
-    ): TType {
-        return new this(value);
-    }
-
-    public static options<TType extends Type<TType['value'], TType[typeof typeFrom]>>(
-        this: new (value: TType[typeof typeFrom], options?: TypeOptions) => TType,
-        options: {
-            nullable?: boolean;
-            immutable?: boolean;
-        }
-    ) {
-        return {
-            from: (value: TType[typeof typeFrom]) => {
-                return new this(value, options);
-            },
-        };
-    }
 }

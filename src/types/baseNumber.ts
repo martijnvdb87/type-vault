@@ -1,6 +1,6 @@
 import { Type } from './type.js';
 
-export abstract class BaseNumber<TFrom = number | void> extends Type<number, TFrom> {
+export abstract class BaseNumber extends Type<number> {
     protected default() {
         return 0;
     }

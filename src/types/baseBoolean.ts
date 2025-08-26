@@ -1,6 +1,6 @@
 import { Type } from './type.js';
 
-export abstract class BaseBoolean<TFrom = boolean | void> extends Type<boolean, TFrom> {
+export abstract class BaseBoolean extends Type<boolean> {
     protected default() {
         return false;
     }
