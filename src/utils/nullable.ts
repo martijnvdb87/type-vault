@@ -2,13 +2,13 @@ import { Type } from '@/types/type.js';
 
 type Constructor = new (...args: unknown[]) => object;
 
-type Nullable<TInstance extends Type<unknown>> = {
+type Nullable<TInstance extends { value: unknown }> = {
     value: TInstance['value'] | null;
 } & Omit<TInstance, 'value'>;
 
-export function Nullable<TValue, TInstance extends Type<TValue>>(instance: TInstance) {
+export function Nullable<TInstance extends Type<TInstance['value']>>(instance: TInstance) {
     return new (class Nullable extends (instance.constructor as Constructor) {
-        protected _value: TValue | null | undefined = instance.rawValue;
+        protected _value: TInstance['value'] | null | undefined = instance.rawValue;
 
         protected default() {
             return null;
