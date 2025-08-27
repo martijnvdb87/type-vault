@@ -4,7 +4,7 @@ type Constructor = new (...args: unknown[]) => object;
 
 type Nullable<TInstance extends Type<unknown>> = {
     value: TInstance['value'] | null;
-};
+} & Omit<TInstance, 'value'>;
 
 export function Nullable<TValue, TInstance extends Type<TValue>>(instance: TInstance) {
     return new (class Nullable extends (instance.constructor as Constructor) {
@@ -13,5 +13,5 @@ export function Nullable<TValue, TInstance extends Type<TValue>>(instance: TInst
         protected default() {
             return null;
         }
-    })() as unknown as Omit<TInstance, 'value'> & Nullable<TInstance>;
+    })() as unknown as Nullable<TInstance>;
 }
