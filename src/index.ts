@@ -1,6 +1,6 @@
 export { Type } from './types/type.js';
 
-export { EmailAddress } from './types/emailAddress.js';
+export { Email } from './types/email.js';
 export { Float } from './types/float.js';
 export { Integer } from './types/integer.js';
 export { Text } from './types/text.js';

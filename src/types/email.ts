@@ -2,7 +2,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import * as z from 'zod/mini';
 import { BaseString } from './baseString.js';
 
-export class EmailAddress extends BaseString {
+export class Email extends BaseString {
     public constructor(value: string) {
         if (!validate(value)) {
             throw new TypeVaultValidationError();
