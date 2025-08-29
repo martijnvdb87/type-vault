@@ -3,15 +3,11 @@ import { BaseString } from './baseString.js';
 
 export class DateTime extends BaseString {
     public constructor(value: DateTime | string | Date | void) {
-        if (value instanceof Date) {
-            value = dayjs(value).toISOString();
-        }
+        super(modifier(value));
+    }
 
-        if (value instanceof DateTime) {
-            value = value.value;
-        }
-
-        super(String(value));
+    public toDate(): Date {
+        return dayjs(this.value).toDate();
     }
 
     protected default(): string {
@@ -19,18 +15,30 @@ export class DateTime extends BaseString {
     }
 
     protected modifier(value: unknown): string {
-        if (value instanceof Date) {
-            value = dayjs(value).toISOString();
+        return modifier(value);
+    }
+
+    protected validate(value: string): boolean {
+        if (!super.validate(value)) {
+            return false;
         }
 
-        if (value instanceof DateTime) {
-            value = value.value;
-        }
-
-        return String(value);
+        return dayjs(value).isValid();
     }
 
     public static now(): DateTime {
         return new DateTime(dayjs().toISOString());
     }
+}
+
+function modifier(value: unknown): string {
+    if (value instanceof Date) {
+        value = dayjs(value).toISOString();
+    }
+
+    if (value instanceof DateTime) {
+        value = value.value;
+    }
+
+    return value as string;
 }
