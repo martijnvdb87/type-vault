@@ -8,19 +8,13 @@ describe('Url class', () => {
     });
 
     test('It should throw an error if the value is not a valid url', () => {
-        expect(() => new Url('example')).toThrowError(TypeVaultValidationError);
-        expect(() => new Url('example.')).toThrowError(TypeVaultValidationError);
-        expect(() => new Url(undefined as unknown as string)).toThrowError(
-            TypeVaultValidationError
-        );
-        expect(() => new Url(1 as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url({} as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url([] as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url(true as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url(false as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Url(BigInt(1) as unknown as string)).toThrowError(
-            TypeVaultValidationError
-        );
+        const values = ['example', 'example.', undefined, 1, {}, [], true, false, BigInt(1)];
+
+        for (const value of values) {
+            expect(() => new Url(value as unknown as string)).toThrowError(
+                TypeVaultValidationError
+            );
+        }
     });
 
     test('It returns a string when toString is called', () => {
