@@ -31,10 +31,6 @@ export abstract class Type<TValue> {
         this._value = modifiedValue;
     }
 
-    public setValue(value: TValue) {
-        this.value = value;
-    }
-
     public get rawValue(): TValue | undefined {
         return this._value;
     }

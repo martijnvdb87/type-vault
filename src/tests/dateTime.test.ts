@@ -32,4 +32,19 @@ describe('DateTime class', () => {
     test('It throws an error if the value is not a valid date', () => {
         expect(() => new DateTime('foo')).toThrowError(TypeVaultValidationError);
     });
+
+    test('It returns the correct values', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(dateTime.millisecond).toBe(123);
+        expect(dateTime.second).toBe(45);
+        expect(dateTime.minute).toBe(23);
+        expect(dateTime.hour).toBe(1);
+        expect(dateTime.date).toBe(2);
+        expect(dateTime.month).toBe(0);
+        expect(dateTime.year).toBe(2023);
+        expect(dateTime.day).toBe(1);
+        expect(dateTime.daysInMonth).toBe(31);
+    });
 });

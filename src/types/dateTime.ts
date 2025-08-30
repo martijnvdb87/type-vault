@@ -10,6 +10,42 @@ export class DateTime extends BaseString {
         return dayjs(this.value).toDate();
     }
 
+    public get millisecond(): number {
+        return dayjs(this.value).millisecond();
+    }
+
+    public get second(): number {
+        return dayjs(this.value).second();
+    }
+
+    public get minute(): number {
+        return dayjs(this.value).minute();
+    }
+
+    public get hour(): number {
+        return dayjs(this.value).hour();
+    }
+
+    public get date(): number {
+        return dayjs(this.value).date();
+    }
+
+    public get month(): number {
+        return dayjs(this.value).month();
+    }
+
+    public get year(): number {
+        return dayjs(this.value).year();
+    }
+
+    public get day(): number {
+        return dayjs(this.value).day();
+    }
+
+    public get daysInMonth(): number {
+        return dayjs(this.value).daysInMonth();
+    }
+
     protected default(): string {
         return dayjs().toISOString();
     }
