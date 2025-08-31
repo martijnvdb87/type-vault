@@ -1,8 +1,8 @@
 import { Type } from './type.js';
 
-export abstract class BaseString extends Type<string> {
+export abstract class BaseString<TType extends string = string> extends Type<TType> {
     protected default() {
-        return '';
+        return '' as TType;
     }
 
     protected validate(value: unknown): boolean {
