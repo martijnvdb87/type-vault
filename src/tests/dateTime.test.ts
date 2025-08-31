@@ -52,11 +52,9 @@ describe('DateTime class', () => {
         expect(dateTime.daysInMonth).toBe(31);
     });
 
-    test('It returns the correct values', () => {
+    test('It changes the timezone', () => {
         const value = '2023-01-02T01:23:45.123Z';
         const dateTime = new DateTime(value);
-
-        expect(dateTime.timezone).toBe(Timezone.UTC);
 
         expect(dateTime.timezone).toBe(Timezone.UTC);
         expect(dateTime.date).toBe(2);
@@ -76,5 +74,127 @@ describe('DateTime class', () => {
         expect(dateTime.timezone).toBe(Timezone.UTC);
         expect(dateTime.date).toBe(2);
         expect(dateTime.hour).toBe(1);
+    });
+
+    test('It throws an error if the timezone is not valid', () => {
+        expect(
+            () => (new DateTime('2023-01-02T01:23:45.123Z').timezone = 'foo' as unknown as Timezone)
+        ).toThrowError(TypeVaultValidationError);
+    });
+
+    test('It updates the value', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(dateTime.value).toBe(value);
+
+        dateTime.value = '2024-02-03T02:34:51.234Z';
+        expect(dateTime.value).toBe('2024-02-03T02:34:51.234Z');
+    });
+
+    test('It updates the date/time values', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(dateTime.millisecond).toBe(123);
+        expect(dateTime.second).toBe(45);
+        expect(dateTime.minute).toBe(23);
+        expect(dateTime.hour).toBe(1);
+        expect(dateTime.date).toBe(2);
+        expect(dateTime.month).toBe(0);
+        expect(dateTime.year).toBe(2023);
+        expect(dateTime.day).toBe(1);
+        expect(dateTime.daysInMonth).toBe(31);
+
+        dateTime.value = '2024-02-03T02:34:51.234Z';
+        expect(dateTime.millisecond).toBe(234);
+        expect(dateTime.second).toBe(51);
+        expect(dateTime.minute).toBe(34);
+        expect(dateTime.hour).toBe(2);
+        expect(dateTime.date).toBe(3);
+        expect(dateTime.month).toBe(1);
+        expect(dateTime.year).toBe(2024);
+        expect(dateTime.day).toBe(6);
+        expect(dateTime.daysInMonth).toBe(29);
+    });
+
+    test('It updates the date/time properties', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.millisecond = 234;
+        dateTime.second = 51;
+        dateTime.minute = 34;
+        dateTime.hour = 2;
+        dateTime.date = 3;
+        dateTime.month = 1;
+        dateTime.year = 2024;
+
+        expect(dateTime.value).toBe('2024-02-03T02:34:51.234Z');
+    });
+
+    test('It updates the date/time properties with timezone', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.timezone = Timezone.America_NewYork;
+        dateTime.millisecond = 234;
+        dateTime.second = 51;
+        dateTime.minute = 34;
+        dateTime.hour = 2;
+        dateTime.date = 3;
+        dateTime.month = 1;
+        dateTime.year = 2024;
+
+        expect(dateTime.timezone).toBe(Timezone.America_NewYork);
+        expect(dateTime.value).toBe('2024-02-03T07:34:51.234Z');
+        expect(dateTime.hour).toBe(2);
+
+        dateTime.timezone = Timezone.UTC;
+        expect(dateTime.value).toBe('2024-02-03T07:34:51.234Z');
+        expect(dateTime.hour).toBe(7);
+    });
+
+    test('It sets using an object', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.set({
+            year: 2024,
+            month: 5,
+            date: 8,
+            hour: 6,
+            minute: 19,
+            second: 33,
+            millisecond: 0,
+        });
+
+        expect(dateTime.value).toBe('2024-06-08T06:19:33.000Z');
+    });
+
+    test('It sets using an object', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.set({
+            hour: 6,
+            timezone: Timezone.America_NewYork,
+        });
+
+        expect(dateTime.timezone).toBe(Timezone.America_NewYork);
+        expect(dateTime.hour).toBe(6);
+    });
+
+    test('It creates a DateTime object from an object', () => {
+        const dateTime = DateTime.fromObject({
+            year: 2023,
+            month: 0,
+            date: 2,
+            hour: 5,
+            timezone: Timezone.America_NewYork,
+        });
+
+        expect(dateTime.value).toBe('2023-01-02T09:00:00.000Z');
+        expect(dateTime.timezone).toBe(Timezone.America_NewYork);
     });
 });
