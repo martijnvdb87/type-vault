@@ -73,3 +73,19 @@ export type Tld = Unpack<`${Letter}${string}`>;
 export type Domain = Unpack<`${string}.${Tld}`>;
 
 export type Email = Unpack<`${string}@${Domain}`>;
+
+export type Year = number;
+export type Month = number;
+export type Day = number;
+export type Hour = number;
+export type Minute = number;
+export type Second = number;
+export type Millisecond = number;
+
+export type Date = Unpack<`${Year}-${Month}-${Day}`>;
+
+export type Time = Unpack<
+    `${Hour}:${Minute}:${Second}.${Millisecond}` | `${Hour}:${Minute}:${Second}`
+>;
+
+export type UtcDateTimeString = Unpack<`${Date}T${Time}Z`>;
