@@ -197,4 +197,28 @@ describe('DateTime class', () => {
         expect(dateTime.value).toBe('2023-01-02T09:00:00.000Z');
         expect(dateTime.timezone).toBe(Timezone.America_NewYork);
     });
+
+    test('It adds to the date/time', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.add({ year: 1, month: 1, day: 1, hour: 1, minute: 1, second: 1, millisecond: 1 });
+        expect(dateTime.value).toBe('2024-02-03T02:24:46.124Z');
+    });
+
+    test('It subtracts from the date/time', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        dateTime.subtract({
+            year: 1,
+            month: 1,
+            day: 1,
+            hour: 1,
+            minute: 1,
+            second: 1,
+            millisecond: 1,
+        });
+        expect(dateTime.value).toBe('2021-12-01T00:22:44.122Z');
+    });
 });

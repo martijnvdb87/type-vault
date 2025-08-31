@@ -20,6 +20,27 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(objectSupport);
 
+type DateTimeManipulateOptions = {
+    year: Year;
+    month: Month;
+    day: DateType;
+    hour: Hour;
+    minute: Minute;
+    second: Second;
+    millisecond: Millisecond;
+};
+
+type DateTimeSetOptions = {
+    year: Year;
+    month: Month;
+    date: DateType;
+    hour: Hour;
+    minute: Minute;
+    second: Second;
+    millisecond: Millisecond;
+    timezone: Timezone;
+};
+
 export class DateTime extends BaseString<UtcDateTimeString> {
     private _timezone: Timezone = Timezone.UTC;
 
@@ -124,16 +145,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         return dayjs(this.value).tz(this.timezone).daysInMonth();
     }
 
-    public set(options: {
-        year?: Year;
-        month?: Month;
-        date?: DateType;
-        hour?: Hour;
-        minute?: Minute;
-        second?: Second;
-        millisecond?: Millisecond;
-        timezone?: Timezone;
-    }) {
+    public set(options: Partial<DateTimeSetOptions>) {
         const setObject = Object.entries(options).reduce(
             (acc, [key, value]) => {
                 if (value !== undefined && key !== 'timezone') {
@@ -149,6 +161,20 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         const value = dayjs(this.value).tz(this.timezone).set(setObject);
 
         this.value = value.toISOString() as UtcDateTimeString;
+    }
+
+    public add(options: Partial<DateTimeManipulateOptions>) {
+        this.value = dayjs(this.value)
+            .tz(this.timezone)
+            .add(options)
+            .toISOString() as UtcDateTimeString;
+    }
+
+    public subtract(options: Partial<DateTimeManipulateOptions>) {
+        this.value = dayjs(this.value)
+            .tz(this.timezone)
+            .subtract(options)
+            .toISOString() as UtcDateTimeString;
     }
 
     protected default() {
@@ -171,16 +197,9 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         return new DateTime(dayjs().toISOString() as UtcDateTimeString);
     }
 
-    public static fromObject(options: {
-        year: Year;
-        month?: Month;
-        date?: DateType;
-        hour?: Hour;
-        minute?: Minute;
-        second?: Second;
-        millisecond?: Millisecond;
-        timezone?: Timezone;
-    }) {
+    public static fromObject(
+        options: Partial<Omit<DateTimeSetOptions, 'year'>> & Pick<DateTimeSetOptions, 'year'>
+    ) {
         const dateTime = new DateTime();
 
         dateTime.timezone = options.timezone ?? dateTime.timezone;
