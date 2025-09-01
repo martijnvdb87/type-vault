@@ -1,5 +1,6 @@
 export { Type } from './types/type.js';
 
+export { DateTime } from './types/dateTime.js';
 export { Email } from './types/email.js';
 export { Float } from './types/float.js';
 export { Integer } from './types/integer.js';
@@ -15,3 +16,13 @@ export { Uuidv7 } from './types/uuidv7.js';
 
 export { TypeVaultError } from './errors/typeVaultError.js';
 export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
+
+export { Immutable } from './utils/immutable.js';
+export { Nullable } from './utils/nullable.js';
+
+export { DateTimeUnit } from './enum/dateTimeUnit.js';
+export { Timezone } from './enum/timezone.js';
+
+export { BaseBoolean } from './types/baseBoolean.js';
+export { BaseNumber } from './types/baseNumber.js';
+export { BaseString } from './types/baseString.js';

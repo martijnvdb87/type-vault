@@ -12,7 +12,9 @@ import {
     Year,
 } from '@/utils/types.js';
 import dayjs, { UnitType } from 'dayjs';
+import duration from 'dayjs/plugin/duration.js';
 import objectSupport from 'dayjs/plugin/objectSupport.js';
+import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { BaseString } from './baseString.js';
@@ -20,6 +22,8 @@ import { BaseString } from './baseString.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(objectSupport);
+dayjs.extend(quarterOfYear);
+dayjs.extend(duration);
 
 type DateTimeManipulateOptions = {
     year: Year;
@@ -165,9 +169,20 @@ export class DateTime extends BaseString<UtcDateTimeString> {
     }
 
     public add(options: Partial<DateTimeManipulateOptions>) {
+        const addObject = Object.entries(options).reduce(
+            (acc, [key, value]) => {
+                if (value !== undefined) {
+                    acc[key] = value;
+                }
+
+                return acc;
+            },
+            {} as Record<string, unknown>
+        );
+
         this.value = dayjs(this.value)
             .tz(this.timezone)
-            .add(options)
+            .add(dayjs.duration(addObject))
             .toISOString() as UtcDateTimeString;
     }
 
@@ -230,6 +245,22 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         });
 
         return dateTime;
+    }
+
+    public static startOf(date: DateTime, unit: DateTimeUnit) {
+        const value = dayjs(date.value)
+            .tz(date.timezone)
+            .startOf(unit as UnitType);
+
+        return new DateTime(value.toISOString() as UtcDateTimeString);
+    }
+
+    public static endOf(date: DateTime, unit: DateTimeUnit) {
+        const value = dayjs(date.value)
+            .tz(date.timezone)
+            .endOf(unit as UnitType);
+
+        return new DateTime(value.toISOString() as UtcDateTimeString);
     }
 }
 

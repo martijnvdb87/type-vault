@@ -203,7 +203,15 @@ describe('DateTime class', () => {
         const value = '2023-01-02T01:23:45.123Z';
         const dateTime = new DateTime(value);
 
-        dateTime.add({ year: 1, month: 1, day: 1, hour: 1, minute: 1, second: 1, millisecond: 1 });
+        dateTime.add({
+            year: 1,
+            month: 1,
+            day: 1,
+            hour: 1,
+            minute: 1,
+            second: 1,
+            millisecond: 1,
+        });
         expect(dateTime.value).toBe('2024-02-03T02:24:46.124Z');
     });
 
@@ -279,5 +287,59 @@ describe('DateTime class', () => {
         expect(
             dateTime.difference(new DateTime('2022-01-02T01:23:45.123Z'), DateTimeUnit.Year)
         ).toBe(1);
+    });
+
+    test('It return start of dateTime', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Year).value).toBe(
+            '2023-01-01T00:00:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Quarter).value).toBe(
+            '2023-01-01T00:00:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Month).value).toBe(
+            '2023-01-01T00:00:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Week).value).toBe(
+            '2023-01-01T00:00:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Day).value).toBe('2023-01-02T00:00:00.000Z');
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Hour).value).toBe(
+            '2023-01-02T01:00:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Minute).value).toBe(
+            '2023-01-02T01:23:00.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Second).value).toBe(
+            '2023-01-02T01:23:45.000Z'
+        );
+        expect(DateTime.startOf(dateTime, DateTimeUnit.Millisecond).value).toBe(
+            '2023-01-02T01:23:45.123Z'
+        );
+    });
+
+    test('It return end of dateTime', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Year).value).toBe('2023-12-31T23:59:59.999Z');
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Quarter).value).toBe(
+            '2023-03-31T23:59:59.999Z'
+        );
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Month).value).toBe('2023-01-31T23:59:59.999Z');
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Week).value).toBe('2023-01-07T23:59:59.999Z');
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Day).value).toBe('2023-01-02T23:59:59.999Z');
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Hour).value).toBe('2023-01-02T01:59:59.999Z');
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Minute).value).toBe(
+            '2023-01-02T01:23:59.999Z'
+        );
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Second).value).toBe(
+            '2023-01-02T01:23:45.999Z'
+        );
+        expect(DateTime.endOf(dateTime, DateTimeUnit.Millisecond).value).toBe(
+            '2023-01-02T01:23:45.123Z'
+        );
     });
 });
