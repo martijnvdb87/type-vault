@@ -221,4 +221,17 @@ describe('DateTime class', () => {
         });
         expect(dateTime.value).toBe('2021-12-01T00:22:44.122Z');
     });
+
+    test('It formats the date/time', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(dateTime.format('YYYY-MM-DD')).toBe('2023-01-02');
+        expect(dateTime.format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-02 01:23:45');
+
+        dateTime.timezone = Timezone.America_NewYork;
+
+        expect(dateTime.format('YYYY-MM-DD')).toBe('2023-01-01');
+        expect(dateTime.format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 20:23:45');
+    });
 });

@@ -177,6 +177,14 @@ export class DateTime extends BaseString<UtcDateTimeString> {
             .toISOString() as UtcDateTimeString;
     }
 
+    public format(format: string): string {
+        if (!this.value) {
+            throw new TypeVaultValidationError();
+        }
+
+        return dayjs(this.value).tz(this.timezone).format(format);
+    }
+
     protected default() {
         return dayjs().tz(this.timezone).toISOString() as UtcDateTimeString;
     }
