@@ -1,3 +1,4 @@
+import { DateTimeUnit } from '@/enum/dateTimeUnit.js';
 import { Timezone } from '@/enum/timezone.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateTime } from '@/types/dateTime.js';
@@ -233,5 +234,50 @@ describe('DateTime class', () => {
 
         expect(dateTime.format('YYYY-MM-DD')).toBe('2023-01-01');
         expect(dateTime.format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 20:23:45');
+    });
+
+    test('It returns the difference', () => {
+        const value = '2023-01-02T01:23:45.123Z';
+        const dateTime = new DateTime(value);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-02T01:23:45.123Z'), DateTimeUnit.Millisecond)
+        ).toBe(0);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-02T01:23:45.000Z'), DateTimeUnit.Millisecond)
+        ).toBe(123);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-02T01:23:46.000Z'), DateTimeUnit.Millisecond)
+        ).toBe(-877);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-02T01:23:44.123Z'), DateTimeUnit.Second)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-02T00:23:45.123Z'), DateTimeUnit.Hour)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2023-01-01T01:23:45.123Z'), DateTimeUnit.Day)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2022-12-25T01:23:45.123Z'), DateTimeUnit.Week)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2022-12-02T01:23:45.123Z'), DateTimeUnit.Month)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2022-09-02T01:23:45.123Z'), DateTimeUnit.Quarter)
+        ).toBe(1);
+
+        expect(
+            dateTime.difference(new DateTime('2022-01-02T01:23:45.123Z'), DateTimeUnit.Year)
+        ).toBe(1);
     });
 });

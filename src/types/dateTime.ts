@@ -1,3 +1,4 @@
+import { DateTimeUnit } from '@/enum/dateTimeUnit.js';
 import { Timezone } from '@/enum/timezone.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import {
@@ -10,7 +11,7 @@ import {
     UtcDateTimeString,
     Year,
 } from '@/utils/types.js';
-import dayjs from 'dayjs';
+import dayjs, { UnitType } from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
@@ -183,6 +184,12 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         }
 
         return dayjs(this.value).tz(this.timezone).format(format);
+    }
+
+    public difference(date: DateTime, unit: DateTimeUnit): number {
+        return dayjs(this.value)
+            .tz(this.timezone)
+            .diff(date.value, unit as UnitType);
     }
 
     protected default() {
