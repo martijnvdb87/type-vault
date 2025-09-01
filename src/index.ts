@@ -1,5 +1,6 @@
 export { Type } from './types/type.js';
 
+export { DateOnly } from './types/dateOnly.js';
 export { DateTime } from './types/dateTime.js';
 export { Email } from './types/email.js';
 export { Float } from './types/float.js';

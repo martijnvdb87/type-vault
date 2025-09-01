@@ -82,10 +82,10 @@ export type Minute = number;
 export type Second = number;
 export type Millisecond = number;
 
-export type DateString = Unpack<`${Year}-${Month}-${Date}`>;
+export type DateOnlyString = Unpack<`${Year}-${Month}-${Date}`>;
 
-export type TimeString = Unpack<
+export type TimeOnlyString = Unpack<
     `${Hour}:${Minute}:${Second}.${Millisecond}` | `${Hour}:${Minute}:${Second}`
 >;
 
-export type UtcDateTimeString = Unpack<`${DateString}T${TimeString}Z`>;
+export type DateTimeString = Unpack<`${DateOnlyString}T${TimeOnlyString}Z`>;

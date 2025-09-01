@@ -2,13 +2,13 @@ import { DateTimeUnit } from '@/enum/dateTimeUnit.js';
 import { Timezone } from '@/enum/timezone.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import {
+    DateTimeString,
     Date as DateType,
     Hour,
     Millisecond,
     Minute,
     Month,
     Second,
-    UtcDateTimeString,
     Year,
 } from '@/utils/types.js';
 import dayjs, { UnitType } from 'dayjs';
@@ -46,7 +46,7 @@ type DateTimeSetOptions = {
     timezone: Timezone;
 };
 
-export class DateTime extends BaseString<UtcDateTimeString> {
+export class DateTime extends BaseString<DateTimeString> {
     private _timezone: Timezone = Timezone.UTC;
 
     public get timezone(): Timezone {
@@ -73,7 +73,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .millisecond(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get second(): number {
@@ -84,7 +84,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .second(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get minute(): number {
@@ -95,7 +95,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .minute(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get hour(): number {
@@ -106,7 +106,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .hour(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get date(): number {
@@ -117,7 +117,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .date(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get month(): number {
@@ -128,7 +128,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .month(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get year(): number {
@@ -139,7 +139,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .year(value)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public get day(): number {
@@ -165,7 +165,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.timezone = options.timezone ?? this.timezone;
         const value = dayjs(this.value).tz(this.timezone).set(setObject);
 
-        this.value = value.toISOString() as UtcDateTimeString;
+        this.value = value.toISOString() as DateTimeString;
     }
 
     public add(options: Partial<DateTimeManipulateOptions>) {
@@ -183,14 +183,14 @@ export class DateTime extends BaseString<UtcDateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .add(dayjs.duration(addObject))
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public subtract(options: Partial<DateTimeManipulateOptions>) {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .subtract(options)
-            .toISOString() as UtcDateTimeString;
+            .toISOString() as DateTimeString;
     }
 
     public format(format: string): string {
@@ -208,11 +208,11 @@ export class DateTime extends BaseString<UtcDateTimeString> {
     }
 
     protected default() {
-        return dayjs().tz(this.timezone).toISOString() as UtcDateTimeString;
+        return dayjs().tz(this.timezone).toISOString() as DateTimeString;
     }
 
     protected modifier(value: unknown) {
-        return modifier(value) as UtcDateTimeString;
+        return modifier(value) as DateTimeString;
     }
 
     protected validate(value: string): boolean {
@@ -220,11 +220,15 @@ export class DateTime extends BaseString<UtcDateTimeString> {
             return false;
         }
 
+        if (!value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d{3})?Z$/)) {
+            return false;
+        }
+
         return dayjs(value).isValid();
     }
 
     public static now(): DateTime {
-        return new DateTime(dayjs().toISOString() as UtcDateTimeString);
+        return new DateTime(dayjs().toISOString() as DateTimeString);
     }
 
     public static fromObject(
@@ -252,7 +256,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
             .tz(date.timezone)
             .startOf(unit as UnitType);
 
-        return new DateTime(value.toISOString() as UtcDateTimeString);
+        return new DateTime(value.toISOString() as DateTimeString);
     }
 
     public static endOf(date: DateTime, unit: DateTimeUnit) {
@@ -260,7 +264,7 @@ export class DateTime extends BaseString<UtcDateTimeString> {
             .tz(date.timezone)
             .endOf(unit as UnitType);
 
-        return new DateTime(value.toISOString() as UtcDateTimeString);
+        return new DateTime(value.toISOString() as DateTimeString);
     }
 }
 

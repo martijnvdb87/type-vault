@@ -2,7 +2,7 @@ import { DateTimeUnit } from '@/enum/dateTimeUnit.js';
 import { Timezone } from '@/enum/timezone.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateTime } from '@/types/dateTime.js';
-import { UtcDateTimeString } from '@/utils/types.js';
+import { DateTimeString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 
 describe('DateTime class', () => {
@@ -26,14 +26,14 @@ describe('DateTime class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new DateTime(value as unknown as UtcDateTimeString)).toThrowError(
+            expect(() => new DateTime(value as unknown as DateTimeString)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is not a valid date', () => {
-        expect(() => new DateTime('foo' as unknown as UtcDateTimeString)).toThrowError(
+        expect(() => new DateTime('foo' as unknown as DateTimeString)).toThrowError(
             TypeVaultValidationError
         );
     });
@@ -173,7 +173,7 @@ describe('DateTime class', () => {
         expect(dateTime.value).toBe('2024-06-08T06:19:33.000Z');
     });
 
-    test('It sets using an object', () => {
+    test('It sets using an object with timezone', () => {
         const value = '2023-01-02T01:23:45.123Z';
         const dateTime = new DateTime(value);
 
