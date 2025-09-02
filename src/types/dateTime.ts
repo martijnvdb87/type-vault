@@ -269,10 +269,6 @@ export class DateTime extends BaseString<DateTimeString> {
 }
 
 function modifier(value: unknown): string {
-    if (value instanceof Date) {
-        value = dayjs(value).toISOString();
-    }
-
     if (value instanceof DateTime) {
         value = value.value;
     }

@@ -6,6 +6,7 @@ export { Email } from './types/email.js';
 export { Float } from './types/float.js';
 export { Integer } from './types/integer.js';
 export { Text } from './types/text.js';
+export { TimeOnly } from './types/timeOnly.js';
 export { Url } from './types/url.js';
 export { Uuid } from './types/uuid.js';
 export { Uuidv1 } from './types/uuidv1.js';

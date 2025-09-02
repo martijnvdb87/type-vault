@@ -15,13 +15,13 @@ dayjs.extend(objectSupport);
 dayjs.extend(quarterOfYear);
 dayjs.extend(duration);
 
-type DateSetOptions = {
+type DateOnlySetOptions = {
     year: number;
     month: number;
     date: number;
 };
 
-type DateManipulateOptions = {
+type DateOnlyManipulateOptions = {
     year: number;
     month: number;
     day: number;
@@ -60,7 +60,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
         return dayjs(this.value).daysInMonth();
     }
 
-    public set(options: Partial<DateSetOptions>) {
+    public set(options: Partial<DateOnlySetOptions>) {
         const setObject = Object.entries(options).reduce(
             (acc, [key, value]) => {
                 if (value !== undefined) {
@@ -77,7 +77,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
         this.value = value.format('YYYY-MM-DD') as DateOnlyString;
     }
 
-    public add(options: Partial<DateManipulateOptions>) {
+    public add(options: Partial<DateOnlyManipulateOptions>) {
         const addObject = Object.entries(options).reduce(
             (acc, [key, value]) => {
                 if (value !== undefined) {
@@ -94,7 +94,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
             .format('YYYY-MM-DD') as DateOnlyString;
     }
 
-    public subtract(options: Partial<DateManipulateOptions>) {
+    public subtract(options: Partial<DateOnlyManipulateOptions>) {
         this.value = dayjs(this.value).subtract(options).format('YYYY-MM-DD') as DateOnlyString;
     }
 
@@ -106,8 +106,8 @@ export class DateOnly extends BaseString<DateOnlyString> {
         return dayjs(this.value).format(format);
     }
 
-    public difference(date: DateOnlyString, unit: DateTimeUnit): number {
-        return dayjs(this.value).diff(date.valueOf(), unit as UnitType);
+    public difference(date: DateOnly, unit: DateTimeUnit): number {
+        return dayjs(this.value).diff(date.value, unit as UnitType);
     }
 
     protected default() {
@@ -135,7 +135,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
     }
 
     public static fromObject(
-        options: Partial<Omit<DateSetOptions, 'year'>> & Pick<DateSetOptions, 'year'>
+        options: Partial<Omit<DateOnlySetOptions, 'year'>> & Pick<DateOnlySetOptions, 'year'>
     ) {
         const dateTime = new DateOnly();
 
@@ -150,10 +150,6 @@ export class DateOnly extends BaseString<DateOnlyString> {
 }
 
 function modifier(value: unknown): string {
-    if (value instanceof DateOnly) {
-        value = dayjs(value).format('YYYY-MM-DD');
-    }
-
     if (value instanceof DateOnly) {
         value = value.value;
     }

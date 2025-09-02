@@ -1,3 +1,4 @@
+import { DateTimeUnit } from '@/enum/dateTimeUnit.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateOnly } from '@/types/dateOnly.js';
 import { DateOnlyString } from '@/utils/types.js';
@@ -127,8 +128,8 @@ describe('DateOnly class', () => {
         const value = '2023-01-02';
         const dateOnly = new DateOnly(value);
 
-        expect(dateOnly.difference('2023-01-01', 'day')).toBe(1);
-        expect(dateOnly.difference('2023-05-02', 'month')).toBe(-4);
-        expect(dateOnly.difference('2020-01-02', 'year')).toBe(3);
+        expect(dateOnly.difference(new DateOnly('2023-01-01'), DateTimeUnit.Day)).toBe(1);
+        expect(dateOnly.difference(new DateOnly('2023-05-02'), DateTimeUnit.Month)).toBe(-4);
+        expect(dateOnly.difference(new DateOnly('2020-01-02'), DateTimeUnit.Year)).toBe(3);
     });
 });
