@@ -1,6 +1,9 @@
-import { Type } from './type.js';
+import { Type, TypeOption } from './type.js';
 
-export abstract class BaseNumber<TType extends number = number> extends Type<TType> {
+export abstract class BaseNumber<
+    TOption extends TypeOption,
+    TType extends number = number,
+> extends Type<TOption, TType> {
     protected validate(value: unknown): boolean {
         if (!(typeof value === 'number' || value instanceof Number)) {
             return false;

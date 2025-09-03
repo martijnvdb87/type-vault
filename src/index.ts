@@ -1,4 +1,4 @@
-export { Type } from './types/type.js';
+export { Type, TypeOption, TypeValue } from './types/type.js';
 
 export { DateOnly } from './types/dateOnly.js';
 export { DateTime } from './types/dateTime.js';
@@ -18,8 +18,6 @@ export { Uuidv7 } from './types/uuidv7.js';
 
 export { TypeVaultError } from './errors/typeVaultError.js';
 export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
-
-export { Immutable } from './utils/immutable.js';
 
 export { DateTimeUnit } from './enum/dateTimeUnit.js';
 export { Timezone } from './enum/timezone.js';

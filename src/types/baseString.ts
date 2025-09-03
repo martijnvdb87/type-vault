@@ -1,6 +1,9 @@
-import { Type } from './type.js';
+import { Type, TypeOption } from './type.js';
 
-export abstract class BaseString<TType extends string = string> extends Type<TType> {
+export abstract class BaseString<
+    TOption extends TypeOption,
+    TType extends string = string,
+> extends Type<TOption, TType> {
     protected validate(value: unknown): boolean {
         if (!(typeof value === 'string' || value instanceof String)) {
             return false;

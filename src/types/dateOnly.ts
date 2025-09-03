@@ -8,6 +8,7 @@ import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { BaseString } from './baseString.js';
+import { SetTypeValue, TypeOption } from './type.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -27,13 +28,19 @@ type DateOnlyManipulateOptions = {
     day: number;
 };
 
-export class DateOnly extends BaseString<DateOnlyString> {
+export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseString<
+    TOptions,
+    DateOnlyString
+> {
     public get date(): number {
         return dayjs(this.value).date();
     }
 
     public set date(value: number) {
-        this.value = dayjs(this.value).date(value).format('YYYY-MM-DD') as DateOnlyString;
+        this.value = dayjs(this.value).date(value).format('YYYY-MM-DD') as SetTypeValue<
+            TOptions,
+            DateOnlyString
+        >;
     }
 
     public get month(): number {
@@ -41,7 +48,10 @@ export class DateOnly extends BaseString<DateOnlyString> {
     }
 
     public set month(value: number) {
-        this.value = dayjs(this.value).month(value).format('YYYY-MM-DD') as DateOnlyString;
+        this.value = dayjs(this.value).month(value).format('YYYY-MM-DD') as SetTypeValue<
+            TOptions,
+            DateOnlyString
+        >;
     }
 
     public get year(): number {
@@ -49,7 +59,10 @@ export class DateOnly extends BaseString<DateOnlyString> {
     }
 
     public set year(value: number) {
-        this.value = dayjs(this.value).year(value).format('YYYY-MM-DD') as DateOnlyString;
+        this.value = dayjs(this.value).year(value).format('YYYY-MM-DD') as SetTypeValue<
+            TOptions,
+            DateOnlyString
+        >;
     }
 
     public get day(): number {
@@ -74,7 +87,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
 
         const value = dayjs(this.value).set(setObject);
 
-        this.value = value.format('YYYY-MM-DD') as DateOnlyString;
+        this.value = value.format('YYYY-MM-DD') as SetTypeValue<TOptions, DateOnlyString>;
     }
 
     public add(options: Partial<DateOnlyManipulateOptions>) {
@@ -91,11 +104,14 @@ export class DateOnly extends BaseString<DateOnlyString> {
 
         this.value = dayjs(this.value)
             .add(dayjs.duration(addObject))
-            .format('YYYY-MM-DD') as DateOnlyString;
+            .format('YYYY-MM-DD') as SetTypeValue<TOptions, DateOnlyString>;
     }
 
     public subtract(options: Partial<DateOnlyManipulateOptions>) {
-        this.value = dayjs(this.value).subtract(options).format('YYYY-MM-DD') as DateOnlyString;
+        this.value = dayjs(this.value).subtract(options).format('YYYY-MM-DD') as SetTypeValue<
+            TOptions,
+            DateOnlyString
+        >;
     }
 
     public format(format: string): string {
@@ -106,7 +122,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
         return dayjs(this.value).format(format);
     }
 
-    public difference(date: DateOnly, unit: DateTimeUnit): number {
+    public difference(date: DateOnly<TypeOption>, unit: DateTimeUnit): number {
         return dayjs(this.value).diff(date.value, unit as UnitType);
     }
 
@@ -126,7 +142,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
         return dayjs(value).isValid();
     }
 
-    public static now(): DateOnly {
+    public static now(): DateOnly<TypeOption> {
         return new DateOnly(dayjs().format('YYYY-MM-DD') as DateOnlyString);
     }
 

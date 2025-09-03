@@ -1,19 +1,45 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 
-export abstract class Type<TValue> {
-    protected _value: TValue | null = null;
+export type TypeOption = {
+    nullable?: boolean;
+    immutable?: boolean;
+};
 
-    public constructor(value: TValue) {
-        this.value = value as TValue;
+export type TypeValue<
+    TOptions extends { nullable?: boolean },
+    TValue,
+> = TOptions['nullable'] extends true ? TValue | null : TValue;
+
+export type SetTypeValue<
+    TOptions extends { nullable?: boolean; immutable?: boolean },
+    TValue,
+> = TOptions['immutable'] extends true
+    ? never
+    : TOptions['nullable'] extends true
+      ? TValue | null
+      : TValue;
+
+export abstract class Type<TOption extends TypeOption, TValue> {
+    declare protected _value: TypeValue<TOption, TValue>;
+    protected _options: TypeOption;
+
+    public constructor(value: TypeValue<TOption, TValue>, options?: TOption) {
+        this._options = options ?? { nullable: false };
+
+        this.value = value as SetTypeValue<TOption, TValue>;
     }
 
-    public get value(): TValue {
-        return this._value as TValue;
+    public get value(): TypeValue<TOption, TValue> {
+        return this._value as TypeValue<TOption, TValue>;
     }
 
-    public set value(value: TValue) {
-        if (value === null) {
-            this._value = null;
+    public set value(value: SetTypeValue<TOption, TValue>) {
+        if (this._options.immutable) {
+            throw new TypeVaultValidationError();
+        }
+
+        if (this._options.nullable && value === null) {
+            this._value = null as TypeValue<TOption, TValue>;
 
             return;
         }
@@ -31,16 +57,16 @@ export abstract class Type<TValue> {
         return this.value?.toString() ?? '';
     }
 
-    public toJSON(): TValue {
+    public toJSON(): TypeValue<TOption, TValue> {
         return this.value;
     }
 
-    public valueOf(): TValue {
+    public valueOf(): TypeValue<TOption, TValue> {
         return this.value;
     }
 
-    protected modifier(value: unknown): TValue {
-        return value as TValue;
+    protected modifier(value: unknown): TypeValue<TOption, TValue> {
+        return value as TypeValue<TOption, TValue>;
     }
 
     protected abstract validate(value: unknown): boolean;

@@ -18,6 +18,7 @@ import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { BaseString } from './baseString.js';
+import { SetTypeValue, TypeOption } from './type.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -46,7 +47,10 @@ type DateTimeSetOptions = {
     timezone: Timezone;
 };
 
-export class DateTime extends BaseString<DateTimeString> {
+export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseString<
+    TOptions,
+    DateTimeString
+> {
     private _timezone: Timezone = Timezone.UTC;
 
     public get timezone(): Timezone {
@@ -73,7 +77,7 @@ export class DateTime extends BaseString<DateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .millisecond(value)
-            .toISOString() as DateTimeString;
+            .toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public get second(): number {
@@ -84,7 +88,7 @@ export class DateTime extends BaseString<DateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .second(value)
-            .toISOString() as DateTimeString;
+            .toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public get minute(): number {
@@ -95,7 +99,7 @@ export class DateTime extends BaseString<DateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .minute(value)
-            .toISOString() as DateTimeString;
+            .toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public get hour(): number {
@@ -103,10 +107,10 @@ export class DateTime extends BaseString<DateTimeString> {
     }
 
     public set hour(value: number) {
-        this.value = dayjs(this.value)
-            .tz(this.timezone)
-            .hour(value)
-            .toISOString() as DateTimeString;
+        this.value = dayjs(this.value).tz(this.timezone).hour(value).toISOString() as SetTypeValue<
+            TOptions,
+            DateTimeString
+        >;
     }
 
     public get date(): number {
@@ -114,10 +118,10 @@ export class DateTime extends BaseString<DateTimeString> {
     }
 
     public set date(value: number) {
-        this.value = dayjs(this.value)
-            .tz(this.timezone)
-            .date(value)
-            .toISOString() as DateTimeString;
+        this.value = dayjs(this.value).tz(this.timezone).date(value).toISOString() as SetTypeValue<
+            TOptions,
+            DateTimeString
+        >;
     }
 
     public get month(): number {
@@ -125,10 +129,10 @@ export class DateTime extends BaseString<DateTimeString> {
     }
 
     public set month(value: number) {
-        this.value = dayjs(this.value)
-            .tz(this.timezone)
-            .month(value)
-            .toISOString() as DateTimeString;
+        this.value = dayjs(this.value).tz(this.timezone).month(value).toISOString() as SetTypeValue<
+            TOptions,
+            DateTimeString
+        >;
     }
 
     public get year(): number {
@@ -136,10 +140,10 @@ export class DateTime extends BaseString<DateTimeString> {
     }
 
     public set year(value: number) {
-        this.value = dayjs(this.value)
-            .tz(this.timezone)
-            .year(value)
-            .toISOString() as DateTimeString;
+        this.value = dayjs(this.value).tz(this.timezone).year(value).toISOString() as SetTypeValue<
+            TOptions,
+            DateTimeString
+        >;
     }
 
     public get day(): number {
@@ -165,7 +169,7 @@ export class DateTime extends BaseString<DateTimeString> {
         this.timezone = options.timezone ?? this.timezone;
         const value = dayjs(this.value).tz(this.timezone).set(setObject);
 
-        this.value = value.toISOString() as DateTimeString;
+        this.value = value.toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public add(options: Partial<DateTimeManipulateOptions>) {
@@ -183,14 +187,14 @@ export class DateTime extends BaseString<DateTimeString> {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .add(dayjs.duration(addObject))
-            .toISOString() as DateTimeString;
+            .toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public subtract(options: Partial<DateTimeManipulateOptions>) {
         this.value = dayjs(this.value)
             .tz(this.timezone)
             .subtract(options)
-            .toISOString() as DateTimeString;
+            .toISOString() as SetTypeValue<TOptions, DateTimeString>;
     }
 
     public format(format: string): string {

@@ -8,6 +8,7 @@ import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { BaseString } from './baseString.js';
+import { SetTypeValue, TypeOption } from './type.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -29,43 +30,48 @@ type TimeOnlyManipulateOptions = {
     millisecond: number;
 };
 
-export class TimeOnly extends BaseString<TimeOnlyString> {
+export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseString<
+    TOptions,
+    TimeOnlyString
+> {
     public get millisecond(): number {
-        return withDummyDate(this.value).millisecond();
+        return dayjs(`1900-01-01T${this.value}`).millisecond();
     }
 
     public set millisecond(value: number) {
-        this.value = withDummyDate(this.value)
+        this.value = dayjs(`1900-01-01T${this.value}`)
             .millisecond(value)
-            .format('HH:mm:ss.SSS') as TimeOnlyString;
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public get second(): number {
-        return withDummyDate(this.value).second();
+        return dayjs(`1900-01-01T${this.value}`).second();
     }
 
     public set second(value: number) {
-        this.value = withDummyDate(this.value)
+        this.value = dayjs(`1900-01-01T${this.value}`)
             .second(value)
-            .format('HH:mm:ss.SSS') as TimeOnlyString;
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public get minute(): number {
-        return withDummyDate(this.value).minute();
+        return dayjs(`1900-01-01T${this.value}`).minute();
     }
 
     public set minute(value: number) {
-        this.value = withDummyDate(this.value)
+        this.value = dayjs(`1900-01-01T${this.value}`)
             .minute(value)
-            .format('HH:mm:ss.SSS') as TimeOnlyString;
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public get hour(): number {
-        return withDummyDate(this.value).hour();
+        return dayjs(`1900-01-01T${this.value}`).hour();
     }
 
     public set hour(value: number) {
-        this.value = withDummyDate(this.value).hour(value).format('HH:mm:ss.SSS') as TimeOnlyString;
+        this.value = dayjs(`1900-01-01T${this.value}`)
+            .hour(value)
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public set(options: Partial<TimeOnlySetOptions>) {
@@ -80,9 +86,9 @@ export class TimeOnly extends BaseString<TimeOnlyString> {
             {} as Record<string, unknown>
         );
 
-        const value = withDummyDate(this.value).set(setObject);
+        const value = dayjs(`1900-01-01T${this.value}`).set(setObject);
 
-        this.value = value.format('HH:mm:ss.SSS') as TimeOnlyString;
+        this.value = value.format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public add(options: Partial<TimeOnlyManipulateOptions>) {
@@ -97,15 +103,15 @@ export class TimeOnly extends BaseString<TimeOnlyString> {
             {} as Record<string, unknown>
         );
 
-        this.value = withDummyDate(this.value)
+        this.value = dayjs(`1900-01-01T${this.value}`)
             .add(dayjs.duration(addObject))
-            .format('HH:mm:ss.SSS') as TimeOnlyString;
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public subtract(options: Partial<TimeOnlyManipulateOptions>) {
-        this.value = withDummyDate(this.value)
+        this.value = dayjs(`1900-01-01T${this.value}`)
             .subtract(options)
-            .format('HH:mm:ss.SSS') as TimeOnlyString;
+            .format('HH:mm:ss.SSS') as SetTypeValue<TOptions, TimeOnlyString>;
     }
 
     public format(format: string): string {
@@ -113,11 +119,14 @@ export class TimeOnly extends BaseString<TimeOnlyString> {
             throw new TypeVaultValidationError();
         }
 
-        return withDummyDate(this.value).format(format);
+        return dayjs(`1900-01-01T${this.value}`).format(format);
     }
 
     public difference(time: TimeOnly, unit: DateTimeUnit): number {
-        return withDummyDate(this.value).diff(withDummyDate(time.value), unit as UnitType);
+        return dayjs(`1900-01-01T${this.value}`).diff(
+            dayjs(`1900-01-01T${time.value}`),
+            unit as UnitType
+        );
     }
 
     protected modifier(value: unknown) {
@@ -156,8 +165,4 @@ function modifier(value: unknown): string {
     }
 
     return value as string;
-}
-
-function withDummyDate(value: TimeOnlyString) {
-    return dayjs(`1900-01-01T${value}`);
 }

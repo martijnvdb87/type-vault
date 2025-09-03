@@ -1,7 +1,11 @@
 import { MonthString } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
+import { TypeOption } from './type.js';
 
-export class Month extends BaseString<MonthString | Capitalize<MonthString>> {
+export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
+    TOptions,
+    MonthString | Capitalize<MonthString>
+> {
     public static January = new Month('january');
     public static February = new Month('february');
     public static March = new Month('march');
