@@ -3,33 +3,22 @@ import { Integer } from '@/types/integer.js';
 import { Uuid } from '@/types/uuid.js';
 import { Uuidv4 } from '@/types/uuidv4.js';
 import { Immutable } from '@/utils/immutable.js';
-import { Nullable } from '@/utils/nullable.js';
 import { describe, expect, test } from 'vitest';
 
 describe('Immutable function', () => {
     test('It expects instance of Integer', () => {
-        const immutable = Immutable(new Integer());
+        const immutable = Immutable(new Integer(0));
 
         expect(immutable instanceof Integer).toBeTruthy();
     });
 
     test('It throws an error when trying to set the value', () => {
-        const immutable = Immutable(new Integer());
+        const immutable = Immutable(new Integer(0));
 
         expect(() => {
             // @ts-expect-error Type error expected
             immutable.value = 1;
         }).toThrowError(Error);
-    });
-
-    test('It throws an error when trying to set the value of nullable', () => {
-        const immutable = Immutable(Nullable(new Integer()));
-
-        expect(() => {
-            // @ts-expect-error Type error expected
-            immutable.value = 1;
-        }).toThrowError(Error);
-        expect(immutable.value).toBe(null);
     });
 
     test('It expects instance of Uuid', () => {

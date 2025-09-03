@@ -20,7 +20,6 @@ export { TypeVaultError } from './errors/typeVaultError.js';
 export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
 
 export { Immutable } from './utils/immutable.js';
-export { Nullable } from './utils/nullable.js';
 
 export { DateTimeUnit } from './enum/dateTimeUnit.js';
 export { Timezone } from './enum/timezone.js';

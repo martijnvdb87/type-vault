@@ -89,3 +89,17 @@ export type TimeOnlyString = Unpack<
 >;
 
 export type DateTimeString = Unpack<`${DateOnlyString}T${TimeOnlyString}Z`>;
+
+export type MonthString =
+    | 'january'
+    | 'february'
+    | 'march'
+    | 'april'
+    | 'may'
+    | 'june'
+    | 'july'
+    | 'august'
+    | 'september'
+    | 'october'
+    | 'november'
+    | 'december';

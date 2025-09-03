@@ -1,10 +1,6 @@
 import { Type } from './type.js';
 
 export abstract class BaseNumber<TType extends number = number> extends Type<TType> {
-    protected default() {
-        return 0 as TType;
-    }
-
     protected validate(value: unknown): boolean {
         if (!(typeof value === 'number' || value instanceof Number)) {
             return false;

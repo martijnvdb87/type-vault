@@ -5,7 +5,7 @@ import { TimeOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 
 describe('TimeOnly class', () => {
-    test('It sets the default value', () => {
+    test('It sets the correct now value', () => {
         const { value } = TimeOnly.now();
         const timeOnly = new TimeOnly(value);
 

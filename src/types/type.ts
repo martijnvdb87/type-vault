@@ -1,23 +1,19 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 
 export abstract class Type<TValue> {
-    protected _value: TValue | undefined = undefined;
+    protected _value: TValue | null = null;
 
-    public constructor(value: TValue | void) {
+    public constructor(value: TValue) {
         this.value = value as TValue;
     }
 
     public get value(): TValue {
-        if (this._value === undefined) {
-            return this.default();
-        }
-
-        return this._value;
+        return this._value as TValue;
     }
 
     public set value(value: TValue) {
-        if (value === undefined || value === null) {
-            this._value = undefined;
+        if (value === null) {
+            this._value = null;
 
             return;
         }
@@ -29,10 +25,6 @@ export abstract class Type<TValue> {
         }
 
         this._value = modifiedValue;
-    }
-
-    public get rawValue(): TValue | undefined {
-        return this._value;
     }
 
     public toString(): string {
@@ -52,5 +44,4 @@ export abstract class Type<TValue> {
     }
 
     protected abstract validate(value: unknown): boolean;
-    protected abstract default(): TValue;
 }

@@ -1,10 +1,6 @@
 import { Type } from './type.js';
 
 export abstract class BaseString<TType extends string = string> extends Type<TType> {
-    protected default() {
-        return '' as TType;
-    }
-
     protected validate(value: unknown): boolean {
         if (!(typeof value === 'string' || value instanceof String)) {
             return false;

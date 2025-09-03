@@ -207,10 +207,6 @@ export class DateTime extends BaseString<DateTimeString> {
             .diff(date.value, unit as UnitType);
     }
 
-    protected default() {
-        return dayjs().tz(this.timezone).toISOString() as DateTimeString;
-    }
-
     protected modifier(value: unknown) {
         return modifier(value) as DateTimeString;
     }
@@ -234,7 +230,7 @@ export class DateTime extends BaseString<DateTimeString> {
     public static fromObject(
         options: Partial<Omit<DateTimeSetOptions, 'year'>> & Pick<DateTimeSetOptions, 'year'>
     ) {
-        const dateTime = new DateTime();
+        const dateTime = DateTime.now();
 
         dateTime.timezone = options.timezone ?? dateTime.timezone;
 

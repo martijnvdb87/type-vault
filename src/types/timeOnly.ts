@@ -120,10 +120,6 @@ export class TimeOnly extends BaseString<TimeOnlyString> {
         return withDummyDate(this.value).diff(withDummyDate(time.value), unit as UnitType);
     }
 
-    protected default() {
-        return dayjs().format('HH:mm:ss.SSS') as TimeOnlyString;
-    }
-
     protected modifier(value: unknown) {
         return modifier(value) as TimeOnlyString;
     }
@@ -141,7 +137,7 @@ export class TimeOnly extends BaseString<TimeOnlyString> {
     }
 
     public static fromObject(options: Partial<TimeOnlySetOptions>) {
-        const dateTime = new TimeOnly();
+        const dateTime = TimeOnly.now();
 
         dateTime.set({
             hour: options.hour ?? 0,

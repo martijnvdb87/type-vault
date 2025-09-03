@@ -110,10 +110,6 @@ export class DateOnly extends BaseString<DateOnlyString> {
         return dayjs(this.value).diff(date.value, unit as UnitType);
     }
 
-    protected default() {
-        return dayjs().format('YYYY-MM-DD') as DateOnlyString;
-    }
-
     protected modifier(value: unknown) {
         return modifier(value) as DateOnlyString;
     }
@@ -137,7 +133,7 @@ export class DateOnly extends BaseString<DateOnlyString> {
     public static fromObject(
         options: Partial<Omit<DateOnlySetOptions, 'year'>> & Pick<DateOnlySetOptions, 'year'>
     ) {
-        const dateTime = new DateOnly();
+        const dateTime = DateOnly.now();
 
         dateTime.set({
             year: options.year,

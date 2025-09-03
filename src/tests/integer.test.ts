@@ -3,10 +3,6 @@ import { Integer } from '@/types/integer.js';
 import { describe, expect, test } from 'vitest';
 
 describe('Integer class', () => {
-    test('It sets the default value to 0', () => {
-        expect(new Integer().value).toBe(0);
-    });
-
     {
         const values = [
             Number.MIN_SAFE_INTEGER,
@@ -95,17 +91,17 @@ describe('Integer class', () => {
     });
 
     test('It returns a string when toString is called', () => {
-        expect(new Integer().toString()).toBe('0');
+        expect(new Integer(0).toString()).toBe('0');
         expect(new Integer(1).toString()).toBe('1');
     });
 
     test('It returns a number when valueOf is called', () => {
-        expect(new Integer().valueOf()).toBe(0);
+        expect(new Integer(0).valueOf()).toBe(0);
         expect(new Integer(1).valueOf()).toBe(1);
     });
 
     test('It returns a number when toJSON is called', () => {
-        expect(new Integer().toJSON()).toBe(0);
+        expect(new Integer(0).toJSON()).toBe(0);
         expect(new Integer(1).toJSON()).toBe(1);
     });
 });

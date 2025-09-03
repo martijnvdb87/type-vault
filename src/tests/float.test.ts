@@ -3,10 +3,6 @@ import { Float } from '@/types/float.js';
 import { describe, expect, test } from 'vitest';
 
 describe('Float class', () => {
-    test('It sets the default value to 0', () => {
-        expect(new Float().value).toBe(0);
-    });
-
     test('It sets the correct value', () => {
         const values = [
             Number.MIN_SAFE_INTEGER,
@@ -84,17 +80,17 @@ describe('Float class', () => {
     });
 
     test('It returns a string when toString is called', () => {
-        expect(new Float().toString()).toBe('0');
+        expect(new Float(0).toString()).toBe('0');
         expect(new Float(1.1).toString()).toBe('1.1');
     });
 
     test('It returns a number when valueOf is called', () => {
-        expect(new Float().valueOf()).toBe(0);
+        expect(new Float(0).valueOf()).toBe(0);
         expect(new Float(1.1).valueOf()).toBe(1.1);
     });
 
     test('It returns a number when toJSON is called', () => {
-        expect(new Float().toJSON()).toBe(0);
+        expect(new Float(0).toJSON()).toBe(0);
         expect(new Float(1.1).toJSON()).toBe(1.1);
     });
 });

@@ -6,7 +6,7 @@ import { DateTimeString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 
 describe('DateTime class', () => {
-    test('It sets the default value', () => {
+    test('It sets the correct now value', () => {
         const { value } = DateTime.now();
 
         const dateTime = new DateTime(value);

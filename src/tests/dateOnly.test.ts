@@ -5,7 +5,7 @@ import { DateOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 
 describe('DateOnly class', () => {
-    test('It sets the default value', () => {
+    test('It sets the correct now value', () => {
         const { value } = DateOnly.now();
 
         const dateOnly = new DateOnly(value);
