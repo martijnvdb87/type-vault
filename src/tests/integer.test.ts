@@ -104,4 +104,33 @@ describe('Integer class', () => {
         expect(new Integer(0).toJSON()).toBe(0);
         expect(new Integer(1).toJSON()).toBe(1);
     });
+
+    test('It allows null when nullable is true', () => {
+        expect(new Integer(0, { nullable: true }).value).toBe(0);
+        expect(new Integer(1, { nullable: true }).value).toBe(1);
+        expect(new Integer(null, { nullable: true }).value).toBe(null);
+    });
+
+    test('It throws an error if the value is null when nullable is false', () => {
+        expect(() => new Integer(null as unknown as number, { nullable: false })).toThrowError(
+            TypeVaultValidationError
+        );
+    });
+
+    test('It throws an error if the value is null when nullable is undefined', () => {
+        expect(() => new Integer(null as unknown as number)).toThrowError(TypeVaultValidationError);
+
+        expect(() => new Integer(null as unknown as number, undefined)).toThrowError(
+            TypeVaultValidationError
+        );
+    });
+
+    test('It does not allow value changes when immutable is true', () => {
+        const integer = new Integer(0, { immutable: true });
+
+        expect(() => {
+            // @ts-expect-error Type error expected
+            integer.value = 1;
+        }).toThrowError(TypeVaultValidationError);
+    });
 });

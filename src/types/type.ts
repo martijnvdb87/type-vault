@@ -34,7 +34,11 @@ export abstract class Type<TOption extends TypeOption, TValue> {
     }
 
     public set value(value: SetTypeValue<TOption, TValue>) {
-        if (this._options.immutable) {
+        if (value === undefined) {
+            throw new TypeVaultValidationError();
+        }
+
+        if (this._options.immutable && this._value !== undefined) {
             throw new TypeVaultValidationError();
         }
 
