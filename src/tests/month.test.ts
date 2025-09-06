@@ -2,6 +2,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Month } from '@/types/month.js';
 import { MonthString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('Month class', () => {
@@ -47,4 +48,5 @@ describe('Month class', () => {
         validValue: Month.January.value,
         invalidValue: 'not-valid',
     });
+    immutableTests({ type: Month, validValue: Month.January.value });
 });

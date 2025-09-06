@@ -4,6 +4,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateTime } from '@/types/dateTime.js';
 import { DateTimeString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('DateTime class', () => {
@@ -349,4 +350,5 @@ describe('DateTime class', () => {
         validValue: '2023-01-02T01:23:45.123Z',
         invalidValue: 'not-valid',
     });
+    immutableTests({ type: DateTime, validValue: '2023-01-02T01:23:45.123Z' });
 });

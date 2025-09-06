@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Integer } from '@/types/integer.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('Integer class', () => {
@@ -125,4 +126,5 @@ describe('Integer class', () => {
     });
 
     nullableTests({ type: Integer, validValue: 42, invalidValue: 'not-valid' });
+    immutableTests({ type: Integer, validValue: 42 });
 });

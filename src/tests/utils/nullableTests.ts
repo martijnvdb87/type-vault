@@ -1,9 +1,15 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { expect, test } from 'vitest';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Type = new (...args: any) => {
-    value: unknown;
+type Type = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (...args: any): {
+        value: unknown;
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    nullable: (value: any) => {
+        value: unknown;
+    };
 };
 
 export function nullableTests<TType extends Type>(options: {
@@ -14,14 +20,18 @@ export function nullableTests<TType extends Type>(options: {
     const { type, validValue, invalidValue } = options;
 
     test('It allows null when nullable is true', () => {
-        const instance = new type(validValue, { nullable: true });
-        expect(instance.value).toBe(validValue);
+        for (const instance of [
+            new type(validValue, { nullable: true }),
+            type.nullable(validValue),
+        ]) {
+            expect(instance.value).toBe(validValue);
 
-        instance.value = null;
-        expect(instance.value).toBe(null);
+            instance.value = null;
+            expect(instance.value).toBe(null);
 
-        instance.value = validValue;
-        expect(instance.value).toBe(validValue);
+            instance.value = validValue;
+            expect(instance.value).toBe(validValue);
+        }
     });
 
     test('It throws an error if the value is null when nullable is false', () => {
@@ -42,11 +52,12 @@ export function nullableTests<TType extends Type>(options: {
     });
 
     test('It does not allow invalid value for nullable', () => {
-        const instance = new type(null, { nullable: true });
-        expect(instance.value).toBe(null);
+        for (const instance of [new type(null, { nullable: true }), type.nullable(null)]) {
+            expect(instance.value).toBe(null);
 
-        expect(() => {
-            instance.value = invalidValue;
-        }).toThrowError(TypeVaultValidationError);
+            expect(() => {
+                instance.value = invalidValue;
+            }).toThrowError(TypeVaultValidationError);
+        }
     });
 }

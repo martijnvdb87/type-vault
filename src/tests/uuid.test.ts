@@ -8,6 +8,7 @@ import { Uuidv6 } from '@/types/uuidv6.js';
 import { Uuidv7 } from '@/types/uuidv7.js';
 import { UuidString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('Uuid class', () => {
@@ -48,6 +49,7 @@ describe('Uuid class', () => {
     });
 
     nullableTests({ type: Uuid, validValue: values.v1[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuid, validValue: values.v1[0] });
 });
 
 describe('Uuidv1 class', () => {
@@ -72,6 +74,7 @@ describe('Uuidv1 class', () => {
     });
 
     nullableTests({ type: Uuidv1, validValue: values.v1[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv1, validValue: values.v1[0] });
 });
 
 describe('Uuidv3 class', () => {
@@ -96,6 +99,7 @@ describe('Uuidv3 class', () => {
     });
 
     nullableTests({ type: Uuidv3, validValue: values.v3[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv3, validValue: values.v3[0] });
 });
 
 describe('Uuidv4 class', () => {
@@ -120,6 +124,7 @@ describe('Uuidv4 class', () => {
     });
 
     nullableTests({ type: Uuidv4, validValue: values.v4[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv4, validValue: values.v4[0] });
 });
 
 describe('Uuidv5 class', () => {
@@ -144,6 +149,7 @@ describe('Uuidv5 class', () => {
     });
 
     nullableTests({ type: Uuidv5, validValue: values.v5[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv5, validValue: values.v5[0] });
 });
 
 describe('Uuidv6 class', () => {
@@ -168,6 +174,7 @@ describe('Uuidv6 class', () => {
     });
 
     nullableTests({ type: Uuidv6, validValue: values.v6[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv6, validValue: values.v6[0] });
 });
 
 describe('Uuidv7 class', () => {
@@ -192,6 +199,7 @@ describe('Uuidv7 class', () => {
     });
 
     nullableTests({ type: Uuidv7, validValue: values.v7[0], invalidValue: 'not-valid' });
+    immutableTests({ type: Uuidv7, validValue: values.v7[0] });
 });
 
 const values = {

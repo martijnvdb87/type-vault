@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Url } from '@/types/url.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('Url class', () => {
@@ -31,4 +32,5 @@ describe('Url class', () => {
     });
 
     nullableTests({ type: Url, validValue: 'https://example.com', invalidValue: 'not-valid' });
+    immutableTests({ type: Url, validValue: 'https://example.com' });
 });

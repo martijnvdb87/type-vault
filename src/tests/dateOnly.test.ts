@@ -3,6 +3,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateOnly } from '@/types/dateOnly.js';
 import { DateOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('DateOnly class', () => {
@@ -135,4 +136,5 @@ describe('DateOnly class', () => {
     });
 
     nullableTests({ type: DateOnly, validValue: '2023-01-01', invalidValue: 'not-valid' });
+    immutableTests({ type: DateOnly, validValue: '2023-01-01' });
 });

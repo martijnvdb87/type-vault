@@ -3,6 +3,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { TimeOnly } from '@/types/timeOnly.js';
 import { TimeOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('TimeOnly class', () => {
@@ -136,4 +137,5 @@ describe('TimeOnly class', () => {
         validValue: '12:34:56.789',
         invalidValue: 1,
     });
+    immutableTests({ type: TimeOnly, validValue: '12:34:56.789' });
 });

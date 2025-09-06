@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Text } from '@/types/text.js';
 import { describe, expect, test } from 'vitest';
+import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
 
 describe('Text class', () => {
@@ -38,4 +39,5 @@ describe('Text class', () => {
         validValue: 'foo',
         invalidValue: 1,
     });
+    immutableTests({ type: Text, validValue: 'foo' });
 });
