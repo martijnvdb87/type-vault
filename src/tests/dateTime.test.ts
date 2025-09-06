@@ -4,6 +4,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateTime } from '@/types/dateTime.js';
 import { DateTimeString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('DateTime class', () => {
     test('It sets the correct now value', () => {
@@ -341,5 +342,11 @@ describe('DateTime class', () => {
         expect(DateTime.endOf(dateTime, DateTimeUnit.Millisecond).value).toBe(
             '2023-01-02T01:23:45.123Z'
         );
+    });
+
+    nullableTests({
+        type: DateTime,
+        validValue: '2023-01-02T01:23:45.123Z',
+        invalidValue: 'not-valid',
     });
 });

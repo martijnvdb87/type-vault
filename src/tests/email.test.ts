@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Email } from '@/types/email.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Email class', () => {
     test('It sets the value to the given valid email address', () => {
@@ -39,5 +40,11 @@ describe('Email class', () => {
 
     test('It returns a string when valueOf is called', () => {
         expect(new Email('foo@example.com').valueOf()).toBe('foo@example.com');
+    });
+
+    nullableTests({
+        type: Email,
+        validValue: 'foo@example.com',
+        invalidValue: 'not-valid',
     });
 });

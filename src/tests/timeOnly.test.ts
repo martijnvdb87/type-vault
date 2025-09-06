@@ -3,6 +3,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { TimeOnly } from '@/types/timeOnly.js';
 import { TimeOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('TimeOnly class', () => {
     test('It sets the correct now value', () => {
@@ -128,5 +129,11 @@ describe('TimeOnly class', () => {
         expect(timeOnly.difference(new TimeOnly('12:34:52.789'), DateTimeUnit.Second)).toBe(4);
         expect(timeOnly.difference(new TimeOnly('12:37:56.789'), DateTimeUnit.Minute)).toBe(-3);
         expect(timeOnly.difference(new TimeOnly('15:34:56.789'), DateTimeUnit.Hour)).toBe(-3);
+    });
+
+    nullableTests({
+        type: TimeOnly,
+        validValue: '12:34:56.789',
+        invalidValue: 1,
     });
 });

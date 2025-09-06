@@ -6,7 +6,9 @@ import { Uuidv4 } from '@/types/uuidv4.js';
 import { Uuidv5 } from '@/types/uuidv5.js';
 import { Uuidv6 } from '@/types/uuidv6.js';
 import { Uuidv7 } from '@/types/uuidv7.js';
+import { UuidString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Uuid class', () => {
     test('It sets the value to the given UUID', () => {
@@ -18,17 +20,25 @@ describe('Uuid class', () => {
     });
 
     test('It should throw an error if the value is not a valid UUID', () => {
-        expect(() => new Uuid('example')).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid('example.')).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(undefined as unknown as string)).toThrowError(
+        expect(() => new Uuid('example' as unknown as UuidString)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new Uuid(1 as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid({} as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid([] as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(true as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(false as unknown as string)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(BigInt(1) as unknown as string)).toThrowError(
+        expect(() => new Uuid('example.' as unknown as UuidString)).toThrowError(
+            TypeVaultValidationError
+        );
+        expect(() => new Uuid(undefined as unknown as UuidString)).toThrowError(
+            TypeVaultValidationError
+        );
+        expect(() => new Uuid(1 as unknown as UuidString)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid({} as unknown as UuidString)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid([] as unknown as UuidString)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid(true as unknown as UuidString)).toThrowError(
+            TypeVaultValidationError
+        );
+        expect(() => new Uuid(false as unknown as UuidString)).toThrowError(
+            TypeVaultValidationError
+        );
+        expect(() => new Uuid(BigInt(1) as unknown as UuidString)).toThrowError(
             TypeVaultValidationError
         );
     });
@@ -36,6 +46,8 @@ describe('Uuid class', () => {
     test('It returns a nil UUID', () => {
         expect(Uuid.nil().value).toBe('00000000-0000-0000-0000-000000000000');
     });
+
+    nullableTests({ type: Uuid, validValue: values.v1[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv1 class', () => {
@@ -58,6 +70,8 @@ describe('Uuidv1 class', () => {
 
         expect(new Uuidv1(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv1, validValue: values.v1[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv3 class', () => {
@@ -80,6 +94,8 @@ describe('Uuidv3 class', () => {
 
         expect(new Uuidv3(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv3, validValue: values.v3[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv4 class', () => {
@@ -102,6 +118,8 @@ describe('Uuidv4 class', () => {
 
         expect(new Uuidv4(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv4, validValue: values.v4[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv5 class', () => {
@@ -124,6 +142,8 @@ describe('Uuidv5 class', () => {
 
         expect(new Uuidv5(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv5, validValue: values.v5[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv6 class', () => {
@@ -146,6 +166,8 @@ describe('Uuidv6 class', () => {
 
         expect(new Uuidv6(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv6, validValue: values.v6[0], invalidValue: 'not-valid' });
 });
 
 describe('Uuidv7 class', () => {
@@ -168,6 +190,8 @@ describe('Uuidv7 class', () => {
 
         expect(new Uuidv7(uuid).value).toBe(uuid);
     });
+
+    nullableTests({ type: Uuidv7, validValue: values.v7[0], invalidValue: 'not-valid' });
 });
 
 const values = {
@@ -213,7 +237,7 @@ const values = {
         '0198c917-ef4f-7124-9ca2-c9c965edb327',
         '0198c917-ef4f-7533-8c45-285083f7acbf',
     ],
-};
+} as const;
 
 function filterUuidTypes(type: keyof typeof values) {
     const filtered = values[type];

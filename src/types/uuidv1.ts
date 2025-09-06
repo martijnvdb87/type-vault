@@ -1,3 +1,4 @@
+import { UuidString } from '@/utils/types.js';
 import { v1, version } from 'uuid';
 import { TypeOption } from './type.js';
 import { Uuid } from './uuid.js';
@@ -8,6 +9,14 @@ export class Uuidv1<TOptions extends TypeOption = TypeOption> extends Uuid<TOpti
     }
 
     public static random() {
-        return new Uuidv1(v1());
+        return new Uuidv1(v1() as UuidString);
+    }
+
+    public static nullable(value: UuidString | null = null) {
+        return new Uuidv1(value, { nullable: true });
+    }
+
+    public static immutable(value: UuidString) {
+        return new Uuidv1(value, { immutable: true });
     }
 }

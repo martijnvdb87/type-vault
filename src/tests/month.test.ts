@@ -2,6 +2,7 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Month } from '@/types/month.js';
 import { MonthString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Month class', () => {
     test('It sets the corrent value', () => {
@@ -39,5 +40,11 @@ describe('Month class', () => {
         expect(() => new Month('foo' as unknown as MonthString)).toThrowError(
             TypeVaultValidationError
         );
+    });
+
+    nullableTests({
+        type: Month,
+        validValue: Month.January.value,
+        invalidValue: 'not-valid',
     });
 });

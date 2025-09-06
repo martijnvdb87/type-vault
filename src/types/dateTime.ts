@@ -266,6 +266,14 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
 
         return new DateTime(value.toISOString() as DateTimeString);
     }
+
+    public static nullable(value: DateTimeString | null = null) {
+        return new DateTime(value, { nullable: true });
+    }
+
+    public static immutable(value: DateTimeString) {
+        return new DateTime(value, { immutable: true });
+    }
 }
 
 function modifier(value: unknown): string {

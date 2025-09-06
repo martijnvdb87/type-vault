@@ -157,6 +157,14 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
 
         return dateTime;
     }
+
+    public static nullable(value: TimeOnlyString | null = null) {
+        return new TimeOnly(value, { nullable: true });
+    }
+
+    public static immutable(value: TimeOnlyString) {
+        return new TimeOnly(value, { immutable: true });
+    }
 }
 
 function modifier(value: unknown): string {

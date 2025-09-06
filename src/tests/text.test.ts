@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Text } from '@/types/text.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Text class', () => {
     test('It sets the correct value', () => {
@@ -30,5 +31,11 @@ describe('Text class', () => {
     test('It returns a string when valueOf is called', () => {
         expect(new Text('').valueOf()).toBe('');
         expect(new Text('foo').valueOf()).toBe('foo');
+    });
+
+    nullableTests({
+        type: Text,
+        validValue: 'foo',
+        invalidValue: 1,
     });
 });

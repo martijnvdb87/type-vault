@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Url } from '@/types/url.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Url class', () => {
     test('It sets the value to the given valid url', () => {
@@ -28,4 +29,6 @@ describe('Url class', () => {
     test('It returns a string when valueOf is called', () => {
         expect(new Url('https://example.com').valueOf()).toBe('https://example.com');
     });
+
+    nullableTests({ type: Url, validValue: 'https://example.com', invalidValue: 'not-valid' });
 });

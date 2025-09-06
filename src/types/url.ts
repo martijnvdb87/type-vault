@@ -6,4 +6,12 @@ export class Url<TOptions extends TypeOption = TypeOption> extends BaseString<TO
     protected validate(value: unknown): boolean {
         return z.url().safeParse(value).success;
     }
+
+    public static nullable(value: string | null = null) {
+        return new Url(value, { nullable: true });
+    }
+
+    public static immutable(value: string) {
+        return new Url(value, { immutable: true });
+    }
 }

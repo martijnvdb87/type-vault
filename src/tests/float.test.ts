@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Float } from '@/types/float.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Float class', () => {
     test('It sets the correct value', () => {
@@ -92,5 +93,11 @@ describe('Float class', () => {
     test('It returns a number when toJSON is called', () => {
         expect(new Float(0).toJSON()).toBe(0);
         expect(new Float(1.1).toJSON()).toBe(1.1);
+    });
+
+    nullableTests({
+        type: Float,
+        validValue: 3.14159265359,
+        invalidValue: 'not-valid',
     });
 });
