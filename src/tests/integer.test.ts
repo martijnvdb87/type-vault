@@ -1,6 +1,7 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Integer } from '@/types/integer.js';
 import { describe, expect, test } from 'vitest';
+import { nullableTests } from './utils/nullableTests.js';
 
 describe('Integer class', () => {
     {
@@ -105,26 +106,6 @@ describe('Integer class', () => {
         expect(new Integer(1).toJSON()).toBe(1);
     });
 
-    test('It allows null when nullable is true', () => {
-        expect(new Integer(0, { nullable: true }).value).toBe(0);
-        expect(new Integer(1, { nullable: true }).value).toBe(1);
-        expect(new Integer(null, { nullable: true }).value).toBe(null);
-    });
-
-    test('It throws an error if the value is null when nullable is false', () => {
-        expect(() => new Integer(null as unknown as number, { nullable: false })).toThrowError(
-            TypeVaultValidationError
-        );
-    });
-
-    test('It throws an error if the value is null when nullable is undefined', () => {
-        expect(() => new Integer(null as unknown as number)).toThrowError(TypeVaultValidationError);
-
-        expect(() => new Integer(null as unknown as number, undefined)).toThrowError(
-            TypeVaultValidationError
-        );
-    });
-
     test('It does not allow value changes when immutable is true', () => {
         const integer = new Integer(0, { immutable: true });
 
@@ -133,4 +114,15 @@ describe('Integer class', () => {
             integer.value = 1;
         }).toThrowError(TypeVaultValidationError);
     });
+
+    test('It throws an error if the value is changed when immutable', () => {
+        const instance = Integer.immutable(0);
+
+        expect(() => {
+            // @ts-expect-error Type error expected
+            instance.value = 1;
+        }).toThrowError(TypeVaultValidationError);
+    });
+
+    nullableTests({ type: Integer, validValue: 42, invalidValue: 'not-valid' });
 });
