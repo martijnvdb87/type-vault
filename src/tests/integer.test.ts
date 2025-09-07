@@ -3,6 +3,7 @@ import { Integer } from '@/types/integer.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Integer class', () => {
     {
@@ -92,21 +93,6 @@ describe('Integer class', () => {
         }
     });
 
-    test('It returns a string when toString is called', () => {
-        expect(new Integer(0).toString()).toBe('0');
-        expect(new Integer(1).toString()).toBe('1');
-    });
-
-    test('It returns a number when valueOf is called', () => {
-        expect(new Integer(0).valueOf()).toBe(0);
-        expect(new Integer(1).valueOf()).toBe(1);
-    });
-
-    test('It returns a number when toJSON is called', () => {
-        expect(new Integer(0).toJSON()).toBe(0);
-        expect(new Integer(1).toJSON()).toBe(1);
-    });
-
     test('It does not allow value changes when immutable is true', () => {
         const integer = new Integer(0, { immutable: true });
 
@@ -125,6 +111,7 @@ describe('Integer class', () => {
         }).toThrowError(TypeVaultValidationError);
     });
 
+    valueTests({ type: Integer, validValue: 42 });
     nullableTests({ type: Integer, validValue: 42, invalidValue: 'not-valid' });
     immutableTests({ type: Integer, validValue: 42 });
 });

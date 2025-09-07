@@ -10,6 +10,7 @@ import { UuidString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Uuid class', () => {
     test('It sets the value to the given UUID', () => {
@@ -48,6 +49,7 @@ describe('Uuid class', () => {
         expect(Uuid.nil().value).toBe('00000000-0000-0000-0000-000000000000');
     });
 
+    valueTests({ type: Uuid, validValue: values.v1[0] });
     nullableTests({ type: Uuid, validValue: values.v1[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuid, validValue: values.v1[0] });
 });
@@ -73,6 +75,7 @@ describe('Uuidv1 class', () => {
         expect(new Uuidv1(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv1, validValue: values.v1[0] });
     nullableTests({ type: Uuidv1, validValue: values.v1[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv1, validValue: values.v1[0] });
 });
@@ -98,6 +101,7 @@ describe('Uuidv3 class', () => {
         expect(new Uuidv3(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv3, validValue: values.v3[0] });
     nullableTests({ type: Uuidv3, validValue: values.v3[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv3, validValue: values.v3[0] });
 });
@@ -123,6 +127,7 @@ describe('Uuidv4 class', () => {
         expect(new Uuidv4(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv4, validValue: values.v4[0] });
     nullableTests({ type: Uuidv4, validValue: values.v4[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv4, validValue: values.v4[0] });
 });
@@ -148,6 +153,7 @@ describe('Uuidv5 class', () => {
         expect(new Uuidv5(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv5, validValue: values.v5[0] });
     nullableTests({ type: Uuidv5, validValue: values.v5[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv5, validValue: values.v5[0] });
 });
@@ -173,6 +179,7 @@ describe('Uuidv6 class', () => {
         expect(new Uuidv6(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv6, validValue: values.v6[0] });
     nullableTests({ type: Uuidv6, validValue: values.v6[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv6, validValue: values.v6[0] });
 });
@@ -198,6 +205,7 @@ describe('Uuidv7 class', () => {
         expect(new Uuidv7(uuid).value).toBe(uuid);
     });
 
+    valueTests({ type: Uuidv7, validValue: values.v7[0] });
     nullableTests({ type: Uuidv7, validValue: values.v7[0], invalidValue: 'not-valid' });
     immutableTests({ type: Uuidv7, validValue: values.v7[0] });
 });

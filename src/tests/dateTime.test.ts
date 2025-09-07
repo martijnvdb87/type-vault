@@ -6,6 +6,7 @@ import { DateTimeString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('DateTime class', () => {
     test('It sets the correct now value', () => {
@@ -345,6 +346,7 @@ describe('DateTime class', () => {
         );
     });
 
+    valueTests({ type: DateTime, validValue: '2023-01-02T01:23:45.123Z' });
     nullableTests({
         type: DateTime,
         validValue: '2023-01-02T01:23:45.123Z',

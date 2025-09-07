@@ -3,6 +3,7 @@ import { Email } from '@/types/email.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Email class', () => {
     test('It sets the value to the given valid email address', () => {
@@ -31,18 +32,7 @@ describe('Email class', () => {
         }
     });
 
-    test('It returns a string when toString is called', () => {
-        expect(new Email('foo@example.com').toString()).toBe('foo@example.com');
-    });
-
-    test('It returns a string when toJSON is called', () => {
-        expect(new Email('foo@example.com').toJSON()).toBe('foo@example.com');
-    });
-
-    test('It returns a string when valueOf is called', () => {
-        expect(new Email('foo@example.com').valueOf()).toBe('foo@example.com');
-    });
-
+    valueTests({ type: Email, validValue: 'foo@example.com' });
     nullableTests({
         type: Email,
         validValue: 'foo@example.com',

@@ -4,6 +4,7 @@ import { MonthString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Month class', () => {
     test('It sets the corrent value', () => {
@@ -43,6 +44,7 @@ describe('Month class', () => {
         );
     });
 
+    valueTests({ type: Month, validValue: Month.January.value });
     nullableTests({
         type: Month,
         validValue: Month.January.value,

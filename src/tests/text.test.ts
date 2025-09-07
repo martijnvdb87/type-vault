@@ -3,6 +3,7 @@ import { Text } from '@/types/text.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Text class', () => {
     test('It sets the correct value', () => {
@@ -19,21 +20,7 @@ describe('Text class', () => {
         }
     });
 
-    test('It returns a string when toString is called', () => {
-        expect(new Text('').toString()).toBe('');
-        expect(new Text('foo').toString()).toBe('foo');
-    });
-
-    test('It returns a string when toJSON is called', () => {
-        expect(new Text('').toJSON()).toBe('');
-        expect(new Text('foo').toJSON()).toBe('foo');
-    });
-
-    test('It returns a string when valueOf is called', () => {
-        expect(new Text('').valueOf()).toBe('');
-        expect(new Text('foo').valueOf()).toBe('foo');
-    });
-
+    valueTests({ type: Text, validValue: 'foo' });
     nullableTests({
         type: Text,
         validValue: 'foo',

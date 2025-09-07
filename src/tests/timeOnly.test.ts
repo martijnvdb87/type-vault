@@ -5,6 +5,7 @@ import { TimeOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('TimeOnly class', () => {
     test('It sets the correct now value', () => {
@@ -132,6 +133,7 @@ describe('TimeOnly class', () => {
         expect(timeOnly.difference(new TimeOnly('15:34:56.789'), DateTimeUnit.Hour)).toBe(-3);
     });
 
+    valueTests({ type: TimeOnly, validValue: '12:34:56.789' });
     nullableTests({
         type: TimeOnly,
         validValue: '12:34:56.789',

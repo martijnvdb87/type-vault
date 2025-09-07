@@ -3,6 +3,7 @@ import { Float } from '@/types/float.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Float class', () => {
     test('It sets the correct value', () => {
@@ -81,21 +82,7 @@ describe('Float class', () => {
         expect(() => new Float(-Infinity)).toThrowError(TypeVaultValidationError);
     });
 
-    test('It returns a string when toString is called', () => {
-        expect(new Float(0).toString()).toBe('0');
-        expect(new Float(1.1).toString()).toBe('1.1');
-    });
-
-    test('It returns a number when valueOf is called', () => {
-        expect(new Float(0).valueOf()).toBe(0);
-        expect(new Float(1.1).valueOf()).toBe(1.1);
-    });
-
-    test('It returns a number when toJSON is called', () => {
-        expect(new Float(0).toJSON()).toBe(0);
-        expect(new Float(1.1).toJSON()).toBe(1.1);
-    });
-
+    valueTests({ type: Float, validValue: 3.14159265359 });
     nullableTests({
         type: Float,
         validValue: 3.14159265359,

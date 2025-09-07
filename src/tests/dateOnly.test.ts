@@ -5,6 +5,7 @@ import { DateOnlyString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('DateOnly class', () => {
     test('It sets the correct now value', () => {
@@ -135,6 +136,7 @@ describe('DateOnly class', () => {
         expect(dateOnly.difference(new DateOnly('2020-01-02'), DateTimeUnit.Year)).toBe(3);
     });
 
+    valueTests({ type: DateOnly, validValue: '2023-01-01' });
     nullableTests({ type: DateOnly, validValue: '2023-01-01', invalidValue: 'not-valid' });
     immutableTests({ type: DateOnly, validValue: '2023-01-01' });
 });

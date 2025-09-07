@@ -3,6 +3,7 @@ import { Url } from '@/types/url.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
+import { valueTests } from './utils/valueTests.js';
 
 describe('Url class', () => {
     test('It sets the value to the given valid url', () => {
@@ -19,18 +20,7 @@ describe('Url class', () => {
         }
     });
 
-    test('It returns a string when toString is called', () => {
-        expect(new Url('https://example.com').toString()).toBe('https://example.com');
-    });
-
-    test('It returns a string when toJSON is called', () => {
-        expect(new Url('https://example.com').toJSON()).toBe('https://example.com');
-    });
-
-    test('It returns a string when valueOf is called', () => {
-        expect(new Url('https://example.com').valueOf()).toBe('https://example.com');
-    });
-
+    valueTests({ type: Url, validValue: 'https://example.com' });
     nullableTests({ type: Url, validValue: 'https://example.com', invalidValue: 'not-valid' });
     immutableTests({ type: Url, validValue: 'https://example.com' });
 });
