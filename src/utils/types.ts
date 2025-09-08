@@ -105,3 +105,5 @@ export type MonthString =
     | 'december';
 
 export type UuidString = `${string}-${string}-${string}-${string}-${string}`;
+
+export type ColorHexString = `#${string}`;
