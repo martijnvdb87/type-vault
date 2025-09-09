@@ -107,3 +107,7 @@ export type MonthString =
 export type UuidString = `${string}-${string}-${string}-${string}-${string}`;
 
 export type ColorHexString = `#${string}`;
+
+export type ColorRgbString =
+    | `rgb${'a' | ''}(${number},${number},${number}${`,${number}` | ''})`
+    | `rgb${'a' | ''}(${number} ${number} ${number}${`/${number}` | ''})`;
