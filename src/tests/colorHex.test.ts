@@ -7,42 +7,42 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
-    '#000000',
-    '#FFFFFF',
-    '#FF0000',
-    '#00FF00',
-    '#0000FF',
-    '#FFFF00',
-    '#00FFFF',
-    '#FF00FF',
-    '#888888',
-    '#CCCCCC',
-    '#000',
-    '#FFF',
-    '#F00',
-    '#0F0',
-    '#00F',
-    '#FF0',
-    '#0FF',
-    '#F0F',
-    '#888',
-    '#CCC',
-    '#00000000',
-    '#FFFFFFFF',
-    '#FF0000F0',
-    '#00FF000F',
-    '#0000FF00',
-    '#FFFF00F0',
-    '#00FFFF0F',
-    '#FF00FFFF',
-    '#88888888',
-    '#CCCCCCCC',
+    ['#000000', '#000000ff'],
+    ['#FFFFFF', '#ffffffff'],
+    ['#FF0000', '#ff0000ff'],
+    ['#00FF00', '#00ff00ff'],
+    ['#0000FF', '#0000ffff'],
+    ['#FFFF00', '#ffff00ff'],
+    ['#00FFFF', '#00ffffff'],
+    ['#FF00FF', '#ff00ffff'],
+    ['#888888', '#888888ff'],
+    ['#CCCCCC', '#ccccccff'],
+    ['#000', '#000000ff'],
+    ['#FFF', '#ffffffff'],
+    ['#F00', '#ff0000ff'],
+    ['#0F0', '#00ff00ff'],
+    ['#00F', '#0000ffff'],
+    ['#FF0', '#ffff00ff'],
+    ['#0FF', '#00ffffff'],
+    ['#F0F', '#ff00ffff'],
+    ['#888', '#888888ff'],
+    ['#CCC', '#ccccccff'],
+    ['#00000000', '#00000000'],
+    ['#FFFFFFFF', '#ffffffff'],
+    ['#FF0000F0', '#ff0000f0'],
+    ['#00FF000F', '#00ff000f'],
+    ['#0000FF00', '#0000ff00'],
+    ['#FFFF00F0', '#ffff00f0'],
+    ['#00FFFF0F', '#00ffff0f'],
+    ['#FF00FFFF', '#ff00ffff'],
+    ['#88888888', '#88888888'],
+    ['#CCCCCCCC', '#cccccccc'],
 ] as const;
 
 describe('ColorHex class', () => {
     test('It sets the value to the given valid color', () => {
-        for (const value of values) {
-            expect(new ColorHex(value).value).toBe(value);
+        for (const [input, output] of values) {
+            expect(new ColorHex(input).value).toBe(output);
         }
     });
 
@@ -56,7 +56,7 @@ describe('ColorHex class', () => {
         }
     });
 
-    for (const validValue of values) {
+    for (const [, validValue] of values) {
         valueTests({ type: ColorHex, validValue });
         nullableTests({ type: ColorHex, validValue, invalidValue: 'not-valid' });
         immutableTests({ type: ColorHex, validValue });
