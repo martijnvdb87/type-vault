@@ -1,15 +1,16 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { expect, test } from 'vitest';
 
+type TypeReturnValue = {
+    value: unknown;
+    isNullable(): boolean;
+};
+
 type Type = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (...args: any): {
-        value: unknown;
-    };
+    new (...args: any): TypeReturnValue;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    nullable: (value: any) => {
-        value: unknown;
-    };
+    nullable: (value: any) => TypeReturnValue;
 };
 
 export function nullableTests<TType extends Type>(options: {
@@ -59,5 +60,17 @@ export function nullableTests<TType extends Type>(options: {
                 instance.value = invalidValue;
             }).toThrowError(TypeVaultValidationError);
         }
+    });
+
+    test('It return correct isImmutable value', () => {
+        for (const instance of [
+            new type(validValue, { nullable: true }),
+            type.nullable(validValue),
+        ]) {
+            expect(instance.isNullable()).toBe(true);
+        }
+
+        const instance = new type(validValue, { nullable: false });
+        expect(instance.isNullable()).toBe(false);
     });
 }

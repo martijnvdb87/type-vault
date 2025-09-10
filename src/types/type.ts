@@ -19,18 +19,21 @@ export type SetTypeValue<
       ? TValue | null
       : TValue;
 
+const valueSymbol = Symbol('value');
+const optionsSymbol = Symbol('options');
+
 export abstract class Type<TOption extends TypeOption, TValue> {
-    declare protected _value: TypeValue<TOption, TValue>;
-    protected _options: TypeOption;
+    declare protected [valueSymbol]: TypeValue<TOption, TValue>;
+    protected [optionsSymbol]: TypeOption;
 
     public constructor(value: TypeValue<TOption, TValue>, options?: TOption) {
-        this._options = options ?? { nullable: false };
+        this[optionsSymbol] = options ?? { nullable: false };
 
         this.value = value as SetTypeValue<TOption, TValue>;
     }
 
     public get value(): TypeValue<TOption, TValue> {
-        return this._value as TypeValue<TOption, TValue>;
+        return this.dangerouslyGetValue();
     }
 
     public set value(value: SetTypeValue<TOption, TValue>) {
@@ -38,12 +41,12 @@ export abstract class Type<TOption extends TypeOption, TValue> {
             throw new TypeVaultValidationError();
         }
 
-        if (this._options.immutable && this._value !== undefined) {
+        if (this[optionsSymbol].immutable && this.dangerouslyGetValue() !== undefined) {
             throw new TypeVaultValidationError();
         }
 
-        if (this._options.nullable && value === null) {
-            this._value = null as TypeValue<TOption, TValue>;
+        if (this[optionsSymbol].nullable && value === null) {
+            this.dangerouslySetValue(null);
 
             return;
         }
@@ -54,7 +57,15 @@ export abstract class Type<TOption extends TypeOption, TValue> {
             throw new TypeVaultValidationError();
         }
 
-        this._value = modifiedValue;
+        this.dangerouslySetValue(modifiedValue);
+    }
+
+    public isNullable(): boolean {
+        return Boolean(this[optionsSymbol].nullable);
+    }
+
+    public isImmutable(): boolean {
+        return Boolean(this[optionsSymbol].immutable);
     }
 
     public toString(): string {
@@ -71,6 +82,14 @@ export abstract class Type<TOption extends TypeOption, TValue> {
 
     protected modifier(value: unknown): TypeValue<TOption, TValue> {
         return value as TypeValue<TOption, TValue>;
+    }
+
+    protected dangerouslyGetValue(): TypeValue<TOption, TValue> {
+        return this[valueSymbol];
+    }
+
+    protected dangerouslySetValue(value: unknown) {
+        this[valueSymbol] = value as TypeValue<TOption, TValue>;
     }
 
     protected abstract validate(value: unknown): boolean;
