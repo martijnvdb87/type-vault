@@ -33,7 +33,7 @@ export abstract class Type<TOption extends TypeOption, TValue> {
     }
 
     public get value(): TypeValue<TOption, TValue> {
-        return this.dangerouslyGetValue();
+        return this.dangerouslyModifyGetValue(this[valueSymbol]);
     }
 
     public set value(value: SetTypeValue<TOption, TValue>) {
@@ -41,12 +41,12 @@ export abstract class Type<TOption extends TypeOption, TValue> {
             throw new TypeVaultValidationError();
         }
 
-        if (this[optionsSymbol].immutable && this.dangerouslyGetValue() !== undefined) {
+        if (this[optionsSymbol].immutable && this.value !== undefined) {
             throw new TypeVaultValidationError();
         }
 
         if (this[optionsSymbol].nullable && value === null) {
-            this.dangerouslySetValue(null);
+            this[valueSymbol] = this.dangerouslyModifySetValue(null);
 
             return;
         }
@@ -57,7 +57,7 @@ export abstract class Type<TOption extends TypeOption, TValue> {
             throw new TypeVaultValidationError();
         }
 
-        this.dangerouslySetValue(modifiedValue);
+        this[valueSymbol] = this.dangerouslyModifySetValue(modifiedValue);
     }
 
     public isNullable(): boolean {
@@ -84,12 +84,14 @@ export abstract class Type<TOption extends TypeOption, TValue> {
         return value as TypeValue<TOption, TValue>;
     }
 
-    protected dangerouslyGetValue(): TypeValue<TOption, TValue> {
-        return this[valueSymbol];
+    protected dangerouslyModifyGetValue(
+        value: TypeValue<TOption, TValue>
+    ): TypeValue<TOption, TValue> {
+        return value;
     }
 
-    protected dangerouslySetValue(value: unknown) {
-        this[valueSymbol] = value as TypeValue<TOption, TValue>;
+    protected dangerouslyModifySetValue(value: unknown) {
+        return value as TypeValue<TOption, TValue>;
     }
 
     protected abstract validate(value: unknown): boolean;
