@@ -7,41 +7,83 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
-    ['#000000', '#000000ff'],
-    ['#FFFFFF', '#ffffffff'],
-    ['#FF0000', '#ff0000ff'],
-    ['#00FF00', '#00ff00ff'],
-    ['#0000FF', '#0000ffff'],
-    ['#FFFF00', '#ffff00ff'],
-    ['#00FFFF', '#00ffffff'],
-    ['#FF00FF', '#ff00ffff'],
-    ['#888888', '#888888ff'],
-    ['#CCCCCC', '#ccccccff'],
-    ['#000', '#000000ff'],
-    ['#FFF', '#ffffffff'],
-    ['#F00', '#ff0000ff'],
-    ['#0F0', '#00ff00ff'],
-    ['#00F', '#0000ffff'],
-    ['#FF0', '#ffff00ff'],
-    ['#0FF', '#00ffffff'],
-    ['#F0F', '#ff00ffff'],
-    ['#888', '#888888ff'],
-    ['#CCC', '#ccccccff'],
-    ['#00000000', '#00000000'],
-    ['#FFFFFFFF', '#ffffffff'],
-    ['#FF0000F0', '#ff0000f0'],
-    ['#00FF000F', '#00ff000f'],
-    ['#0000FF00', '#0000ff00'],
-    ['#FFFF00F0', '#ffff00f0'],
-    ['#00FFFF0F', '#00ffff0f'],
-    ['#FF00FFFF', '#ff00ffff'],
-    ['#88888888', '#88888888'],
-    ['#CCCCCCCC', '#cccccccc'],
+    { input: '#000000', output: '#000000ff', red: 0, green: 0, blue: 0, alpha: 255 },
+    { input: '#FFFFFF', output: '#ffffffff', red: 255, green: 255, blue: 255, alpha: 255 },
+    { input: '#FF0000', output: '#ff0000ff', red: 255, green: 0, blue: 0, alpha: 255 },
+    { input: '#00FF00', output: '#00ff00ff', red: 0, green: 255, blue: 0, alpha: 255 },
+    { input: '#0000FF', output: '#0000ffff', red: 0, green: 0, blue: 255, alpha: 255 },
+    { input: '#FFFF00', output: '#ffff00ff', red: 255, green: 255, blue: 0, alpha: 255 },
+    { input: '#00FFFF', output: '#00ffffff', red: 0, green: 255, blue: 255, alpha: 255 },
+    { input: '#FF00FF', output: '#ff00ffff', red: 255, green: 0, blue: 255, alpha: 255 },
+    { input: '#888888', output: '#888888ff', red: 136, green: 136, blue: 136, alpha: 255 },
+    { input: '#CCCCCC', output: '#ccccccff', red: 204, green: 204, blue: 204, alpha: 255 },
+    { input: '#000', output: '#000000ff', red: 0, green: 0, blue: 0, alpha: 255 },
+    { input: '#FFF', output: '#ffffffff', red: 255, green: 255, blue: 255, alpha: 255 },
+    { input: '#F00', output: '#ff0000ff', red: 255, green: 0, blue: 0, alpha: 255 },
+    { input: '#0F0', output: '#00ff00ff', red: 0, green: 255, blue: 0, alpha: 255 },
+    { input: '#00F', output: '#0000ffff', red: 0, green: 0, blue: 255, alpha: 255 },
+    { input: '#FF0', output: '#ffff00ff', red: 255, green: 255, blue: 0, alpha: 255 },
+    { input: '#0FF', output: '#00ffffff', red: 0, green: 255, blue: 255, alpha: 255 },
+    { input: '#F0F', output: '#ff00ffff', red: 255, green: 0, blue: 255, alpha: 255 },
+    { input: '#888', output: '#888888ff', red: 136, green: 136, blue: 136, alpha: 255 },
+    { input: '#CCC', output: '#ccccccff', red: 204, green: 204, blue: 204, alpha: 255 },
+    { input: '#00000000', output: '#00000000', red: 0, green: 0, blue: 0, alpha: 0 },
+    { input: '#FFFFFFFF', output: '#ffffffff', red: 255, green: 255, blue: 255, alpha: 255 },
+    {
+        input: '#FF0000F0',
+        output: '#ff0000f0',
+        red: 255,
+        green: 0,
+        blue: 0,
+        alpha: 240,
+    },
+    {
+        input: '#00FF000F',
+        output: '#00ff000f',
+        red: 0,
+        green: 255,
+        blue: 0,
+        alpha: 15,
+    },
+    { input: '#0000FF00', output: '#0000ff00', red: 0, green: 0, blue: 255, alpha: 0 },
+    {
+        input: '#FFFF00F0',
+        output: '#ffff00f0',
+        red: 255,
+        green: 255,
+        blue: 0,
+        alpha: 240,
+    },
+    {
+        input: '#00FFFF0F',
+        output: '#00ffff0f',
+        red: 0,
+        green: 255,
+        blue: 255,
+        alpha: 15,
+    },
+    { input: '#FF00FFFF', output: '#ff00ffff', red: 255, green: 0, blue: 255, alpha: 255 },
+    {
+        input: '#88888888',
+        output: '#88888888',
+        red: 136,
+        green: 136,
+        blue: 136,
+        alpha: 136,
+    },
+    {
+        input: '#CCCCCCCC',
+        output: '#cccccccc',
+        red: 204,
+        green: 204,
+        blue: 204,
+        alpha: 204,
+    },
 ] as const;
 
 describe('ColorHex class', () => {
     test('It sets the value to the given valid color', () => {
-        for (const [input, output] of values) {
+        for (const { input, output } of values) {
             expect(new ColorHex(input).value).toBe(output);
         }
     });
@@ -56,9 +98,77 @@ describe('ColorHex class', () => {
         }
     });
 
-    for (const [, validValue] of values) {
-        valueTests({ type: ColorHex, validValue });
-        nullableTests({ type: ColorHex, validValue, invalidValue: 'not-valid' });
-        immutableTests({ type: ColorHex, validValue });
+    test('It should return the correct color values', () => {
+        for (const { input, red, green, blue, alpha } of values) {
+            expect(new ColorHex(input).red).toBe(red);
+            expect(new ColorHex(input).green).toBe(green);
+            expect(new ColorHex(input).blue).toBe(blue);
+            expect(new ColorHex(input).alpha).toBe(alpha);
+        }
+    });
+
+    test('It can update the color values', () => {
+        for (const { output, red, green, blue, alpha } of values) {
+            const color = ColorHex.nullable();
+
+            color.red = red;
+            color.green = green;
+            color.blue = blue;
+            color.alpha = alpha;
+
+            expect(color.value).toBe(output);
+        }
+    });
+
+    test('It can modify color values', () => {
+        const color = new ColorHex('#000000');
+
+        color.red = 255;
+        color.green = 255;
+        color.blue = 255;
+        color.alpha = 255;
+
+        expect(color.value).toBe('#ffffffff');
+
+        color.red = 0;
+        color.green = 0;
+        color.blue = 0;
+        color.alpha = 0;
+
+        expect(color.value).toBe('#00000000');
+
+        color.red = 128;
+        color.green = 128;
+        color.blue = 128;
+        color.alpha = 128;
+
+        expect(color.value).toBe('#80808080');
+
+        color.red = 25;
+        color.green = 50;
+        color.blue = 100;
+        color.alpha = 150;
+
+        expect(color.value).toBe('#19326496');
+
+        color.red = 999;
+        color.green = 999;
+        color.blue = 999;
+        color.alpha = 999;
+
+        expect(color.value).toBe('#ffffffff');
+
+        color.red = -1;
+        color.green = -1;
+        color.blue = -1;
+        color.alpha = -1;
+
+        expect(color.value).toBe('#00000000');
+    });
+
+    for (const { output } of values) {
+        valueTests({ type: ColorHex, validValue: output });
+        nullableTests({ type: ColorHex, validValue: output, invalidValue: 'not-valid' });
+        immutableTests({ type: ColorHex, validValue: output });
     }
 });

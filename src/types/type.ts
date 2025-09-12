@@ -41,11 +41,13 @@ export abstract class Type<TOption extends TypeOption, TValue> {
             throw new TypeVaultValidationError();
         }
 
-        if (this[optionsSymbol].immutable && this.value !== undefined) {
-            throw new TypeVaultValidationError();
+        if (this.value !== undefined) {
+            this.assertMutable();
         }
 
-        if (this[optionsSymbol].nullable && value === null) {
+        if (value === null) {
+            this.assertNullable();
+
             this[valueSymbol] = this.dangerouslyModifySetValue(null);
 
             return;
@@ -92,6 +94,18 @@ export abstract class Type<TOption extends TypeOption, TValue> {
 
     protected dangerouslyModifySetValue(value: unknown) {
         return value as TypeValue<TOption, TValue>;
+    }
+
+    protected assertMutable() {
+        if (this.isImmutable()) {
+            throw new TypeVaultValidationError();
+        }
+    }
+
+    protected assertNullable() {
+        if (!this.isNullable()) {
+            throw new TypeVaultValidationError();
+        }
     }
 
     protected abstract validate(value: unknown): boolean;
