@@ -166,6 +166,28 @@ describe('ColorHex class', () => {
         expect(color.value).toBe('#00000000');
     });
 
+    test('It throws an error if the value is changed when immutable', () => {
+        const instance = ColorHex.immutable('#00000000');
+
+        expect(() => {
+            instance.red = 1;
+        }).toThrowError(TypeVaultValidationError);
+
+        expect(() => {
+            instance.green = 1;
+        }).toThrowError(TypeVaultValidationError);
+
+        expect(() => {
+            instance.blue = 1;
+        }).toThrowError(TypeVaultValidationError);
+
+        expect(() => {
+            instance.alpha = 1;
+        }).toThrowError(TypeVaultValidationError);
+
+        expect(instance.value).toBe('#00000000');
+    });
+
     for (const { output } of values) {
         valueTests({ type: ColorHex, validValue: output });
         nullableTests({ type: ColorHex, validValue: output, invalidValue: 'not-valid' });
