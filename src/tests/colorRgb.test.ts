@@ -123,6 +123,74 @@ describe('ColorRgb class', () => {
         }
     });
 
+    test('It should return the correct color values', () => {
+        for (const { input, red, green, blue, alpha } of values) {
+            expect(new ColorRgb(input).red).toBe(red);
+            expect(new ColorRgb(input).green).toBe(green);
+            expect(new ColorRgb(input).blue).toBe(blue);
+            expect(new ColorRgb(input).alpha).toBe(alpha);
+        }
+    });
+
+    test('It can update the color values', () => {
+        for (const { output, red, green, blue, alpha } of values) {
+            const color = ColorRgb.nullable();
+
+            color.red = red;
+            color.green = green;
+            color.blue = blue;
+            color.alpha = alpha;
+
+            expect(color.value).toBe(output);
+        }
+    });
+
+    test('It can modify color values', () => {
+        const color = new ColorRgb('rgb(0, 0, 0)');
+
+        color.red = 255;
+        color.green = 255;
+        color.blue = 255;
+        color.alpha = 1;
+
+        expect(color.value).toBe('rgba(255, 255, 255, 1)');
+
+        color.red = 0;
+        color.green = 0;
+        color.blue = 0;
+        color.alpha = 0;
+
+        expect(color.value).toBe('rgba(0, 0, 0, 0)');
+
+        color.red = 128;
+        color.green = 128;
+        color.blue = 128;
+        color.alpha = 1;
+
+        expect(color.value).toBe('rgba(128, 128, 128, 1)');
+
+        color.red = 25;
+        color.green = 50;
+        color.blue = 100;
+        color.alpha = 1;
+
+        expect(color.value).toBe('rgba(25, 50, 100, 1)');
+
+        color.red = 999;
+        color.green = 999;
+        color.blue = 999;
+        color.alpha = 999;
+
+        expect(color.value).toBe('rgba(255, 255, 255, 1)');
+
+        color.red = -1;
+        color.green = -1;
+        color.blue = -1;
+        color.alpha = -1;
+
+        expect(color.value).toBe('rgba(0, 0, 0, 0)');
+    });
+
     test('It should throw an error if the value is not a valid color', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
