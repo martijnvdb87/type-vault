@@ -16,7 +16,7 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
             return false;
         }
 
-        return /^#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?(?:[0-9a-fA-F]{2})?$/.test(String(value));
+        return /^#[0-9a-fA-F]{8}$/.test(String(value));
     }
 
     protected modifier(value: unknown): ColorHexString {
