@@ -36,16 +36,10 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
             return `#${parts.toLowerCase()}`;
         }
 
-        const regularNotation = String(value).match(/^#([0-9a-fA-F]{6})$/);
+        const regularNotation = String(value).match(/^#([0-9a-fA-F]{6,8})$/);
 
         if (regularNotation) {
-            return `#${regularNotation[1].toLowerCase()}ff`;
-        }
-
-        const fullNotation = String(value).match(/^#([0-9a-fA-F]{8})$/);
-
-        if (fullNotation) {
-            return `#${fullNotation[1].toLowerCase()}`;
+            return `#${regularNotation[1].toLowerCase()}`.padEnd(9, 'f') as ColorHexString;
         }
 
         return value as ColorHexString;
