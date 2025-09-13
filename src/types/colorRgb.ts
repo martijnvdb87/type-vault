@@ -15,9 +15,21 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
             return false;
         }
 
-        return /^rgba?\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})((, ?| \/ )(1|0?(.\d+)?))?\)$/.test(
+        return /^rgba\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (1|0(?:.\d+)?)?\)$/.test(
             String(value)
         );
+    }
+
+    protected modifier(value: unknown): ColorRgbString {
+        const matches = String(value).match(
+            /^rgba?\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:(?:, ?| ?\/ ?)(1|0?(?:.\d+)?)?)?\)$/
+        );
+
+        if (matches) {
+            value = `rgba(${matches[1]}, ${matches[2]}, ${matches[3]}, ${matches[4] ?? 1})`;
+        }
+
+        return value as ColorRgbString;
     }
 
     public static nullable(value: ColorRgbString | null = null) {
