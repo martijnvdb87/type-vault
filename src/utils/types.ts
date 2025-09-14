@@ -111,3 +111,5 @@ export type ColorHexString = `#${string}`;
 export type ColorRgbString =
     | `rgb${'a' | ''}(${number},${number},${number}${`,${number}` | ''})`
     | `rgb${'a' | ''}(${number} ${number} ${number}${`/${number}` | ''})`;
+
+export type ColorHslString = `hsl${'a' | ''}(${number},${number},${number}${`,${number}` | ''})`;
