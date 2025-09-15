@@ -7,28 +7,28 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
-    { input: 'rgb(0, 0, 0)', output: 'rgba(0, 0, 0, 1)', red: 0, green: 0, blue: 0, alpha: 1 },
+    { input: 'rgb(0, 0, 0)', output: 'rgb(0 0 0 / 1)', red: 0, green: 0, blue: 0, alpha: 1 },
     {
         input: 'rgb(255, 255, 255)',
-        output: 'rgba(255, 255, 255, 1)',
+        output: 'rgb(255 255 255 / 1)',
         red: 255,
         green: 255,
         blue: 255,
         alpha: 1,
     },
-    { input: 'rgba(0, 0, 0)', output: 'rgba(0, 0, 0, 1)', red: 0, green: 0, blue: 0, alpha: 1 },
+    { input: 'rgba(0, 0, 0)', output: 'rgb(0 0 0 / 1)', red: 0, green: 0, blue: 0, alpha: 1 },
     {
         input: 'rgba(255, 255, 255)',
-        output: 'rgba(255, 255, 255, 1)',
+        output: 'rgb(255 255 255 / 1)',
         red: 255,
         green: 255,
         blue: 255,
         alpha: 1,
     },
-    { input: 'rgba(0, 0, 0)', output: 'rgba(0, 0, 0, 1)', red: 0, green: 0, blue: 0, alpha: 1 },
+    { input: 'rgba(0, 0, 0)', output: 'rgb(0 0 0 / 1)', red: 0, green: 0, blue: 0, alpha: 1 },
     {
         input: 'rgba(255, 255, 255)',
-        output: 'rgba(255, 255, 255, 1)',
+        output: 'rgb(255 255 255 / 1)',
         red: 255,
         green: 255,
         blue: 255,
@@ -36,7 +36,7 @@ const values = [
     },
     {
         input: 'rgba(0, 0, 0, 1)',
-        output: 'rgba(0, 0, 0, 1)',
+        output: 'rgb(0 0 0 / 1)',
         red: 0,
         green: 0,
         blue: 0,
@@ -44,7 +44,7 @@ const values = [
     },
     {
         input: 'rgba(255, 255, 255, 1)',
-        output: 'rgba(255, 255, 255, 1)',
+        output: 'rgb(255 255 255 / 1)',
         red: 255,
         green: 255,
         blue: 255,
@@ -52,7 +52,7 @@ const values = [
     },
     {
         input: 'rgba(0, 0, 0, 0.5)',
-        output: 'rgba(0, 0, 0, 0.5)',
+        output: 'rgb(0 0 0 / 0.5)',
         red: 0,
         green: 0,
         blue: 0,
@@ -60,7 +60,7 @@ const values = [
     },
     {
         input: 'rgba(255, 255, 255, 0.5)',
-        output: 'rgba(255, 255, 255, 0.5)',
+        output: 'rgb(255 255 255 / 0.5)',
         red: 255,
         green: 255,
         blue: 255,
@@ -68,7 +68,7 @@ const values = [
     },
     {
         input: 'rgba(0, 0, 0, 0.25)',
-        output: 'rgba(0, 0, 0, 0.25)',
+        output: 'rgb(0 0 0 / 0.25)',
         red: 0,
         green: 0,
         blue: 0,
@@ -76,7 +76,7 @@ const values = [
     },
     {
         input: 'rgba(255, 255, 255, 0.25)',
-        output: 'rgba(255, 255, 255, 0.25)',
+        output: 'rgb(255 255 255 / 0.25)',
         red: 255,
         green: 255,
         blue: 255,
@@ -84,7 +84,7 @@ const values = [
     },
     {
         input: 'rgba(0 0 0 / 0.125)',
-        output: 'rgba(0, 0, 0, 0.125)',
+        output: 'rgb(0 0 0 / 0.125)',
         red: 0,
         green: 0,
         blue: 0,
@@ -92,7 +92,7 @@ const values = [
     },
     {
         input: 'rgba(255 255 255 / 0.125)',
-        output: 'rgba(255, 255, 255, 0.125)',
+        output: 'rgb(255 255 255 / 0.125)',
         red: 255,
         green: 255,
         blue: 255,
@@ -100,7 +100,7 @@ const values = [
     },
     {
         input: 'rgb(0 0 0 / 0.125)',
-        output: 'rgba(0, 0, 0, 0.125)',
+        output: 'rgb(0 0 0 / 0.125)',
         red: 0,
         green: 0,
         blue: 0,
@@ -108,7 +108,7 @@ const values = [
     },
     {
         input: 'rgb(255 255 255 / 0.125)',
-        output: 'rgba(255, 255, 255, 0.125)',
+        output: 'rgb(255 255 255 / 0.125)',
         red: 255,
         green: 255,
         blue: 255,
@@ -153,42 +153,42 @@ describe('ColorRgb class', () => {
         color.blue = 255;
         color.alpha = 1;
 
-        expect(color.value).toBe('rgba(255, 255, 255, 1)');
+        expect(color.value).toBe('rgb(255 255 255 / 1)');
 
         color.red = 0;
         color.green = 0;
         color.blue = 0;
         color.alpha = 0;
 
-        expect(color.value).toBe('rgba(0, 0, 0, 0)');
+        expect(color.value).toBe('rgb(0 0 0 / 0)');
 
         color.red = 128;
         color.green = 128;
         color.blue = 128;
         color.alpha = 1;
 
-        expect(color.value).toBe('rgba(128, 128, 128, 1)');
+        expect(color.value).toBe('rgb(128 128 128 / 1)');
 
         color.red = 25;
         color.green = 50;
         color.blue = 100;
         color.alpha = 1;
 
-        expect(color.value).toBe('rgba(25, 50, 100, 1)');
+        expect(color.value).toBe('rgb(25 50 100 / 1)');
 
         color.red = 999;
         color.green = 999;
         color.blue = 999;
         color.alpha = 999;
 
-        expect(color.value).toBe('rgba(255, 255, 255, 1)');
+        expect(color.value).toBe('rgb(255 255 255 / 1)');
 
         color.red = -1;
         color.green = -1;
         color.blue = -1;
         color.alpha = -1;
 
-        expect(color.value).toBe('rgba(0, 0, 0, 0)');
+        expect(color.value).toBe('rgb(0 0 0 / 0)');
     });
 
     test('It should throw an error if the value is not a valid color', () => {

@@ -16,7 +16,7 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
             return false;
         }
 
-        return /^rgba\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (1|0(?:.\d+)?)?\)$/.test(
+        return /^rgb\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) \/ (1|0(?:.\d+)?)?\)$/.test(
             String(value)
         );
     }
@@ -95,19 +95,22 @@ function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
 }) {
     const { red, green, blue, alpha } = options;
 
-    const parts = [
-        clamp(red, 0, 255),
-        clamp(green, 0, 255),
-        clamp(blue, 0, 255),
-        clamp(alpha, 0, 1),
-    ];
+    const parts = {
+        red: clamp(red, 0, 255),
+        green: clamp(green, 0, 255),
+        blue: clamp(blue, 0, 255),
+        alpha: clamp(alpha, 0, 1),
+    };
 
-    return `rgba(${parts.join(', ')})` as SetTypeValue<TOptions, ColorRgbString>;
+    return `rgb(${parts.red} ${parts.green} ${parts.blue} / ${parts.alpha})` as SetTypeValue<
+        TOptions,
+        ColorRgbString
+    >;
 }
 
 function rgbToNumberValues(value: ColorRgbString | null) {
     const matches = String(value ?? '').match(
-        /^rgba\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}), (1|0(?:.\d+)?)?\)$/
+        /^rgb\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) \/ (1|0(?:.\d+)?)?\)$/
     );
 
     if (matches === null) {
