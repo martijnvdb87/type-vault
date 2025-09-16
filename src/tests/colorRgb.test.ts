@@ -182,20 +182,20 @@ describe('ColorRgb class', () => {
         color.alpha = 1.23;
 
         expect(color.value).toBe('rgb(12.3 45.6 7.89 / 1.23%)');
+    });
 
-        color.red = 999;
-        color.green = 999;
-        color.blue = 999;
-        color.alpha = 999;
+    test('It should throw an error if the value is out of allowed range', () => {
+        const color = new ColorRgb('rgb(0 0 0 / 0)');
 
-        expect(color.value).toBe('rgb(255 255 255 / 100%)');
+        expect(() => (color.red = 256)).toThrowError();
+        expect(() => (color.green = 256)).toThrowError();
+        expect(() => (color.blue = 256)).toThrowError();
+        expect(() => (color.alpha = 101)).toThrowError();
 
-        color.red = -1;
-        color.green = -1;
-        color.blue = -1;
-        color.alpha = -1;
-
-        expect(color.value).toBe('rgb(0 0 0 / 0%)');
+        expect(() => (color.red = -1)).toThrowError();
+        expect(() => (color.green = -1)).toThrowError();
+        expect(() => (color.blue = -1)).toThrowError();
+        expect(() => (color.alpha = -1)).toThrowError();
     });
 
     test('It should throw an error if the value is not a valid color', () => {

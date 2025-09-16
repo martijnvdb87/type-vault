@@ -1,4 +1,4 @@
-import { clamp } from '@/utils/numberUtils.js';
+import { assertClamp } from '@/utils/numberUtils.js';
 import { ColorHexString } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
@@ -115,10 +115,10 @@ function numberToHexString<TOptions extends TypeOption = TypeOption>(options: {
     const { red, green, blue, alpha } = options;
 
     const parts = [
-        numberToHex(clamp(red, 0, 255)),
-        numberToHex(clamp(green, 0, 255)),
-        numberToHex(clamp(blue, 0, 255)),
-        numberToHex(clamp(alpha, 0, 255)),
+        numberToHex(assertClamp(red, { min: 0, max: 255 })),
+        numberToHex(assertClamp(green, { min: 0, max: 255 })),
+        numberToHex(assertClamp(blue, { min: 0, max: 255 })),
+        numberToHex(assertClamp(alpha, { min: 0, max: 255 })),
     ];
 
     return `#${parts.join('')}` as SetTypeValue<TOptions, ColorHexString>;

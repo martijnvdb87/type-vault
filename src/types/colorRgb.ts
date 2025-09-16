@@ -1,4 +1,4 @@
-import { clamp } from '@/utils/numberUtils.js';
+import { assertClamp } from '@/utils/numberUtils.js';
 import { ColorRgbString } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
@@ -113,10 +113,10 @@ function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
     const { red, green, blue, alpha } = options;
 
     const parts = {
-        red: clamp(red, 0, 255),
-        green: clamp(green, 0, 255),
-        blue: clamp(blue, 0, 255),
-        alpha: clamp(alpha, 0, 100),
+        red: assertClamp(red, { min: 0, max: 255 }),
+        green: assertClamp(green, { min: 0, max: 255 }),
+        blue: assertClamp(blue, { min: 0, max: 255 }),
+        alpha: assertClamp(alpha, { min: 0, max: 100 }),
     };
 
     return `rgb(${parts.red} ${parts.green} ${parts.blue} / ${parts.alpha}%)` as SetTypeValue<

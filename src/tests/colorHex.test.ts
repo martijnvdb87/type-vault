@@ -150,20 +150,22 @@ describe('ColorHex class', () => {
         color.alpha = 150;
 
         expect(color.value).toBe('#19326496');
+    });
 
-        color.red = 999;
-        color.green = 999;
-        color.blue = 999;
-        color.alpha = 999;
+    test('It should throw an error if the value is out of allowed range', () => {
+        const color = new ColorHex('#ffffffff');
+
+        expect(() => (color.red = 256)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.green = 256)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.blue = 256)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.alpha = 256)).toThrowError(TypeVaultValidationError);
+
+        expect(() => (color.red = -1)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.green = -1)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.blue = -1)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.alpha = -1)).toThrowError(TypeVaultValidationError);
 
         expect(color.value).toBe('#ffffffff');
-
-        color.red = -1;
-        color.green = -1;
-        color.blue = -1;
-        color.alpha = -1;
-
-        expect(color.value).toBe('#00000000');
     });
 
     test('It throws an error if the value is changed when immutable', () => {
