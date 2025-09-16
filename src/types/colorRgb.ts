@@ -3,6 +3,13 @@ import { ColorRgbString } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
+const regex = {
+    getValue:
+        /^rgb\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?)(?: \/ (100|(?:\d{1,2})(?:\.\d+)?)%)?\)$/,
+    setValue:
+        /^rgba?\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?)(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?)(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}(?:\.\d*)?)(?:(?:, ?| ?\/ ?)((?:(?:100|(?:\d{1,2})(?:\.\d+)?)%)|(?:1|(?:0(?:\.\d+)?))))?\)$/,
+} as const;
+
 export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
     TOptions,
     ColorRgbString
@@ -16,22 +23,32 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
             return false;
         }
 
-        return /^rgb\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) \/ (1|0(?:.\d+)?)?\)$/.test(
-            String(value)
-        );
+        return regex.getValue.test(String(value));
     }
 
     protected modifier(value: unknown): ColorRgbString {
-        const matches = String(value).match(
-            /^rgba?\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:, ?| )(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(?:(?:, ?| ?\/ ?)(1|0?(?:.\d+)?)?)?\)$/
-        );
+        const matches = String(value).match(regex.setValue);
 
         if (matches) {
+            const alpha = (() => {
+                if (!matches[4]) {
+                    return 100;
+                }
+
+                const alphaPercentageMatches = matches[4].match(/^((?:\d*)(?:\.\d*)?)%$/);
+
+                if (alphaPercentageMatches) {
+                    return parseFloat(alphaPercentageMatches[1]);
+                }
+
+                return parseFloat(matches[4]) * 100;
+            })();
+
             value = numberToRgbString({
-                red: parseInt(matches[1]),
-                green: parseInt(matches[2]),
-                blue: parseInt(matches[3]),
-                alpha: matches[4] ? parseFloat(matches[4]) : 1,
+                red: parseFloat(matches[1]),
+                green: parseFloat(matches[2]),
+                blue: parseFloat(matches[3]),
+                alpha,
             });
         }
 
@@ -99,19 +116,17 @@ function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
         red: clamp(red, 0, 255),
         green: clamp(green, 0, 255),
         blue: clamp(blue, 0, 255),
-        alpha: clamp(alpha, 0, 1),
+        alpha: clamp(alpha, 0, 100),
     };
 
-    return `rgb(${parts.red} ${parts.green} ${parts.blue} / ${parts.alpha})` as SetTypeValue<
+    return `rgb(${parts.red} ${parts.green} ${parts.blue} / ${parts.alpha}%)` as SetTypeValue<
         TOptions,
         ColorRgbString
     >;
 }
 
 function rgbToNumberValues(value: ColorRgbString | null) {
-    const matches = String(value ?? '').match(
-        /^rgb\((25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) (25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}) \/ (1|0(?:.\d+)?)?\)$/
-    );
+    const matches = String(value ?? '').match(regex.getValue);
 
     if (matches === null) {
         return {
@@ -123,9 +138,9 @@ function rgbToNumberValues(value: ColorRgbString | null) {
     }
 
     return {
-        red: parseInt(matches[1]),
-        green: parseInt(matches[2]),
-        blue: parseInt(matches[3]),
-        alpha: matches[4] ? parseFloat(matches[4]) : 1,
+        red: parseFloat(matches[1]),
+        green: parseFloat(matches[2]),
+        blue: parseFloat(matches[3]),
+        alpha: parseFloat(matches[4]),
     };
 }
