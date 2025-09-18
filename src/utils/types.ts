@@ -114,3 +114,6 @@ export type ColorRgbString =
 
 export type ColorHslString =
     `hsl${'a' | ''}(${number}${'deg' | ''}${',' | ' '}${number}${'%' | ''}${',' | ' '}${number}${'%' | ''}${`${`${' ' | ''}/${' ' | ''}` | ','}${number}${'%' | ''}` | ''})`;
+
+export type ColorOklchString =
+    `oklch${'a' | ''}(${number}${'%' | ''} ${number}${'%' | ''} ${number}${'deg' | ''}${`${' ' | ''}/${' ' | ''}${number}${'%' | ''}` | ''})`;
