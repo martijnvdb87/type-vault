@@ -16,17 +16,57 @@ export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
             return false;
         }
 
-        return Boolean(matchAbsoluteFormat(String(value)));
+        return Boolean(getMatchFromString(String(value)));
     }
 
     protected modifier(value: unknown): ColorOklchString {
         const match = matchAbsoluteFormat(String(value));
 
         if (match) {
-            return valuesToHslString(match);
+            return valuesToString(match);
         }
 
         return value as ColorOklchString;
+    }
+
+    public get lightness() {
+        return matchValueFormat(this.value).lightness;
+    }
+
+    public set lightness(lightness: number) {
+        this.assertMutable();
+
+        this.value = valuesToString({ ...matchValueFormat(this.value), lightness });
+    }
+
+    public get chroma() {
+        return matchValueFormat(this.value).chroma;
+    }
+
+    public set chroma(chroma: number) {
+        this.assertMutable();
+
+        this.value = valuesToString({ ...matchValueFormat(this.value), chroma });
+    }
+
+    public get hue() {
+        return matchValueFormat(this.value).hue;
+    }
+
+    public set hue(hue: number) {
+        this.assertMutable();
+
+        this.value = valuesToString({ ...matchValueFormat(this.value), hue });
+    }
+
+    public get alpha() {
+        return matchValueFormat(this.value).alpha;
+    }
+
+    public set alpha(alpha: number) {
+        this.assertMutable();
+
+        this.value = valuesToString({ ...matchValueFormat(this.value), alpha });
     }
 
     public static nullable(value: ColorOklchString | null = null) {
@@ -38,11 +78,30 @@ export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
     }
 }
 
-function matchAbsoluteFormat(value: string) {
+function getMatchFromString(value: string) {
     const pattern =
         /^oklch\(((?:\d+?)|(?:(?:\d+?)?\.\d+?))(%)? ((?:\d+?)|(?:(?:\d+?)?\.\d+?))(%)? ((?:\d+?)|(?:(?:\d+?)?\.\d+?))(?:deg)?(?: ?\/ ?((?:\d+?)?(?:\.\d+?)?)(%)?)?\)$/;
 
-    const matches = value.match(pattern);
+    return value.match(pattern);
+}
+
+function matchValueFormat(value: string | null) {
+    const match = matchAbsoluteFormat(value ?? '');
+
+    if (match === null || value === null) {
+        return {
+            lightness: 0,
+            chroma: 0,
+            hue: 0,
+            alpha: 0,
+        };
+    }
+
+    return match;
+}
+
+function matchAbsoluteFormat(value: string) {
+    const matches = getMatchFromString(value);
 
     if (!matches) {
         return null;
@@ -113,7 +172,7 @@ function matchAbsoluteFormat(value: string) {
     };
 }
 
-function valuesToHslString<TOptions extends TypeOption = TypeOption>(options: {
+function valuesToString<TOptions extends TypeOption = TypeOption>(options: {
     lightness: number;
     chroma: number;
     hue: number;

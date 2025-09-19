@@ -31,12 +31,12 @@ describe('ColorOklch class', () => {
         }
     });
 
-    // test('It should return the correct color values', () => {
-    //     for (const { input, lightness, chroma, hue, alpha } of values) {
-    //         expect(new ColorOklch(input).lightness).toBe(lightness);
-    //         expect(new ColorOklch(input).chroma).toBe(chroma);
-    //         expect(new ColorOklch(input).hue).toBe(hue);
-    //         expect(new ColorOklch(input).alpha).toBe(alpha);
-    //     }
-    // });
+    test('It should return the correct color values', () => {
+        for (const { input, lightness, chroma, hue, alpha } of values) {
+            expect(new ColorOklch(input).lightness).toBe(lightness);
+            expect(new ColorOklch(input).chroma).toBe(chroma);
+            expect(new ColorOklch(input).hue).toBe(hue);
+            expect(new ColorOklch(input).alpha).toBe(alpha);
+        }
+    });
 });
