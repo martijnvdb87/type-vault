@@ -135,7 +135,7 @@ function matchAbsoluteFormat(value: string) {
         })(),
         {
             min: 0,
-            max: 0.5,
+            max: 1,
         }
     );
 
