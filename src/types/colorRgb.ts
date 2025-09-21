@@ -1,5 +1,6 @@
 import { assertClamp } from '@/utils/numberUtils.js';
 import { ColorRgbString } from '@/utils/types.js';
+import { default as ColorJs } from 'colorjs.io';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
@@ -101,6 +102,22 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
 
     public static immutable(value: ColorRgbString) {
         return new ColorRgb(value, { immutable: true });
+    }
+
+    public static from(color: Color) {
+        const colorJs = new ColorJs(color.value);
+
+        const value = numberToRgbString({
+            red: colorJs.srgb.r * 255,
+            green: colorJs.srgb.g * 255,
+            blue: colorJs.srgb.b * 255,
+            alpha: color.getNormalizedAlpha(),
+        });
+
+        return new ColorRgb(value, {
+            immutable: color.isImmutable(),
+            nullable: color.isNullable(),
+        });
     }
 }
 

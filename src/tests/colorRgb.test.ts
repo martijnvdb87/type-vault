@@ -1,4 +1,5 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
+import { ColorHex } from '@/types/colorHex.js';
 import { ColorRgb } from '@/types/colorRgb.js';
 import { ColorRgbString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
@@ -205,6 +206,55 @@ describe('ColorRgb class', () => {
             expect(() => new ColorRgb(value as unknown as ColorRgbString)).toThrowError(
                 TypeVaultValidationError
             );
+        }
+    });
+
+    test('It can be created from ColorHex', () => {
+        const fromValue = [
+            {
+                input: '#000000',
+                output: 'rgb(0 0 0 / 100%)',
+            },
+            {
+                input: '#ffffff',
+                output: 'rgb(255 255 255 / 100%)',
+            },
+            {
+                input: '#ff0000',
+                output: 'rgb(255 0 0 / 100%)',
+            },
+            {
+                input: '#00ff00',
+                output: 'rgb(0 255 0 / 100%)',
+            },
+            {
+                input: '#0000ff',
+                output: 'rgb(0 0 255 / 100%)',
+            },
+            {
+                input: '#ffff00',
+                output: 'rgb(255 255 0 / 100%)',
+            },
+            {
+                input: '#00ffff',
+                output: 'rgb(0 255 255 / 100%)',
+            },
+            {
+                input: '#ff00ff',
+                output: 'rgb(255 0 255 / 100%)',
+            },
+            {
+                input: '#123456',
+                output: 'rgb(18 52 86 / 100%)',
+            },
+            {
+                input: '#abcdef',
+                output: 'rgb(171 205 239 / 100%)',
+            },
+        ] as const;
+
+        for (const { input, output } of fromValue) {
+            expect(ColorRgb.from(new ColorHex(input)).value).toBe(output);
         }
     });
 

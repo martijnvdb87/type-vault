@@ -85,6 +85,10 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
         this.value = numberToHexString({ ...hexToNumberValues(this.value), alpha });
     }
 
+    public getNormalizedAlpha() {
+        return this.alpha / 2.55;
+    }
+
     public static nullable(value: ColorHexString | null = null) {
         return new ColorHex(value, { nullable: true });
     }
