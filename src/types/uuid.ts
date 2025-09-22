@@ -23,6 +23,3 @@ export class Uuid<TOptions extends TypeOption = TypeOption> extends BaseString<
         return new Uuid(value, { immutable: true });
     }
 }
-
-const yay = new Uuid('00000000-0000-0000-0000-000000000000', { nullable: true, immutable: false });
-yay.value = null;
