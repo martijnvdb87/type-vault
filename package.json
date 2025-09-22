@@ -34,7 +34,6 @@
         "vitest": "^3.2.4"
     },
     "dependencies": {
-        "colorjs.io": "^0.5.2",
         "dayjs": "^1.11.13",
         "uuid": "^11.1.0",
         "zod": "^4.0.17"
