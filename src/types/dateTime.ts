@@ -47,14 +47,16 @@ type DateTimeSetOptions = {
     timezone: Timezone;
 };
 
+const timezoneValue = Symbol('timezone');
+
 export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
     DateTimeString
 > {
-    private _timezone: Timezone = Timezone.UTC;
+    private [timezoneValue]: Timezone = Timezone.UTC;
 
     public get timezone(): Timezone {
-        return this._timezone;
+        return this[timezoneValue];
     }
 
     public set timezone(value: Timezone) {
@@ -62,7 +64,7 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
             throw new TypeVaultValidationError();
         }
 
-        this._timezone = value;
+        this[timezoneValue] = value;
     }
 
     public toDate(): Date {
