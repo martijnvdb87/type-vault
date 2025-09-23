@@ -1,10 +1,15 @@
-import * as z from 'zod/mini';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Url<TOptions extends TypeOption = TypeOption> extends BaseString<TOptions> {
     protected validate(value: unknown): boolean {
-        return z.url().safeParse(value).success;
+        try {
+            const url = new URL(value as string);
+
+            return ['http:', 'https:'].includes(url.protocol);
+        } catch {
+            return false;
+        }
     }
 
     public static nullable(value: string | null = null) {
