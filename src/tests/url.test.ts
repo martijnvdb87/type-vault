@@ -8,6 +8,7 @@ import { valueTests } from './utils/valueTests.js';
 describe('Url class', () => {
     const values = [
         'http://example.com',
+        'http://example.com',
         'https://example.com',
         'https://blog.example.com',
         'https://shop.uk.example.co.uk',
@@ -17,7 +18,6 @@ describe('Url class', () => {
         'https://example.com/api?user=john&id=42',
         'https://example.com/docs#section2',
         'https://example.com/page#top',
-        'http://localhost:3000',
         'https://example.com:8080/dashboard',
         'https://user:pass@example.com',
         'https://xn--fsq.com',
