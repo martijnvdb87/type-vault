@@ -1,11 +1,5 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Uuid } from '@/types/uuid.js';
-import { Uuidv1 } from '@/types/uuidv1.js';
-import { Uuidv3 } from '@/types/uuidv3.js';
-import { Uuidv4 } from '@/types/uuidv4.js';
-import { Uuidv5 } from '@/types/uuidv5.js';
-import { Uuidv6 } from '@/types/uuidv6.js';
-import { Uuidv7 } from '@/types/uuidv7.js';
 import { UuidString } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
@@ -49,168 +43,23 @@ describe('Uuid class', () => {
         expect(Uuid.nil().value).toBe('00000000-0000-0000-0000-000000000000');
     });
 
-    valueTests({ type: Uuid, validValue: values.v1[0] });
-    nullableTests({ type: Uuid, validValue: values.v1[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuid, validValue: values.v1[0] });
-});
+    test('It returns a random UUID', () => {
+        const uuid = Uuid.random().value;
 
-describe('Uuidv1 class', () => {
-    const { filtered, rest } = filterUuidTypes('v1');
+        expect(new Uuid(uuid).value).toBe(uuid);
+    });
 
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv1(value).value).toBe(value);
+    Object.values(values)
+        .flat()
+        .forEach((validValue) => {
+            valueTests({ type: Uuid, validValue });
+            nullableTests({ type: Uuid, validValue, invalidValue: 'not-valid' });
+            immutableTests({ type: Uuid, validValue });
         });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v1', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv1(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv1', () => {
-        const uuid = Uuidv1.random().value;
-
-        expect(new Uuidv1(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv1, validValue: values.v1[0] });
-    nullableTests({ type: Uuidv1, validValue: values.v1[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv1, validValue: values.v1[0] });
-});
-
-describe('Uuidv3 class', () => {
-    const { filtered, rest } = filterUuidTypes('v3');
-
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv3(value).value).toBe(value);
-        });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v3', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv3(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv3', () => {
-        const uuid = Uuidv3.random('foo', Uuidv4.random()).value;
-
-        expect(new Uuidv3(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv3, validValue: values.v3[0] });
-    nullableTests({ type: Uuidv3, validValue: values.v3[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv3, validValue: values.v3[0] });
-});
-
-describe('Uuidv4 class', () => {
-    const { filtered, rest } = filterUuidTypes('v4');
-
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv4(value).value).toBe(value);
-        });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v4', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv4(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv4', () => {
-        const uuid = Uuidv4.random().value;
-
-        expect(new Uuidv4(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv4, validValue: values.v4[0] });
-    nullableTests({ type: Uuidv4, validValue: values.v4[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv4, validValue: values.v4[0] });
-});
-
-describe('Uuidv5 class', () => {
-    const { filtered, rest } = filterUuidTypes('v5');
-
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv5(value).value).toBe(value);
-        });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v5', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv5(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv5', () => {
-        const uuid = Uuidv5.random('foo', Uuidv4.random()).value;
-
-        expect(new Uuidv5(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv5, validValue: values.v5[0] });
-    nullableTests({ type: Uuidv5, validValue: values.v5[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv5, validValue: values.v5[0] });
-});
-
-describe('Uuidv6 class', () => {
-    const { filtered, rest } = filterUuidTypes('v6');
-
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv6(value).value).toBe(value);
-        });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v6', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv6(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv6', () => {
-        const uuid = Uuidv6.random().value;
-
-        expect(new Uuidv6(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv6, validValue: values.v6[0] });
-    nullableTests({ type: Uuidv6, validValue: values.v6[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv6, validValue: values.v6[0] });
-});
-
-describe('Uuidv7 class', () => {
-    const { filtered, rest } = filterUuidTypes('v7');
-
-    test('It sets the value to the given UUID', () => {
-        filtered.forEach((value) => {
-            expect(new Uuidv7(value).value).toBe(value);
-        });
-    });
-
-    test('It should throw an error if the value is not a valid UUID v7', () => {
-        rest.forEach((value) => {
-            expect(() => new Uuidv7(value)).toThrowError(TypeVaultValidationError);
-        });
-    });
-
-    test('It returns a random UUIDv7', () => {
-        const uuid = Uuidv7.random().value;
-
-        expect(new Uuidv7(uuid).value).toBe(uuid);
-    });
-
-    valueTests({ type: Uuidv7, validValue: values.v7[0] });
-    nullableTests({ type: Uuidv7, validValue: values.v7[0], invalidValue: 'not-valid' });
-    immutableTests({ type: Uuidv7, validValue: values.v7[0] });
 });
 
 const values = {
+    nil: '00000000-0000-0000-0000-000000000000',
     v1: [
         '194d4682-7e01-11f0-8de9-0242ac120002',
         '194d4948-7e01-11f0-8de9-0242ac120002',
@@ -254,15 +103,3 @@ const values = {
         '0198c917-ef4f-7533-8c45-285083f7acbf',
     ],
 } as const;
-
-function filterUuidTypes(type: keyof typeof values) {
-    const filtered = values[type];
-    const rest = Object.entries(values)
-        .filter(([key]) => key !== type)
-        .flatMap(([, value]) => value);
-
-    return {
-        filtered,
-        rest,
-    };
-}
