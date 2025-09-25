@@ -13,9 +13,6 @@ export { Uuid } from './types/uuid.js';
 export { TypeVaultError } from './errors/typeVaultError.js';
 export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
 
-export { DateTimeUnit } from './enum/dateTimeUnit.js';
-export { Timezone } from './enum/timezone.js';
-
 export { BaseBoolean } from './types/baseBoolean.js';
 export { BaseNumber } from './types/baseNumber.js';
 export { BaseString } from './types/baseString.js';
