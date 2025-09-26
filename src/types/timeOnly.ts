@@ -7,7 +7,17 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     TimeOnlyString
 > {
     protected modifier(value: unknown) {
-        return modifier(value) as TimeOnlyString;
+        const valueString = `${value}`;
+
+        const matches = valueString.match(/^(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?/);
+
+        if (!matches) {
+            return valueString as TimeOnlyString;
+        }
+
+        const [, hour, minute, second, millisecond = '000'] = matches;
+
+        return `${hour}:${minute}:${second}.${millisecond}` as TimeOnlyString;
     }
 
     protected validate(value: string): boolean {
@@ -15,7 +25,7 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        return Boolean(value.match(/^\d{2}:\d{2}:\d{2}(.\d{3})?$/));
+        return Boolean(value.match(/^\d{2}:\d{2}:\d{2}.\d{3}$/));
     }
 
     public static nullable(value: TimeOnlyString | null = null) {
@@ -25,12 +35,4 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     public static immutable(value: TimeOnlyString) {
         return new TimeOnly(value, { immutable: true });
     }
-}
-
-function modifier(value: unknown): string {
-    if (value instanceof TimeOnly) {
-        value = value.value;
-    }
-
-    return value as string;
 }
