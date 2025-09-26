@@ -7,7 +7,19 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     DateTimeString
 > {
     protected modifier(value: unknown) {
-        return modifier(value) as DateTimeString;
+        const valueString = `${value}`;
+
+        const matches = valueString.match(
+            /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?Z/
+        );
+
+        if (!matches) {
+            return valueString as DateTimeString;
+        }
+
+        const [, year, month, day, hour, minute, second, millisecond = '000'] = matches;
+
+        return `${year}-${month}-${day}T${hour}:${minute}:${second}.${millisecond}Z` as DateTimeString;
     }
 
     protected validate(value: string): boolean {
@@ -15,7 +27,7 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d{3})?Z$/;
+        const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
 
         return pattern.test(value);
     }
@@ -27,12 +39,4 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     public static immutable(value: DateTimeString) {
         return new DateTime(value, { immutable: true });
     }
-}
-
-function modifier(value: unknown): string {
-    if (value instanceof DateTime) {
-        value = value.value;
-    }
-
-    return value as string;
 }
