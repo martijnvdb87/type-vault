@@ -9,7 +9,7 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     protected modifier(value: unknown) {
         const valueString = `${value}`;
 
-        const matches = valueString.match(/^(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?/);
+        const matches = valueString.match(/^(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?$/);
 
         if (!matches) {
             return valueString as TimeOnlyString;
@@ -25,7 +25,19 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        return Boolean(value.match(/^\d{2}:\d{2}:\d{2}.\d{3}$/));
+        const pattern = /^\d{2}:\d{2}:\d{2}.\d{3}$/;
+
+        if (!pattern.test(value)) {
+            return false;
+        }
+
+        const date = new Date(toDateTimeString(value));
+
+        if (date.toString() === 'Invalid Date') {
+            return false;
+        }
+
+        return date.toISOString() === toDateTimeString(value);
     }
 
     public static nullable(value: TimeOnlyString | null = null) {
@@ -35,4 +47,8 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     public static immutable(value: TimeOnlyString) {
         return new TimeOnly(value, { immutable: true });
     }
+}
+
+function toDateTimeString(value: string) {
+    return `1000-01-01T${value}Z`;
 }
