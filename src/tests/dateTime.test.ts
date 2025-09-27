@@ -7,18 +7,48 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('DateTime class', () => {
+    const values = [
+        {
+            input: '2023-01-02T01:23:45.123Z',
+            output: '2023-01-02T01:23:45.123Z',
+        },
+        {
+            input: '2023-01-02T01:23:45Z',
+            output: '2023-01-02T01:23:45.000Z',
+        },
+        {
+            input: '1000-01-01T00:00:00.000Z',
+            output: '1000-01-01T00:00:00.000Z',
+        },
+        {
+            input: '9999-12-31T23:59:59.999Z',
+            output: '9999-12-31T23:59:59.999Z',
+        },
+    ] as const;
+
     test('It sets the correct value', () => {
-        const value = '2022-01-01T00:00:00.000Z';
+        for (const { input, output } of values) {
+            expect(new DateTime(input).value).toBe(output);
+        }
+    });
 
-        const dateTime = new DateTime(value);
-
-        expect(dateTime.value).toBe(value);
+    test('It throws an error if the value is not a supported date string', () => {
+        for (const value of [
+            '2023-01-02',
+            '2023-01-02T01:23:45',
+            '2023-01-02T01:23:45.123',
+            '999-12-31T23:59:59.999Z',
+            '10000-01-01T01:00:00.000Z',
+            '2000-13-31T23:59:59.999Z',
+        ]) {
+            expect(() => new DateTime(value as unknown as DateTimeString)).toThrowError(
+                TypeVaultValidationError
+            );
+        }
     });
 
     test('It throws an error if the value is not a string', () => {
-        const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
-
-        for (const value of values) {
+        for (const value of [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)]) {
             expect(() => new DateTime(value as unknown as DateTimeString)).toThrowError(
                 TypeVaultValidationError
             );
@@ -41,11 +71,13 @@ describe('DateTime class', () => {
         expect(dateTime.value).toBe('2024-02-03T02:34:51.234Z');
     });
 
-    valueTests({ type: DateTime, validValue: '2023-01-02T01:23:45.123Z' });
-    nullableTests({
-        type: DateTime,
-        validValue: '2023-01-02T01:23:45.123Z',
-        invalidValue: 'not-valid',
-    });
-    immutableTests({ type: DateTime, validValue: '2023-01-02T01:23:45.123Z' });
+    for (const validValue of values.map(({ output }) => output)) {
+        valueTests({ type: DateTime, validValue });
+        nullableTests({
+            type: DateTime,
+            validValue,
+            invalidValue: 'not-valid',
+        });
+        immutableTests({ type: DateTime, validValue });
+    }
 });

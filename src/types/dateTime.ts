@@ -29,7 +29,17 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
 
         const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
 
-        return pattern.test(value);
+        if (!pattern.test(value)) {
+            return false;
+        }
+
+        const date = new Date(value);
+
+        if (date.toString() === 'Invalid Date') {
+            return false;
+        }
+
+        return date.toISOString() === value;
     }
 
     public static nullable(value: DateTimeString | null = null) {
