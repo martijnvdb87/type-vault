@@ -71,6 +71,17 @@ describe('DateTime class', () => {
         expect(dateTime.value).toBe('2024-02-03T02:34:51.234Z');
     });
 
+    test('It return a Date instance', () => {
+        for (const { input, output } of values) {
+            const date = new DateTime(input).toDate();
+            expect(date instanceof Date).toBe(true);
+            expect(date.toISOString()).toBe(output);
+        }
+
+        const nullable = DateTime.nullable().toDate();
+        expect(nullable).toBeNull();
+    });
+
     for (const validValue of values.map(({ output }) => output)) {
         valueTests({ type: DateTime, validValue });
         nullableTests({

@@ -32,6 +32,10 @@ export abstract class Type<TOption extends TypeOption, TValue> {
         this.value = value as SetTypeValue<TOption, TValue>;
     }
 
+    public get options(): TypeOption {
+        return this[optionsSymbol];
+    }
+
     public get value(): TypeValue<TOption, TValue> {
         return this.dangerouslyModifyGetValue(this[valueSymbol]);
     }

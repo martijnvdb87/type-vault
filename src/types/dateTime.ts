@@ -6,6 +6,14 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     TOptions,
     DateTimeString
 > {
+    public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
+        if (this.options.nullable && this.value === null) {
+            return null as TOptions['nullable'] extends true ? Date | null : Date;
+        }
+
+        return new Date(this.value as DateTimeString);
+    }
+
     protected modifier(value: unknown) {
         const valueString = `${value}`;
 
