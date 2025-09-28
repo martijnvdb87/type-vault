@@ -40,6 +40,17 @@ describe('DateOnly class', () => {
         );
     });
 
+    test('It return a Date instance', () => {
+        for (const value of valid) {
+            const date = new DateOnly(value).toDate();
+            expect(date instanceof Date).toBe(true);
+            expect(date.toISOString()).toBe(`${value}T00:00:00.000Z`);
+        }
+
+        const nullable = DateOnly.nullable().toDate();
+        expect(nullable).toBeNull();
+    });
+
     for (const validValue of valid) {
         valueTests({ type: DateOnly, validValue });
         nullableTests({ type: DateOnly, validValue, invalidValue: 'not-valid' });

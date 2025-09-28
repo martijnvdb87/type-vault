@@ -6,6 +6,14 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     TOptions,
     DateOnlyString
 > {
+    public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
+        if (this.options.nullable && this.value === null) {
+            return null as TOptions['nullable'] extends true ? Date | null : Date;
+        }
+
+        return new Date(toDateTimeString(this.value as DateOnlyString));
+    }
+
     protected modifier(value: unknown) {
         return modifier(value) as DateOnlyString;
     }
