@@ -15,7 +15,19 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        return /^\d{4}-\d{2}-\d{2}$/.test(value);
+        const pattern = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!pattern.test(value)) {
+            return false;
+        }
+
+        const date = new Date(toDateTimeString(value));
+
+        if (date.toString() === 'Invalid Date') {
+            return false;
+        }
+
+        return date.toISOString() === toDateTimeString(value);
     }
 
     public static nullable(value: DateOnlyString | null = null) {
@@ -33,4 +45,8 @@ function modifier(value: unknown): string {
     }
 
     return value as string;
+}
+
+function toDateTimeString(value: string) {
+    return `${value}T00:00:00.000Z`;
 }

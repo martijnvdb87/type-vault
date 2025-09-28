@@ -7,12 +7,21 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('DateOnly class', () => {
+    const valid = ['1000-01-01', '9999-12-31', '2000-01-01'] as const;
+    const invalid = ['foo', '2000-13-01', '2000-01-32', '999-01-01', '10000-01-01'] as const;
+
     test('It sets the correct value', () => {
-        const value = '2022-01-01';
+        for (const value of valid) {
+            expect(new DateOnly(value).value).toBe(value);
+        }
+    });
 
-        const dateOnly = new DateOnly(value);
-
-        expect(dateOnly.value).toBe(value);
+    test('It throws an error if the value is not a supported date string', () => {
+        for (const value of invalid) {
+            expect(() => new DateOnly(value as unknown as DateOnlyString)).toThrowError(
+                TypeVaultValidationError
+            );
+        }
     });
 
     test('It throws an error if the value is not a string', () => {
@@ -31,7 +40,9 @@ describe('DateOnly class', () => {
         );
     });
 
-    valueTests({ type: DateOnly, validValue: '2023-01-01' });
-    nullableTests({ type: DateOnly, validValue: '2023-01-01', invalidValue: 'not-valid' });
-    immutableTests({ type: DateOnly, validValue: '2023-01-01' });
+    for (const validValue of valid) {
+        valueTests({ type: DateOnly, validValue });
+        nullableTests({ type: DateOnly, validValue, invalidValue: 'not-valid' });
+        immutableTests({ type: DateOnly, validValue });
+    }
 });
