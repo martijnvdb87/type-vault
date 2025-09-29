@@ -50,6 +50,10 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
         return date.toISOString() === value;
     }
 
+    public static fromDate(date: Date) {
+        return new DateTime(date.toISOString() as DateTimeString);
+    }
+
     public static nullable(value: DateTimeString | null = null) {
         return new DateTime(value, { nullable: true });
     }
