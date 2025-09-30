@@ -38,6 +38,13 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         return date.toISOString() === toDateTimeString(value);
     }
 
+    public static fromDate(date: Date) {
+        const dateString = date.toISOString();
+        const dateStringWithoutTime = dateString.split('T')[0];
+
+        return new DateOnly(dateStringWithoutTime as DateOnlyString);
+    }
+
     public static nullable(value: DateOnlyString | null = null) {
         return new DateOnly(value, { nullable: true });
     }

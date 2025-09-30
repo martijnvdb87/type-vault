@@ -83,11 +83,12 @@ describe('DateTime class', () => {
     });
 
     test('It return DateTime from Date', () => {
-        const dateTimeString = '2023-01-02T01:23:45.123Z';
-        const date = new Date(dateTimeString);
-        const instance = DateTime.fromDate(date);
-        expect(instance instanceof DateTime).toBe(true);
-        expect(date.toISOString()).toBe(dateTimeString);
+        for (const { input, output } of values) {
+            const date = new Date(input);
+            const instance = DateTime.fromDate(date);
+            expect(instance instanceof DateTime).toBe(true);
+            expect(instance.value).toBe(output);
+        }
     });
 
     for (const validValue of values.map(({ output }) => output)) {

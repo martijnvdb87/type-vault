@@ -51,6 +51,15 @@ describe('DateOnly class', () => {
         expect(nullable).toBeNull();
     });
 
+    test('It return DateOnly from Date', () => {
+        for (const value of valid) {
+            const date = new Date(value);
+            const instance = DateOnly.fromDate(date);
+            expect(instance instanceof DateOnly).toBe(true);
+            expect(instance.value).toBe(value);
+        }
+    });
+
     for (const validValue of valid) {
         valueTests({ type: DateOnly, validValue });
         nullableTests({ type: DateOnly, validValue, invalidValue: 'not-valid' });
