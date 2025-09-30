@@ -2,22 +2,37 @@ import { MonthString } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
+const months = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december',
+] as const;
+
 export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
     MonthString | Capitalize<MonthString>
 > {
-    public static January = new Month('january');
-    public static February = new Month('february');
-    public static March = new Month('march');
-    public static April = new Month('april');
-    public static May = new Month('may');
-    public static June = new Month('june');
-    public static July = new Month('july');
-    public static August = new Month('august');
-    public static September = new Month('september');
-    public static October = new Month('october');
-    public static November = new Month('november');
-    public static December = new Month('december');
+    public static January = new Month(months[0]);
+    public static February = new Month(months[1]);
+    public static March = new Month(months[2]);
+    public static April = new Month(months[3]);
+    public static May = new Month(months[4]);
+    public static June = new Month(months[5]);
+    public static July = new Month(months[6]);
+    public static August = new Month(months[7]);
+    public static September = new Month(months[8]);
+    public static October = new Month(months[9]);
+    public static November = new Month(months[10]);
+    public static December = new Month(months[11]);
 
     protected modifier(value: unknown) {
         if (value instanceof Month) {
@@ -32,20 +47,7 @@ export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
             return false;
         }
 
-        return [
-            'january',
-            'february',
-            'march',
-            'april',
-            'may',
-            'june',
-            'july',
-            'august',
-            'september',
-            'october',
-            'november',
-            'december',
-        ].some((month) => {
+        return months.some((month) => {
             return month === value.toLowerCase();
         });
     }
