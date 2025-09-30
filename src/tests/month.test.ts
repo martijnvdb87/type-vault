@@ -7,21 +7,23 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Month class', () => {
+    const months = [
+        Month.January,
+        Month.February,
+        Month.March,
+        Month.April,
+        Month.May,
+        Month.June,
+        Month.July,
+        Month.August,
+        Month.September,
+        Month.October,
+        Month.November,
+        Month.December,
+    ];
+
     test('It sets the corrent value', () => {
-        [
-            'january',
-            'february',
-            'march',
-            'april',
-            'may',
-            'june',
-            'july',
-            'august',
-            'september',
-            'october',
-            'november',
-            'december',
-        ].forEach((value) => {
+        months.forEach(({ value }) => {
             const month = new Month(value as MonthString);
 
             expect(month.value).toBe(value);
@@ -44,11 +46,13 @@ describe('Month class', () => {
         );
     });
 
-    valueTests({ type: Month, validValue: Month.January.value });
-    nullableTests({
-        type: Month,
-        validValue: Month.January.value,
-        invalidValue: 'not-valid',
-    });
-    immutableTests({ type: Month, validValue: Month.January.value });
+    for (const month of months) {
+        valueTests({ type: Month, validValue: month.value });
+        nullableTests({
+            type: Month,
+            validValue: month.value,
+            invalidValue: 'not-valid',
+        });
+        immutableTests({ type: Month, validValue: month.value });
+    }
 });

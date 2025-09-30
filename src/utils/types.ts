@@ -104,6 +104,15 @@ export type MonthString =
     | 'november'
     | 'december';
 
+export type WeekdayString =
+    | 'monday'
+    | 'tuesday'
+    | 'wednesday'
+    | 'thursday'
+    | 'friday'
+    | 'saturday'
+    | 'sunday';
+
 export type UuidString = `${string}-${string}-${string}-${string}-${string}`;
 
 export type ColorHexString = `#${string}`;
