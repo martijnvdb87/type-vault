@@ -7,12 +7,34 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('DateOnly class', () => {
-    const valid = ['1000-01-01', '9999-12-31', '2000-01-01'] as const;
-    const invalid = ['foo', '2000-13-01', '2000-01-32', '999-01-01', '10000-01-01'] as const;
+    const values = [
+        {
+            input: '0-01-01',
+            output: '0000-01-01',
+        },
+        {
+            input: '1-01-01',
+            output: '0001-01-01',
+        },
+        {
+            input: '1000-01-01',
+            output: '1000-01-01',
+        },
+        {
+            input: '9999-12-31',
+            output: '9999-12-31',
+        },
+        {
+            input: '2000-01-01',
+            output: '2000-01-01',
+        },
+    ] as const;
+
+    const invalid = ['foo', '2000-13-01', '2000-01-32', '10000-01-01'] as const;
 
     test('It sets the correct value', () => {
-        for (const value of valid) {
-            expect(new DateOnly(value).value).toBe(value);
+        for (const { input, output } of values) {
+            expect(new DateOnly(input).value).toBe(output);
         }
     });
 
@@ -41,10 +63,10 @@ describe('DateOnly class', () => {
     });
 
     test('It return a Date instance', () => {
-        for (const value of valid) {
-            const date = new DateOnly(value).toDate();
+        for (const { input, output } of values) {
+            const date = new DateOnly(input).toDate();
             expect(date instanceof Date).toBe(true);
-            expect(date.toISOString()).toBe(`${value}T00:00:00.000Z`);
+            expect(date.toISOString()).toBe(`${output}T00:00:00.000Z`);
         }
 
         const nullable = DateOnly.nullable().toDate();
@@ -52,15 +74,15 @@ describe('DateOnly class', () => {
     });
 
     test('It return DateOnly from Date', () => {
-        for (const value of valid) {
-            const date = new Date(value);
+        for (const { output } of values) {
+            const date = new Date(output);
             const instance = DateOnly.fromDate(date);
             expect(instance instanceof DateOnly).toBe(true);
-            expect(instance.value).toBe(value);
+            expect(instance.value).toBe(output);
         }
     });
 
-    for (const validValue of valid) {
+    for (const { output: validValue } of values) {
         valueTests({ type: DateOnly, validValue });
         nullableTests({ type: DateOnly, validValue, invalidValue: 'not-valid' });
         immutableTests({ type: DateOnly, validValue });

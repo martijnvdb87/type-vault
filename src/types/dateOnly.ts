@@ -15,7 +15,15 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     }
 
     protected modifier(value: unknown) {
-        return modifier(value) as DateOnlyString;
+        const valueString = `${value}`;
+
+        const matches = getComponents(valueString);
+
+        if (!matches) {
+            return valueString as DateOnlyString;
+        }
+
+        return getFormatFromComponents(matches);
     }
 
     protected validate(value: string): boolean {
@@ -23,19 +31,25 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        const pattern = /^\d{4}-\d{2}-\d{2}$/;
-
-        if (!pattern.test(value)) {
+        if (!isValidFormat(value)) {
             return false;
         }
 
-        const date = new Date(toDateTimeString(value));
+        const components = getComponents(value);
+
+        if (!components) {
+            return false;
+        }
+
+        const dateString = toDateTimeString(getFormatFromComponents(components));
+
+        const date = new Date(dateString);
 
         if (date.toString() === 'Invalid Date') {
             return false;
         }
 
-        return date.toISOString() === toDateTimeString(value);
+        return date.toISOString() === dateString;
     }
 
     public static fromDate(date: Date) {
@@ -54,14 +68,36 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     }
 }
 
-function modifier(value: unknown): string {
-    if (value instanceof DateOnly) {
-        value = value.value;
-    }
-
-    return value as string;
-}
-
 function toDateTimeString(value: string) {
     return `${value}T00:00:00.000Z`;
+}
+
+function getComponents(value: string) {
+    const matches = matchPattern(value);
+
+    if (matches === null) {
+        return null;
+    }
+
+    const [, year, month, day] = matches;
+
+    return {
+        year: year ? parseInt(year) : 0,
+        month: month ? parseInt(month) : 0,
+        day: day ? parseInt(day) : 0,
+    };
+}
+
+function getFormatFromComponents(options: { year: number; month: number; day: number }) {
+    const { year, month, day } = options;
+
+    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}` as DateOnlyString;
+}
+
+function isValidFormat(value: string) {
+    return Boolean(matchPattern(value));
+}
+
+function matchPattern(value: string) {
+    return value.match(/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/);
 }
