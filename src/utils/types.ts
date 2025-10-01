@@ -113,6 +113,9 @@ export type WeekdayString =
     | 'saturday'
     | 'sunday';
 
+export type DurationString =
+    Unpack<`P${`${number}Y` | ''}${`${number}M` | ''}${`${number}D` | ''}${`T${`${number}H` | ''}${`${number}M` | ''}${`${number}S` | ''}` | ''}`>;
+
 export type UuidString = `${string}-${string}-${string}-${string}-${string}`;
 
 export type ColorHexString = `#${string}`;
