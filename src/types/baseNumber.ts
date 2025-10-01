@@ -19,11 +19,11 @@ export abstract class BaseNumber<
             return false;
         }
 
-        if (number < Number.MIN_SAFE_INTEGER) {
+        if (number < this.min()) {
             return false;
         }
 
-        if (number > Number.MAX_SAFE_INTEGER) {
+        if (number > this.max()) {
             return false;
         }
 
