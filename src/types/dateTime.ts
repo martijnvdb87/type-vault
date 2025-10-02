@@ -17,17 +17,13 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     protected modifier(value: unknown) {
         const valueString = `${value}`;
 
-        const matches = valueString.match(
-            /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?Z/
-        );
+        const matches = getComponents(valueString);
 
         if (!matches) {
             return valueString as DateTimeString;
         }
 
-        const [, year, month, day, hour, minute, second, millisecond = '000'] = matches;
-
-        return `${year}-${month}-${day}T${hour}:${minute}:${second}.${millisecond}Z` as DateTimeString;
+        return getFormatFromComponents(matches);
     }
 
     protected validate(value: string): boolean {
@@ -35,19 +31,25 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        const pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
-
-        if (!pattern.test(value)) {
+        if (!isValidFormat(value)) {
             return false;
         }
 
-        const date = new Date(value);
+        const components = getComponents(value);
+
+        if (!components) {
+            return false;
+        }
+
+        const dateString = getFormatFromComponents(components);
+
+        const date = new Date(dateString);
 
         if (date.toString() === 'Invalid Date') {
             return false;
         }
 
-        return date.toISOString() === value;
+        return date.toISOString() === dateString;
     }
 
     public static fromDate(date: Date) {
@@ -61,4 +63,48 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     public static immutable(value: DateTimeString) {
         return new DateTime(value, { immutable: true });
     }
+}
+
+function getComponents(value: string) {
+    const matches = matchPattern(value);
+
+    if (matches === null) {
+        return null;
+    }
+
+    const [, year, month, day, hour, minute, second, millisecond] = matches;
+
+    return {
+        year: year ? parseInt(year) : 0,
+        month: month ? parseInt(month) : 0,
+        day: day ? parseInt(day) : 0,
+        hour: hour ? parseInt(hour) : 0,
+        minute: minute ? parseInt(minute) : 0,
+        second: second ? parseInt(second) : 0,
+        millisecond: millisecond ? parseInt(millisecond) : 0,
+    };
+}
+
+function getFormatFromComponents(options: {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+    minute: number;
+    second: number;
+    millisecond: number;
+}) {
+    const { year, month, day, hour, minute, second, millisecond } = options;
+
+    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}Z` as DateTimeString;
+}
+
+function isValidFormat(value: string) {
+    return Boolean(matchPattern(value));
+}
+
+function matchPattern(value: string) {
+    return value.match(
+        /^(\d{1,4})-(\d{1,2})-(\d{1,2})T(\d{1,2}):(\d{1,2}):(\d{1,2})(?:.(\d{1,3}))?Z$/
+    );
 }

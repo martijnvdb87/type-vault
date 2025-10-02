@@ -9,6 +9,14 @@ import { valueTests } from './utils/valueTests.js';
 describe('DateTime class', () => {
     const values = [
         {
+            input: '1-2-3T4:5:6.7Z',
+            output: '0001-02-03T04:05:06.700Z',
+        },
+        {
+            input: '0001-01-02T01:23:45.123Z',
+            output: '0001-01-02T01:23:45.123Z',
+        },
+        {
             input: '2023-01-02T01:23:45.123Z',
             output: '2023-01-02T01:23:45.123Z',
         },
@@ -37,7 +45,6 @@ describe('DateTime class', () => {
             '2023-01-02',
             '2023-01-02T01:23:45',
             '2023-01-02T01:23:45.123',
-            '999-12-31T23:59:59.999Z',
             '10000-01-01T01:00:00.000Z',
             '2000-13-31T23:59:59.999Z',
         ]) {
@@ -83,8 +90,8 @@ describe('DateTime class', () => {
     });
 
     test('It return DateTime from Date', () => {
-        for (const { input, output } of values) {
-            const date = new Date(input);
+        for (const { output } of values) {
+            const date = new Date(output);
             const instance = DateTime.fromDate(date);
             expect(instance instanceof DateTime).toBe(true);
             expect(instance.value).toBe(output);

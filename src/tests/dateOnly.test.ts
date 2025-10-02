@@ -9,11 +9,11 @@ import { valueTests } from './utils/valueTests.js';
 describe('DateOnly class', () => {
     const values = [
         {
-            input: '0-01-01',
+            input: '0-1-1',
             output: '0000-01-01',
         },
         {
-            input: '1-01-01',
+            input: '1-1-1',
             output: '0001-01-01',
         },
         {
