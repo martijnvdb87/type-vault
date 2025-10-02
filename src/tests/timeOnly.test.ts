@@ -9,6 +9,14 @@ import { valueTests } from './utils/valueTests.js';
 describe('TimeOnly class', () => {
     const values = [
         {
+            input: '0:0:0',
+            output: '00:00:00.000',
+        },
+        {
+            input: '1:2:3.4',
+            output: '01:02:03.400',
+        },
+        {
             input: '01:23:45.123',
             output: '01:23:45.123',
         },

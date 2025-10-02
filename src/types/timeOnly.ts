@@ -9,15 +9,13 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     protected modifier(value: unknown) {
         const valueString = `${value}`;
 
-        const matches = valueString.match(/^(\d{2}):(\d{2}):(\d{2})(?:.(\d{3}))?$/);
+        const matches = getComponents(valueString);
 
         if (!matches) {
             return valueString as TimeOnlyString;
         }
 
-        const [, hour, minute, second, millisecond = '000'] = matches;
-
-        return `${hour}:${minute}:${second}.${millisecond}` as TimeOnlyString;
+        return getFormatFromComponents(matches);
     }
 
     protected validate(value: string): boolean {
@@ -25,19 +23,25 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
             return false;
         }
 
-        const pattern = /^\d{2}:\d{2}:\d{2}.\d{3}$/;
-
-        if (!pattern.test(value)) {
+        if (!isValidFormat(value)) {
             return false;
         }
 
-        const date = new Date(toDateTimeString(value));
+        const components = getComponents(value);
+
+        if (!components) {
+            return false;
+        }
+
+        const dateString = toDateTimeString(getFormatFromComponents(components));
+
+        const date = new Date(dateString);
 
         if (date.toString() === 'Invalid Date') {
             return false;
         }
 
-        return date.toISOString() === toDateTimeString(value);
+        return date.toISOString() === dateString;
     }
 
     public static nullable(value: TimeOnlyString | null = null) {
@@ -50,5 +54,41 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
 }
 
 function toDateTimeString(value: string) {
-    return `1000-01-01T${value}Z`;
+    return `0000-01-01T${value}Z`;
+}
+
+function getComponents(value: string) {
+    const matches = matchPattern(value);
+
+    if (matches === null) {
+        return null;
+    }
+
+    const [, hour, minute, second, millisecond] = matches;
+
+    return {
+        hour: hour ? parseInt(hour) : 0,
+        minute: minute ? parseInt(minute) : 0,
+        second: second ? parseInt(second) : 0,
+        millisecond: millisecond ? parseInt(millisecond) : 0,
+    };
+}
+
+function getFormatFromComponents(options: {
+    hour: number;
+    minute: number;
+    second: number;
+    millisecond: number;
+}) {
+    const { hour, minute, second, millisecond } = options;
+
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}` as TimeOnlyString;
+}
+
+function isValidFormat(value: string) {
+    return Boolean(matchPattern(value));
+}
+
+function matchPattern(value: string) {
+    return value.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})(?:.(\d{1,3}))?$/);
 }
