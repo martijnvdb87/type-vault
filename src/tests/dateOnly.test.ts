@@ -38,7 +38,7 @@ describe('DateOnly class', () => {
         }
     });
 
-    test('It throws an error if the value is not a supported date string', () => {
+    test('It throws an error if the value is not a supported value', () => {
         for (const value of invalid) {
             expect(() => new DateOnly(value as unknown as DateOnlyString)).toThrowError(
                 TypeVaultValidationError

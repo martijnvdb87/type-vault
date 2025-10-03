@@ -52,7 +52,7 @@ describe('Duration class', () => {
         }
     });
 
-    test('It throws an error if the value is not a supported date string', () => {
+    test('It throws an error if the value is not a supported value', () => {
         for (const value of [
             '3Y6M4DT12H30M5S',
             'P3Y6M4D12H30M5S',

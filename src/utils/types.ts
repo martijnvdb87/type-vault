@@ -64,7 +64,7 @@ export type LetterUpperCase =
 
 export type Letter = Unpack<LetterLowerCase | LetterUpperCase>;
 
-export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type Alphanumeric = Unpack<Letter | Digit>;
 
@@ -129,3 +129,5 @@ export type ColorHslString =
 
 export type ColorOklchString =
     `oklch${'a' | ''}(${number}${'%' | ''} ${number}${'%' | ''} ${number}${'deg' | ''}${`${' ' | ''}/${' ' | ''}${number}${'%' | ''}` | ''})`;
+
+export type PhoneNumberString = `+${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}${number}`;

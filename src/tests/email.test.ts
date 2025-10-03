@@ -44,9 +44,7 @@ describe('Email class', () => {
 
         for (const value of values) {
             // @ts-expect-error Type error expected
-            expect(() => new Email(value as unknown as string)).toThrowError(
-                TypeVaultValidationError
-            );
+            expect(() => new Email(value)).toThrowError(TypeVaultValidationError);
         }
     });
 

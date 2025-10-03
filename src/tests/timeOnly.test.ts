@@ -40,7 +40,7 @@ describe('TimeOnly class', () => {
         }
     });
 
-    test('It throws an error if the value is not a supported date string', () => {
+    test('It throws an error if the value is not a supported value', () => {
         for (const value of [
             '24:23:45',
             '01:23:45.1000',

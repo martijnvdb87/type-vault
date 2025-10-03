@@ -40,7 +40,7 @@ describe('DateTime class', () => {
         }
     });
 
-    test('It throws an error if the value is not a supported date string', () => {
+    test('It throws an error if the value is not a supported value', () => {
         for (const value of [
             '2023-01-02',
             '2023-01-02T01:23:45',
