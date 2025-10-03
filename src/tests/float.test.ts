@@ -6,49 +6,50 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Float class', () => {
-    test('It sets the correct value', () => {
-        const values = [
-            Number.MIN_SAFE_INTEGER,
-            -99 - 1,
-            0,
-            1,
-            99,
-            Number.MAX_SAFE_INTEGER,
-            -2,
-            -1.9,
-            -1.1,
-            -1,
-            -0.9,
-            -0.1,
-            0,
-            0.1,
-            0.9,
-            1,
-            1.1,
-            1.9,
-            2,
-            Number(-2),
-            Number(-1.9),
-            Number(-1.1),
-            Number(-1),
-            Number(-0.9),
-            Number(-0.1),
-            Number(0),
-            Number(0.1),
-            Number(0.9),
-            Number(1),
-            Number(1.1),
-            Number(1.9),
-            Number(2),
-            Number(Number.MIN_SAFE_INTEGER),
-            Number(-99),
-            Number(-1),
-            Number(0),
-            Number(1),
-            Number(99),
-            Number(Number.MAX_SAFE_INTEGER),
-        ];
+    const values = [
+        Number.MIN_SAFE_INTEGER,
+        -99 - 1,
+        0,
+        1,
+        99,
+        Number.MAX_SAFE_INTEGER,
+        -2,
+        -1.9,
+        -1.1,
+        -1,
+        -0.9,
+        -0.1,
+        0,
+        0.1,
+        0.9,
+        1,
+        1.1,
+        1.9,
+        2,
+        3.14159265359,
+        Number(-2),
+        Number(-1.9),
+        Number(-1.1),
+        Number(-1),
+        Number(-0.9),
+        Number(-0.1),
+        Number(0),
+        Number(0.1),
+        Number(0.9),
+        Number(1),
+        Number(1.1),
+        Number(1.9),
+        Number(2),
+        Number(Number.MIN_SAFE_INTEGER),
+        Number(-99),
+        Number(-1),
+        Number(0),
+        Number(1),
+        Number(99),
+        Number(Number.MAX_SAFE_INTEGER),
+    ];
 
+    test('It sets the correct value', () => {
         for (const value of values) {
             expect(new Float(value).value).toBe(value);
         }
@@ -82,11 +83,13 @@ describe('Float class', () => {
         expect(() => new Float(-Infinity)).toThrowError(TypeVaultValidationError);
     });
 
-    valueTests({ type: Float, validValue: 3.14159265359 });
-    nullableTests({
-        type: Float,
-        validValue: 3.14159265359,
-        invalidValue: 'not-valid',
-    });
-    immutableTests({ type: Float, validValue: 3.14159265359 });
+    for (const validValue of values) {
+        valueTests({ type: Float, validValue });
+        nullableTests({
+            type: Float,
+            validValue,
+            invalidValue: 'not-valid',
+        });
+        immutableTests({ type: Float, validValue });
+    }
 });
