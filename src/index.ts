@@ -12,6 +12,8 @@ export { Email } from './types/email.js';
 export { Float } from './types/float.js';
 export { Integer } from './types/integer.js';
 export { Month } from './types/month.js';
+export { Percentage } from './types/percentage.js';
+export { PhoneNumber } from './types/phoneNumber.js';
 export { Text } from './types/text.js';
 export { TimeOnly } from './types/timeOnly.js';
 export { Url } from './types/url.js';
