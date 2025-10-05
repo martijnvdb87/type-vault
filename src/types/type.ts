@@ -27,7 +27,7 @@ export abstract class Type<TOption extends TypeOption, TValue> {
     protected [optionsSymbol]: TypeOption;
 
     public constructor(value: TypeValue<TOption, TValue>, options?: TOption) {
-        this[optionsSymbol] = options ?? { nullable: false };
+        this[optionsSymbol] = options ?? { nullable: false, immutable: false };
 
         this.value = value as SetTypeValue<TOption, TValue>;
     }
