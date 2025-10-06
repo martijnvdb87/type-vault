@@ -50,4 +50,26 @@ describe('Collection class', () => {
             expect(() => collection.concat(other)).toThrowError();
         });
     });
+
+    describe('Every method', () => {
+        test('It returns true', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.every((item) => item.value < 4)).toBe(true);
+        });
+
+        test('It returns false', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.every((item) => item.value > 2)).toBe(false);
+        });
+    });
 });

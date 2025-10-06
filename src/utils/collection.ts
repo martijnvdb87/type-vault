@@ -29,6 +29,10 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         other.toArray().forEach((item) => this.push(item));
     }
 
+    public every(callback: (item: InstanceType<TType>) => boolean) {
+        return this[valueSymbol].every(callback);
+    }
+
     public push(item: InstanceType<TType>) {
         if (!(item instanceof this.type)) {
             throw new TypeVaultValidationError();
