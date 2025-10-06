@@ -41,6 +41,10 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].find(callback);
     }
 
+    public findIndex(callback: (item: InstanceType<TType>) => boolean) {
+        return this[valueSymbol].findIndex(callback);
+    }
+
     public push(item: InstanceType<TType>) {
         if (!(item instanceof this.type)) {
             throw new TypeVaultValidationError();

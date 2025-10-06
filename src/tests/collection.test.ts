@@ -114,4 +114,30 @@ describe('Collection class', () => {
             expect(found).toBeUndefined();
         });
     });
+
+    describe('FindIndex method', () => {
+        test('It returns found index', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.findIndex((item) => item.value === 2);
+
+            expect(found).toBe(1);
+        });
+
+        test('It returns -1 if not found', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.findIndex((item) => item.value === 4);
+
+            expect(found).toBe(-1);
+        });
+    });
 });
