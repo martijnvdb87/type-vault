@@ -72,4 +72,19 @@ describe('Collection class', () => {
             expect(collection.every((item) => item.value > 2)).toBe(false);
         });
     });
+
+    describe('Filter method', () => {
+        test('It returns filtered collection', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const filtered = collection.filter((item) => item.value < 3);
+
+            expect(filtered.type).toBe(Integer);
+            expect(filtered.toArray()).toEqual([new Integer(1), new Integer(2)]);
+        });
+    });
 });
