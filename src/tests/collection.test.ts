@@ -140,4 +140,20 @@ describe('Collection class', () => {
             expect(found).toBe(-1);
         });
     });
+
+    describe('ForEach method', () => {
+        test('It calls the callback', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            collection.forEach((item, index, array) => {
+                expect(item instanceof Integer).toBe(true);
+                expect(item.value).toBe(index + 1);
+                expect(array).toBe(collection.toArray());
+            });
+        });
+    });
 });

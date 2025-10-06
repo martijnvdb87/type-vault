@@ -45,6 +45,12 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].findIndex(callback);
     }
 
+    public forEach(
+        callback: (item: InstanceType<TType>, index: number, array: InstanceType<TType>[]) => void
+    ) {
+        this[valueSymbol].forEach(callback);
+    }
+
     public push(item: InstanceType<TType>) {
         if (!(item instanceof this.type)) {
             throw new TypeVaultValidationError();
