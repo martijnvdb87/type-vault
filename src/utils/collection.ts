@@ -21,6 +21,14 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[typeSymbol];
     }
 
+    public concat(other: Collection<TType>) {
+        if (this.type !== other.type) {
+            throw new TypeVaultValidationError();
+        }
+
+        other.toArray().forEach((item) => this.push(item));
+    }
+
     public push(item: InstanceType<TType>) {
         if (!(item instanceof this.type)) {
             throw new TypeVaultValidationError();
