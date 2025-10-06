@@ -5,20 +5,31 @@ export type CollectionOption = {
     immutable?: boolean;
 };
 
+const typeSymbol = Symbol('typ');
 const valueSymbol = Symbol('value');
 
 export class Collection<TType extends typeof Type<TypeOption, unknown>> {
-    declare protected [valueSymbol]: InstanceType<TType>[];
+    protected [typeSymbol]: TType;
+    protected [valueSymbol]: InstanceType<TType>[] = [];
 
     public constructor(type: TType, value: InstanceType<TType>[] = []) {
+        this[typeSymbol] = type;
         value.forEach((item) => this.push(item));
     }
 
+    public get type() {
+        return this[typeSymbol];
+    }
+
     public push(item: InstanceType<TType>) {
-        if (!(item instanceof Type)) {
+        if (!(item instanceof this.type)) {
             throw new TypeVaultValidationError();
         }
 
         this[valueSymbol].push(item);
+    }
+
+    public toArray() {
+        return this[valueSymbol];
     }
 }
