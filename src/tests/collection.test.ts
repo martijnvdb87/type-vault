@@ -87,4 +87,31 @@ describe('Collection class', () => {
             expect(filtered.toArray()).toEqual([new Integer(1), new Integer(2)]);
         });
     });
+
+    describe('Find method', () => {
+        test('It returns found item', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.find((item) => item.value === 2);
+
+            expect(found instanceof Integer).toBe(true);
+            expect(found?.value).toBe(2);
+        });
+
+        test('It returns undefined if not found', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.find((item) => item.value === 4);
+
+            expect(found).toBeUndefined();
+        });
+    });
 });
