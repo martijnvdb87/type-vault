@@ -156,4 +156,87 @@ describe('Collection class', () => {
             });
         });
     });
+
+    describe('Includes method', () => {
+        test('It returns true', () => {
+            const item = new Integer(2);
+
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                item,
+                new Integer(3),
+                item,
+            ]);
+
+            expect(collection.includes(item)).toBe(true);
+        });
+
+        test('It returns false', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.includes(new Integer(4))).toBe(false);
+        });
+    });
+
+    describe('IndexOf method', () => {
+        test('It returns found index', () => {
+            const item = new Integer(2);
+
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                item,
+                new Integer(3),
+                item,
+            ]);
+
+            const found = collection.indexOf(item);
+
+            expect(found).toBe(1);
+        });
+
+        test('It returns -1 if not found', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.indexOf(new Integer(4));
+
+            expect(found).toBe(-1);
+        });
+    });
+
+    describe('LastIndexOf method', () => {
+        test('It returns found index', () => {
+            const item = new Integer(2);
+
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                item,
+                new Integer(3),
+                item,
+            ]);
+
+            const found = collection.lastIndexOf(item);
+
+            expect(found).toBe(3);
+        });
+
+        test('It returns -1 if not found', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.lastIndexOf(new Integer(4));
+
+            expect(found).toBe(-1);
+        });
+    });
 });

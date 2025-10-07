@@ -59,6 +59,18 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         this[valueSymbol].push(item);
     }
 
+    public includes(item: InstanceType<TType>) {
+        return this[valueSymbol].includes(item);
+    }
+
+    public indexOf(item: InstanceType<TType>) {
+        return this[valueSymbol].indexOf(item);
+    }
+
+    public lastIndexOf(item: InstanceType<TType>) {
+        return this[valueSymbol].lastIndexOf(item);
+    }
+
     public toArray() {
         return this[valueSymbol];
     }
