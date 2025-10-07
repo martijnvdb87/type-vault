@@ -239,4 +239,47 @@ describe('Collection class', () => {
             expect(found).toBe(-1);
         });
     });
+
+    describe('Map method', () => {
+        test('It calls the callback', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const mapped = collection.map((item) => item.value);
+
+            expect(mapped).toEqual([1, 2, 3]);
+        });
+    });
+
+    describe('Pop method', () => {
+        test('It returns the last item', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const item = collection.pop();
+
+            expect(item instanceof Integer).toBe(true);
+            expect(item?.value).toBe(3);
+
+            expect(collection.length()).toEqual(2);
+        });
+    });
+
+    describe('Length method', () => {
+        test('It returns the length', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.length()).toEqual(3);
+        });
+    });
 });

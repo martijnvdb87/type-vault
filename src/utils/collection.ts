@@ -71,6 +71,18 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].lastIndexOf(item);
     }
 
+    public map<TElement>(callback: (item: InstanceType<TType>) => TElement) {
+        return this[valueSymbol].map<TElement>(callback);
+    }
+
+    public pop() {
+        return this[valueSymbol].pop();
+    }
+
+    public length() {
+        return this[valueSymbol].length;
+    }
+
     public toArray() {
         return this[valueSymbol];
     }
