@@ -51,14 +51,6 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         this[valueSymbol].forEach(callback);
     }
 
-    public push(item: InstanceType<TType>) {
-        if (!(item instanceof this.type)) {
-            throw new TypeVaultValidationError();
-        }
-
-        this[valueSymbol].push(item);
-    }
-
     public includes(item: InstanceType<TType>) {
         return this[valueSymbol].includes(item);
     }
@@ -77,6 +69,31 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
 
     public pop() {
         return this[valueSymbol].pop();
+    }
+
+    public push(...items: InstanceType<TType>[]) {
+        for (const item of items) {
+            if (!(item instanceof this.type)) {
+                throw new TypeVaultValidationError();
+            }
+
+            this[valueSymbol].push(item);
+        }
+    }
+
+    public reduce<TElement>(
+        callback: (previousValue: TElement, item: InstanceType<TType>) => TElement,
+        initialValue: TElement
+    ) {
+        return this[valueSymbol].reduce(callback, initialValue);
+    }
+
+    public shift() {
+        return this[valueSymbol].shift();
+    }
+
+    public some(callback: (item: InstanceType<TType>) => boolean) {
+        return this[valueSymbol].some(callback);
     }
 
     public length() {

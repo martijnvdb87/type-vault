@@ -1,3 +1,4 @@
+import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Float } from '@/types/float.js';
 import { Integer } from '@/types/integer.js';
 import { Collection } from '@/utils/collection.js';
@@ -268,6 +269,88 @@ describe('Collection class', () => {
             expect(item?.value).toBe(3);
 
             expect(collection.length()).toEqual(2);
+        });
+    });
+
+    describe('Push method', () => {
+        test('It adds the item', () => {
+            const collection = new Collection(Integer);
+
+            collection.push(new Integer(1));
+            collection.push(new Integer(2));
+            collection.push(new Integer(3));
+
+            expect(collection.length()).toEqual(3);
+        });
+
+        test('It adds multiple items', () => {
+            const collection = new Collection(Integer);
+
+            collection.push(new Integer(1), new Integer(2), new Integer(3));
+
+            expect(collection.length()).toEqual(3);
+        });
+
+        test('It throws an error if the item is not of the same type', () => {
+            const collection = new Collection(Integer);
+
+            expect(() => {
+                // @ts-expect-error Type error expected
+                collection.push(new String('1'));
+            }).toThrowError(TypeVaultValidationError);
+        });
+    });
+
+    describe('Reduce method', () => {
+        test('It calls the callback', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const reduced = collection.reduce((previousValue, item) => {
+                return previousValue + item.value;
+            }, 0);
+
+            expect(reduced).toEqual(6);
+        });
+    });
+
+    describe('Shift method', () => {
+        test('It returns the first item', () => {
+            const item = new Integer(1);
+
+            const collection = new Collection(Integer, [item, new Integer(2), new Integer(3)]);
+
+            const firstItem = collection.shift();
+
+            expect(firstItem instanceof Integer).toBe(true);
+            expect(firstItem).toBe(item);
+
+            expect(collection.length()).toEqual(2);
+        });
+
+        test('It returns undefined if the collection is empty', () => {
+            const collection = new Collection(Integer);
+
+            const item = collection.shift();
+
+            expect(item).toBeUndefined();
+        });
+    });
+
+    describe('Some method', () => {
+        test('It returns true', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const found = collection.some((item) => item.value === 2);
+
+            expect(found).toBe(true);
         });
     });
 
