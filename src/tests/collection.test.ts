@@ -255,6 +255,18 @@ describe('Collection class', () => {
         });
     });
 
+    describe('Length method', () => {
+        test('It returns the length', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.length()).toEqual(3);
+        });
+    });
+
     describe('Pop method', () => {
         test('It returns the last item', () => {
             const collection = new Collection(Integer, [
@@ -314,6 +326,20 @@ describe('Collection class', () => {
             }, 0);
 
             expect(reduced).toEqual(6);
+        });
+    });
+
+    describe('Reverse method', () => {
+        test('It reverses the collection', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const reversed = collection.reverse();
+
+            expect(reversed).toEqual([new Integer(3), new Integer(2), new Integer(1)]);
         });
     });
 
@@ -383,6 +409,18 @@ describe('Collection class', () => {
         });
     });
 
+    describe('ToArray method', () => {
+        test('It returns an array', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.toArray()).toEqual([new Integer(1), new Integer(2), new Integer(3)]);
+        });
+    });
+
     describe('ToString method', () => {
         test('It returns a string', () => {
             const collection = new Collection(Integer, [
@@ -395,15 +433,27 @@ describe('Collection class', () => {
         });
     });
 
-    describe('Length method', () => {
-        test('It returns the length', () => {
+    describe('Unshift method', () => {
+        test('It adds the item', () => {
+            const collection = new Collection(Integer);
+
+            collection.unshift(new Integer(1));
+            collection.unshift(new Integer(2));
+            collection.unshift(new Integer(3));
+
+            expect(collection.length()).toEqual(3);
+        });
+    });
+
+    describe('Values method', () => {
+        test('It returns an array', () => {
             const collection = new Collection(Integer, [
                 new Integer(1),
                 new Integer(2),
                 new Integer(3),
             ]);
 
-            expect(collection.length()).toEqual(3);
+            expect(collection.values()).toEqual([new Integer(1), new Integer(2), new Integer(3)]);
         });
     });
 });

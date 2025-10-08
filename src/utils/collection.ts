@@ -67,6 +67,10 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].map<TElement>(callback);
     }
 
+    public length() {
+        return this[valueSymbol].length;
+    }
+
     public pop() {
         return this[valueSymbol].pop();
     }
@@ -88,6 +92,10 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].reduce(callback, initialValue);
     }
 
+    public reverse() {
+        return this[valueSymbol].reverse();
+    }
+
     public shift() {
         return this[valueSymbol].shift();
     }
@@ -104,15 +112,19 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].splice(start, deleteCount);
     }
 
+    public toArray() {
+        return this[valueSymbol];
+    }
+
     public toString() {
         return this[valueSymbol].map((item) => item.toString()).join();
     }
 
-    public length() {
-        return this[valueSymbol].length;
+    public unshift(...items: InstanceType<TType>[]) {
+        return this[valueSymbol].unshift(...items);
     }
 
-    public toArray() {
+    public values() {
         return this[valueSymbol];
     }
 }
