@@ -1,5 +1,7 @@
 export { Type, TypeOption, TypeValue } from './types/type.js';
 
+export * from './utils/types.js';
+
 export { Color } from './types/color.js';
 export { ColorHex } from './types/colorHex.js';
 export { ColorHsl } from './types/colorHsl.js';
