@@ -354,6 +354,47 @@ describe('Collection class', () => {
         });
     });
 
+    describe('Sort method', () => {
+        test('It sorts the collection', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const sorted = collection.sort((a, b) => b.value - a.value);
+
+            expect(sorted).toEqual([new Integer(3), new Integer(2), new Integer(1)]);
+        });
+    });
+
+    describe('Splice method', () => {
+        test('It returns the removed items', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            const removed = collection.splice(1, 1);
+
+            expect(removed).toEqual([new Integer(2)]);
+            expect(collection.length()).toEqual(2);
+        });
+    });
+
+    describe('ToString method', () => {
+        test('It returns a string', () => {
+            const collection = new Collection(Integer, [
+                new Integer(1),
+                new Integer(2),
+                new Integer(3),
+            ]);
+
+            expect(collection.toString()).toEqual('1,2,3');
+        });
+    });
+
     describe('Length method', () => {
         test('It returns the length', () => {
             const collection = new Collection(Integer, [

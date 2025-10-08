@@ -96,6 +96,18 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[valueSymbol].some(callback);
     }
 
+    public sort(compareFunction?: (a: InstanceType<TType>, b: InstanceType<TType>) => number) {
+        return this[valueSymbol].sort(compareFunction);
+    }
+
+    public splice(start: number, deleteCount?: number) {
+        return this[valueSymbol].splice(start, deleteCount);
+    }
+
+    public toString() {
+        return this[valueSymbol].map((item) => item.toString()).join();
+    }
+
     public length() {
         return this[valueSymbol].length;
     }
