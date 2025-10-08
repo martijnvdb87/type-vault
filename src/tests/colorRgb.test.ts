@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorRgb } from '@/types/colorRgb.js';
-import { ColorRgbString } from '@/utils/types.js';
+import { ColorRgbValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -202,7 +202,7 @@ describe('ColorRgb class', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new ColorRgb(value as unknown as ColorRgbString)).toThrowError(
+            expect(() => new ColorRgb(value as unknown as ColorRgbValue)).toThrowError(
                 TypeVaultValidationError
             );
         }

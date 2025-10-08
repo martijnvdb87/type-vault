@@ -1,4 +1,4 @@
-import { Email as EmailPattern } from '@/utils/types.js';
+import { EmailValue as EmailPattern } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 

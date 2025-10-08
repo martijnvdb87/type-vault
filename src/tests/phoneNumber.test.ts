@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { PhoneNumber } from '@/types/phoneNumber.js';
-import { PhoneNumberString } from '@/utils/types.js';
+import { PhoneNumberValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -19,7 +19,7 @@ describe('PhoneNumber class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new PhoneNumber(value as unknown as PhoneNumberString)).toThrowError(
+            expect(() => new PhoneNumber(value as unknown as PhoneNumberValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -27,7 +27,7 @@ describe('PhoneNumber class', () => {
 
     test('It throws an error if the value is not a supported value', () => {
         for (const value of ['+0987654321', '+1234567891234567', '1234567890', '00123456789']) {
-            expect(() => new PhoneNumber(value as unknown as PhoneNumberString)).toThrowError(
+            expect(() => new PhoneNumber(value as unknown as PhoneNumberValue)).toThrowError(
                 TypeVaultValidationError
             );
         }

@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorHsl } from '@/types/colorHsl.js';
-import { ColorHslString } from '@/utils/types.js';
+import { ColorHslValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -159,7 +159,7 @@ describe('ColorHsl class', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new ColorHsl(value as unknown as ColorHslString)).toThrowError(
+            expect(() => new ColorHsl(value as unknown as ColorHslValue)).toThrowError(
                 TypeVaultValidationError
             );
         }

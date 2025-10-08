@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorOklch } from '@/types/colorOklch.js';
-import { ColorOklchString } from '@/utils/types.js';
+import { ColorOklchValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -68,7 +68,7 @@ describe('ColorOklch class', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new ColorOklch(value as unknown as ColorOklchString)).toThrowError(
+            expect(() => new ColorOklch(value as unknown as ColorOklchValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -146,7 +146,7 @@ describe('ColorOklch class', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new ColorOklch(value as unknown as ColorOklchString)).toThrowError(
+            expect(() => new ColorOklch(value as unknown as ColorOklchValue)).toThrowError(
                 TypeVaultValidationError
             );
         }

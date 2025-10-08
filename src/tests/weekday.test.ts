@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Weekday } from '@/types/weekday.js';
-import { WeekdayString } from '@/utils/types.js';
+import { WeekdayValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -19,7 +19,7 @@ describe('Weekday class', () => {
 
     test('It sets the corrent value', () => {
         weekdays.forEach(({ value }) => {
-            const weekday = new Weekday(value as WeekdayString);
+            const weekday = new Weekday(value as WeekdayValue);
 
             expect(weekday.value).toBe(value);
         });
@@ -29,14 +29,14 @@ describe('Weekday class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new Weekday(value as unknown as WeekdayString)).toThrowError(
+            expect(() => new Weekday(value as unknown as WeekdayValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It return an error when the value is not a valid weekday', () => {
-        expect(() => new Weekday('foo' as unknown as WeekdayString)).toThrowError(
+        expect(() => new Weekday('foo' as unknown as WeekdayValue)).toThrowError(
             TypeVaultValidationError
         );
     });

@@ -1,5 +1,5 @@
 import { assertClamp } from '@/utils/numberUtils.js';
-import { ColorRgbString } from '@/utils/types.js';
+import { ColorRgbValue } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
@@ -12,7 +12,7 @@ const regex = {
 
 export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
     TOptions,
-    ColorRgbString
+    ColorRgbValue
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
@@ -26,7 +26,7 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
         return regex.getValue.test(String(value));
     }
 
-    protected modifier(value: unknown): ColorRgbString {
+    protected modifier(value: unknown): ColorRgbValue {
         const matches = String(value).match(regex.setValue);
 
         if (matches) {
@@ -52,7 +52,7 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
             });
         }
 
-        return value as ColorRgbString;
+        return value as ColorRgbValue;
     }
 
     public get red() {
@@ -95,11 +95,11 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
         this.value = numberToRgbString({ ...rgbToNumberValues(this.value), alpha });
     }
 
-    public static nullable(value: ColorRgbString | null = null) {
+    public static nullable(value: ColorRgbValue | null = null) {
         return new ColorRgb(value, { nullable: true });
     }
 
-    public static immutable(value: ColorRgbString) {
+    public static immutable(value: ColorRgbValue) {
         return new ColorRgb(value, { immutable: true });
     }
 }
@@ -121,11 +121,11 @@ function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
 
     return `rgb(${parts.red} ${parts.green} ${parts.blue} / ${parts.alpha}%)` as SetTypeValue<
         TOptions,
-        ColorRgbString
+        ColorRgbValue
     >;
 }
 
-function rgbToNumberValues(value: ColorRgbString | null) {
+function rgbToNumberValues(value: ColorRgbValue | null) {
     const matches = String(value ?? '').match(regex.getValue);
 
     if (matches === null) {

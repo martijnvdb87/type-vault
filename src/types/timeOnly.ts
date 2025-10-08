@@ -1,10 +1,10 @@
-import { TimeOnlyString } from '@/utils/types.js';
+import { TimeOnlyValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    TimeOnlyString
+    TimeOnlyValue
 > {
     protected modifier(value: unknown) {
         const valueString = `${value}`;
@@ -12,7 +12,7 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         const matches = getComponents(valueString);
 
         if (!matches) {
-            return valueString as TimeOnlyString;
+            return valueString as TimeOnlyValue;
         }
 
         return getFormatFromComponents(matches);
@@ -44,11 +44,11 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         return date.toISOString() === dateString;
     }
 
-    public static nullable(value: TimeOnlyString | null = null) {
+    public static nullable(value: TimeOnlyValue | null = null) {
         return new TimeOnly(value, { nullable: true });
     }
 
-    public static immutable(value: TimeOnlyString) {
+    public static immutable(value: TimeOnlyValue) {
         return new TimeOnly(value, { immutable: true });
     }
 }
@@ -82,7 +82,7 @@ function getFormatFromComponents(options: {
 }) {
     const { hour, minute, second, millisecond } = options;
 
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}` as TimeOnlyString;
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}` as TimeOnlyValue;
 }
 
 function isValidFormat(value: string) {

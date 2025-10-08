@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Uuid } from '@/types/uuid.js';
-import { UuidString } from '@/utils/types.js';
+import { UuidValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -16,25 +16,23 @@ describe('Uuid class', () => {
     });
 
     test('It should throw an error if the value is not a valid UUID', () => {
-        expect(() => new Uuid('example' as unknown as UuidString)).toThrowError(
+        expect(() => new Uuid('example' as unknown as UuidValue)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new Uuid('example.' as unknown as UuidString)).toThrowError(
+        expect(() => new Uuid('example.' as unknown as UuidValue)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new Uuid(undefined as unknown as UuidString)).toThrowError(
+        expect(() => new Uuid(undefined as unknown as UuidValue)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new Uuid(1 as unknown as UuidString)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid({} as unknown as UuidString)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid([] as unknown as UuidString)).toThrowError(TypeVaultValidationError);
-        expect(() => new Uuid(true as unknown as UuidString)).toThrowError(
+        expect(() => new Uuid(1 as unknown as UuidValue)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid({} as unknown as UuidValue)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid([] as unknown as UuidValue)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid(true as unknown as UuidValue)).toThrowError(TypeVaultValidationError);
+        expect(() => new Uuid(false as unknown as UuidValue)).toThrowError(
             TypeVaultValidationError
         );
-        expect(() => new Uuid(false as unknown as UuidString)).toThrowError(
-            TypeVaultValidationError
-        );
-        expect(() => new Uuid(BigInt(1) as unknown as UuidString)).toThrowError(
+        expect(() => new Uuid(BigInt(1) as unknown as UuidValue)).toThrowError(
             TypeVaultValidationError
         );
     });

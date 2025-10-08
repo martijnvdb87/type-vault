@@ -1,11 +1,11 @@
 import { assertClamp } from '@/utils/numberUtils.js';
-import { ColorHslString } from '@/utils/types.js';
+import { ColorHslValue } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
 export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
     TOptions,
-    ColorHslString
+    ColorHslValue
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
@@ -19,7 +19,7 @@ export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
         return Boolean(matchAbsoluteFormat(String(value)));
     }
 
-    protected modifier(value: unknown): ColorHslString {
+    protected modifier(value: unknown): ColorHslValue {
         {
             const match = matchAbsoluteFormat(String(value));
 
@@ -44,7 +44,7 @@ export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
             }
         }
 
-        return value as ColorHslString;
+        return value as ColorHslValue;
     }
 
     public get hue() {
@@ -87,11 +87,11 @@ export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
         this.value = valuesToHslString({ ...matchValueFormat(this.value), alpha });
     }
 
-    public static nullable(value: ColorHslString | null = null) {
+    public static nullable(value: ColorHslValue | null = null) {
         return new ColorHsl(value, { nullable: true });
     }
 
-    public static immutable(value: ColorHslString) {
+    public static immutable(value: ColorHslValue) {
         return new ColorHsl(value, { immutable: true });
     }
 }
@@ -200,6 +200,6 @@ function valuesToHslString<TOptions extends TypeOption = TypeOption>(options: {
 
     return `hsl(${hue}deg ${saturation}% ${lightness}% / ${alpha}%)` as SetTypeValue<
         TOptions,
-        ColorHslString
+        ColorHslValue
     >;
 }

@@ -1,11 +1,11 @@
 import { assertClamp } from '@/utils/numberUtils.js';
-import { ColorHexString } from '@/utils/types.js';
+import { ColorHexValue } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
 export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
     TOptions,
-    ColorHexString
+    ColorHexValue
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
@@ -19,7 +19,7 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
         return /^#[0-9a-fA-F]{8}$/.test(String(value));
     }
 
-    protected modifier(value: unknown): ColorHexString {
+    protected modifier(value: unknown): ColorHexValue {
         const shortNotation = String(value).match(/^#([0-9a-fA-F]{3})$/);
 
         if (shortNotation) {
@@ -39,10 +39,10 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
         const regularNotation = String(value).match(/^#([0-9a-fA-F]{6,8})$/);
 
         if (regularNotation) {
-            return `#${regularNotation[1].toLowerCase()}`.padEnd(9, 'f') as ColorHexString;
+            return `#${regularNotation[1].toLowerCase()}`.padEnd(9, 'f') as ColorHexValue;
         }
 
-        return value as ColorHexString;
+        return value as ColorHexValue;
     }
 
     public get red() {
@@ -89,11 +89,11 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
         return this.alpha / 2.55;
     }
 
-    public static nullable(value: ColorHexString | null = null) {
+    public static nullable(value: ColorHexValue | null = null) {
         return new ColorHex(value, { nullable: true });
     }
 
-    public static immutable(value: ColorHexString) {
+    public static immutable(value: ColorHexValue) {
         return new ColorHex(value, { immutable: true });
     }
 }
@@ -125,10 +125,10 @@ function numberToHexString<TOptions extends TypeOption = TypeOption>(options: {
         numberToHex(assertClamp(alpha, { min: 0, max: 255 })),
     ];
 
-    return `#${parts.join('')}` as SetTypeValue<TOptions, ColorHexString>;
+    return `#${parts.join('')}` as SetTypeValue<TOptions, ColorHexValue>;
 }
 
-function hexToNumberValues(value: ColorHexString | null) {
+function hexToNumberValues(value: ColorHexValue | null) {
     if (value === null) {
         return {
             red: 0,

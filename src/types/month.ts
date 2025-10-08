@@ -1,4 +1,4 @@
-import { MonthString } from '@/utils/types.js';
+import { MonthValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
@@ -19,7 +19,7 @@ const months = [
 
 export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    MonthString | Capitalize<MonthString>
+    MonthValue | Capitalize<MonthValue>
 > {
     public static January = new Month(months[0]);
     public static February = new Month(months[1]);
@@ -39,7 +39,7 @@ export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
             value = value.value;
         }
 
-        return value as MonthString;
+        return value as MonthValue;
     }
 
     protected validate(value: string): boolean {
@@ -52,11 +52,11 @@ export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
         });
     }
 
-    public static nullable(value: MonthString | null = null) {
+    public static nullable(value: MonthValue | null = null) {
         return new Month(value, { nullable: true });
     }
 
-    public static immutable(value: MonthString) {
+    public static immutable(value: MonthValue) {
         return new Month(value, { immutable: true });
     }
 }

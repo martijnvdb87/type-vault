@@ -1,4 +1,4 @@
-import { WeekdayString } from '@/utils/types.js';
+import { WeekdayValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
@@ -14,7 +14,7 @@ const weekdays = [
 
 export class Weekday<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    WeekdayString | Capitalize<WeekdayString>
+    WeekdayValue | Capitalize<WeekdayValue>
 > {
     public static Monday = new Weekday(weekdays[0]);
     public static Tuesday = new Weekday(weekdays[1]);
@@ -29,7 +29,7 @@ export class Weekday<TOptions extends TypeOption = TypeOption> extends BaseStrin
             value = value.value;
         }
 
-        return value as WeekdayString;
+        return value as WeekdayValue;
     }
 
     protected validate(value: string): boolean {
@@ -42,11 +42,11 @@ export class Weekday<TOptions extends TypeOption = TypeOption> extends BaseStrin
         });
     }
 
-    public static nullable(value: WeekdayString | null = null) {
+    public static nullable(value: WeekdayValue | null = null) {
         return new Weekday(value, { nullable: true });
     }
 
-    public static immutable(value: WeekdayString) {
+    public static immutable(value: WeekdayValue) {
         return new Weekday(value, { immutable: true });
     }
 }

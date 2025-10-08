@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateTime } from '@/types/dateTime.js';
-import { DateTimeString } from '@/utils/types.js';
+import { DateTimeValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -48,7 +48,7 @@ describe('DateTime class', () => {
             '10000-01-01T01:00:00.000Z',
             '2000-13-31T23:59:59.999Z',
         ]) {
-            expect(() => new DateTime(value as unknown as DateTimeString)).toThrowError(
+            expect(() => new DateTime(value as unknown as DateTimeValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -56,14 +56,14 @@ describe('DateTime class', () => {
 
     test('It throws an error if the value is not a string', () => {
         for (const value of [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)]) {
-            expect(() => new DateTime(value as unknown as DateTimeString)).toThrowError(
+            expect(() => new DateTime(value as unknown as DateTimeValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is not a valid date', () => {
-        expect(() => new DateTime('foo' as unknown as DateTimeString)).toThrowError(
+        expect(() => new DateTime('foo' as unknown as DateTimeValue)).toThrowError(
             TypeVaultValidationError
         );
     });

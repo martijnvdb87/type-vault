@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { DateOnly } from '@/types/dateOnly.js';
-import { DateOnlyString } from '@/utils/types.js';
+import { DateOnlyValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -40,7 +40,7 @@ describe('DateOnly class', () => {
 
     test('It throws an error if the value is not a supported value', () => {
         for (const value of invalid) {
-            expect(() => new DateOnly(value as unknown as DateOnlyString)).toThrowError(
+            expect(() => new DateOnly(value as unknown as DateOnlyValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -50,14 +50,14 @@ describe('DateOnly class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new DateOnly(value as unknown as DateOnlyString)).toThrowError(
+            expect(() => new DateOnly(value as unknown as DateOnlyValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is not a valid date', () => {
-        expect(() => new DateOnly('foo' as unknown as DateOnlyString)).toThrowError(
+        expect(() => new DateOnly('foo' as unknown as DateOnlyValue)).toThrowError(
             TypeVaultValidationError
         );
     });

@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Duration } from '@/types/duration.js';
-import { DurationString } from '@/utils/types.js';
+import { DurationValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -64,7 +64,7 @@ describe('Duration class', () => {
             '2000-01-01',
             '00:00:00',
         ]) {
-            expect(() => new Duration(value as unknown as DurationString)).toThrowError(
+            expect(() => new Duration(value as unknown as DurationValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -72,14 +72,14 @@ describe('Duration class', () => {
 
     test('It throws an error if the value is not a string', () => {
         for (const value of [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)]) {
-            expect(() => new Duration(value as unknown as DurationString)).toThrowError(
+            expect(() => new Duration(value as unknown as DurationValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is not a valid date', () => {
-        expect(() => new Duration('foo' as unknown as DurationString)).toThrowError(
+        expect(() => new Duration('foo' as unknown as DurationValue)).toThrowError(
             TypeVaultValidationError
         );
     });

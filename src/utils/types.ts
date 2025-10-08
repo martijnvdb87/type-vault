@@ -1,12 +1,8 @@
-export type Brand<TInstance, TBrand> = TInstance & { __brand: TBrand };
-
-export type Constructor = new (...args: unknown[]) => object;
-
 type Unpack<T> = {
     [K in keyof T]: T[K] extends object ? Unpack<T[K]> : T[K];
 };
 
-export type LetterLowerCase =
+type LetterLowerCase =
     | 'a'
     | 'b'
     | 'c'
@@ -34,7 +30,7 @@ export type LetterLowerCase =
     | 'y'
     | 'z';
 
-export type LetterUpperCase =
+type LetterUpperCase =
     | 'A'
     | 'B'
     | 'C'
@@ -62,35 +58,23 @@ export type LetterUpperCase =
     | 'Y'
     | 'Z';
 
-export type Letter = Unpack<LetterLowerCase | LetterUpperCase>;
+type Letter = Unpack<LetterLowerCase | LetterUpperCase>;
 
-export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type Tld = Unpack<`${Letter}${string}`>;
 
-export type Alphanumeric = Unpack<Letter | Digit>;
+type Domain = Unpack<`${string}.${Tld}`>;
 
-export type Tld = Unpack<`${Letter}${string}`>;
+export type EmailValue = Unpack<`${string}@${Domain}`>;
 
-export type Domain = Unpack<`${string}.${Tld}`>;
+export type DateOnlyValue = Unpack<`${number}-${number}-${number}`>;
 
-export type Email = Unpack<`${string}@${Domain}`>;
-
-export type Year = number;
-export type Month = number;
-export type Date = number;
-export type Hour = number;
-export type Minute = number;
-export type Second = number;
-export type Millisecond = number;
-
-export type DateOnlyString = Unpack<`${Year}-${Month}-${Date}`>;
-
-export type TimeOnlyString = Unpack<
-    `${Hour}:${Minute}:${Second}.${Millisecond}` | `${Hour}:${Minute}:${Second}`
+export type TimeOnlyValue = Unpack<
+    `${number}:${number}:${number}.${number}` | `${number}:${number}:${number}`
 >;
 
-export type DateTimeString = Unpack<`${DateOnlyString}T${TimeOnlyString}Z`>;
+export type DateTimeValue = Unpack<`${DateOnlyValue}T${TimeOnlyValue}Z`>;
 
-export type MonthString =
+export type MonthValue =
     | 'january'
     | 'february'
     | 'march'
@@ -104,7 +88,7 @@ export type MonthString =
     | 'november'
     | 'december';
 
-export type WeekdayString =
+export type WeekdayValue =
     | 'monday'
     | 'tuesday'
     | 'wednesday'
@@ -113,21 +97,21 @@ export type WeekdayString =
     | 'saturday'
     | 'sunday';
 
-export type DurationString =
+export type DurationValue =
     Unpack<`P${`${number}Y` | ''}${`${number}M` | ''}${`${number}D` | ''}${`T${`${number}H` | ''}${`${number}M` | ''}${`${number}S` | ''}` | ''}`>;
 
-export type UuidString = `${string}-${string}-${string}-${string}-${string}`;
+export type UuidValue = `${string}-${string}-${string}-${string}-${string}`;
 
-export type ColorHexString = `#${string}`;
+export type ColorHexValue = `#${string}`;
 
-export type ColorRgbString =
+export type ColorRgbValue =
     | `rgb${'a' | ''}(${number},${number},${number}${`,${number}` | ''})`
     | `rgb${'a' | ''}(${number} ${number} ${number}${`/${number}` | ''})`;
 
-export type ColorHslString =
+export type ColorHslValue =
     `hsl${'a' | ''}(${number}${'deg' | ''}${',' | ' '}${number}${'%' | ''}${',' | ' '}${number}${'%' | ''}${`${`${' ' | ''}/${' ' | ''}` | ','}${number}${'%' | ''}` | ''})`;
 
-export type ColorOklchString =
+export type ColorOklchValue =
     `oklch${'a' | ''}(${number}${'%' | ''} ${number}${'%' | ''} ${number}${'deg' | ''}${`${' ' | ''}/${' ' | ''}${number}${'%' | ''}` | ''})`;
 
-export type PhoneNumberString = `+${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}${number}`;
+export type PhoneNumberValue = `+${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}${number}`;

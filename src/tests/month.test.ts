@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Month } from '@/types/month.js';
-import { MonthString } from '@/utils/types.js';
+import { MonthValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -24,7 +24,7 @@ describe('Month class', () => {
 
     test('It sets the corrent value', () => {
         months.forEach(({ value }) => {
-            const month = new Month(value as MonthString);
+            const month = new Month(value as MonthValue);
 
             expect(month.value).toBe(value);
         });
@@ -34,14 +34,14 @@ describe('Month class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new Month(value as unknown as MonthString)).toThrowError(
+            expect(() => new Month(value as unknown as MonthValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It return an error when the value is not a valid month', () => {
-        expect(() => new Month('foo' as unknown as MonthString)).toThrowError(
+        expect(() => new Month('foo' as unknown as MonthValue)).toThrowError(
             TypeVaultValidationError
         );
     });

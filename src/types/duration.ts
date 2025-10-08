@@ -1,10 +1,10 @@
-import { DurationString } from '@/utils/types.js';
+import { DurationValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Duration<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    DurationString
+    DurationValue
 > {
     protected modifier(value: unknown) {
         const valueString = `${value}`;
@@ -12,7 +12,7 @@ export class Duration<TOptions extends TypeOption = TypeOption> extends BaseStri
         const matches = getComponents(valueString);
 
         if (!matches) {
-            return valueString as DurationString;
+            return valueString as DurationValue;
         }
 
         return getFormatFromComponents(matches);
@@ -26,11 +26,11 @@ export class Duration<TOptions extends TypeOption = TypeOption> extends BaseStri
         return isValidFormat(value);
     }
 
-    public static nullable(value: DurationString | null = null) {
+    public static nullable(value: DurationValue | null = null) {
         return new Duration(value, { nullable: true });
     }
 
-    public static immutable(value: DurationString) {
+    public static immutable(value: DurationValue) {
         return new Duration(value, { immutable: true });
     }
 }
@@ -64,7 +64,7 @@ function getFormatFromComponents(options: {
 }) {
     const { year, month, day, hour, minute, second } = options;
 
-    return `P${year}Y${month}M${day}DT${hour}H${minute}M${second}S` as DurationString;
+    return `P${year}Y${month}M${day}DT${hour}H${minute}M${second}S` as DurationValue;
 }
 
 function isValidFormat(value: string) {

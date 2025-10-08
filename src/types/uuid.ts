@@ -1,10 +1,10 @@
-import { UuidString } from '@/utils/types.js';
+import { UuidValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Uuid<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    UuidString
+    UuidValue
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
@@ -24,11 +24,11 @@ export class Uuid<TOptions extends TypeOption = TypeOption> extends BaseString<
         return new Uuid(crypto.randomUUID());
     }
 
-    public static nullable(value: UuidString | null = null) {
+    public static nullable(value: UuidValue | null = null) {
         return new Uuid(value, { nullable: true });
     }
 
-    public static immutable(value: UuidString) {
+    public static immutable(value: UuidValue) {
         return new Uuid(value, { immutable: true });
     }
 }

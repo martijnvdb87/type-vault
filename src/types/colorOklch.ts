@@ -1,11 +1,11 @@
 import { assertClamp } from '@/utils/numberUtils.js';
-import { ColorOklchString } from '@/utils/types.js';
+import { ColorOklchValue } from '@/utils/types.js';
 import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
 export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
     TOptions,
-    ColorOklchString
+    ColorOklchValue
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
@@ -19,14 +19,14 @@ export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
         return Boolean(getMatchFromString(String(value)));
     }
 
-    protected modifier(value: unknown): ColorOklchString {
+    protected modifier(value: unknown): ColorOklchValue {
         const match = matchAbsoluteFormat(String(value));
 
         if (match) {
             return valuesToString(match);
         }
 
-        return value as ColorOklchString;
+        return value as ColorOklchValue;
     }
 
     public get lightness() {
@@ -69,11 +69,11 @@ export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
         this.value = valuesToString({ ...matchValueFormat(this.value), alpha });
     }
 
-    public static nullable(value: ColorOklchString | null = null) {
+    public static nullable(value: ColorOklchValue | null = null) {
         return new ColorOklch(value, { nullable: true });
     }
 
-    public static immutable(value: ColorOklchString) {
+    public static immutable(value: ColorOklchValue) {
         return new ColorOklch(value, { immutable: true });
     }
 }
@@ -182,6 +182,6 @@ function valuesToString<TOptions extends TypeOption = TypeOption>(options: {
 
     return `oklch(${lightness}% ${chroma} ${hue}deg / ${alpha}%)` as SetTypeValue<
         TOptions,
-        ColorOklchString
+        ColorOklchValue
     >;
 }

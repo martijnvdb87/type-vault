@@ -21,6 +21,8 @@ export { Uuid } from './types/uuid.js';
 export { Weekday } from './types/weekday.js';
 export { Year } from './types/year.js';
 
+export { Collection } from './utils/collection.js';
+
 export { TypeVaultError } from './errors/typeVaultError.js';
 export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
 

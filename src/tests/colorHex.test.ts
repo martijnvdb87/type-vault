@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorHex } from '@/types/colorHex.js';
-import { ColorHexString } from '@/utils/types.js';
+import { ColorHexValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -92,7 +92,7 @@ describe('ColorHex class', () => {
         const values = ['example', '#foo', undefined, 1, {}, [], true, false, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new ColorHex(value as unknown as ColorHexString)).toThrowError(
+            expect(() => new ColorHex(value as unknown as ColorHexValue)).toThrowError(
                 TypeVaultValidationError
             );
         }

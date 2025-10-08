@@ -1,10 +1,10 @@
-import { PhoneNumberString } from '@/utils/types.js';
+import { PhoneNumberValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class PhoneNumber<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    PhoneNumberString
+    PhoneNumberValue
 > {
     protected validate(value: string): boolean {
         if (!super.validate(value)) {
@@ -14,11 +14,11 @@ export class PhoneNumber<TOptions extends TypeOption = TypeOption> extends BaseS
         return isValidFormat(value);
     }
 
-    public static nullable(value: PhoneNumberString | null = null) {
+    public static nullable(value: PhoneNumberValue | null = null) {
         return new PhoneNumber(value, { nullable: true });
     }
 
-    public static immutable(value: PhoneNumberString) {
+    public static immutable(value: PhoneNumberValue) {
         return new PhoneNumber(value, { immutable: true });
     }
 }

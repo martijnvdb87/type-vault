@@ -1,6 +1,6 @@
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { TimeOnly } from '@/types/timeOnly.js';
-import { TimeOnlyString } from '@/utils/types.js';
+import { TimeOnlyValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
 import { nullableTests } from './utils/nullableTests.js';
@@ -48,7 +48,7 @@ describe('TimeOnly class', () => {
             '01:00:60.000',
             '24:60:60.999',
         ]) {
-            expect(() => new TimeOnly(value as unknown as TimeOnlyString)).toThrowError(
+            expect(() => new TimeOnly(value as unknown as TimeOnlyValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
@@ -58,14 +58,14 @@ describe('TimeOnly class', () => {
         const values = [1, {}, true, false, [], [1, 2, 3], { foo: 'bar' }, BigInt(1)];
 
         for (const value of values) {
-            expect(() => new TimeOnly(value as unknown as TimeOnlyString)).toThrowError(
+            expect(() => new TimeOnly(value as unknown as TimeOnlyValue)).toThrowError(
                 TypeVaultValidationError
             );
         }
     });
 
     test('It throws an error if the value is not a valid date', () => {
-        expect(() => new TimeOnly('foo' as unknown as TimeOnlyString)).toThrowError(
+        expect(() => new TimeOnly('foo' as unknown as TimeOnlyValue)).toThrowError(
             TypeVaultValidationError
         );
     });

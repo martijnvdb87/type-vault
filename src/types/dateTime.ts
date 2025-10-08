@@ -1,17 +1,17 @@
-import { DateTimeString } from '@/utils/types.js';
+import { DateTimeValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    DateTimeString
+    DateTimeValue
 > {
     public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
         if (this.options.nullable && this.value === null) {
             return null as TOptions['nullable'] extends true ? Date | null : Date;
         }
 
-        return new Date(this.value as DateTimeString);
+        return new Date(this.value as DateTimeValue);
     }
 
     protected modifier(value: unknown) {
@@ -20,7 +20,7 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
         const matches = getComponents(valueString);
 
         if (!matches) {
-            return valueString as DateTimeString;
+            return valueString as DateTimeValue;
         }
 
         return getFormatFromComponents(matches);
@@ -53,14 +53,14 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     }
 
     public static fromDate(date: Date) {
-        return new DateTime(date.toISOString() as DateTimeString);
+        return new DateTime(date.toISOString() as DateTimeValue);
     }
 
-    public static nullable(value: DateTimeString | null = null) {
+    public static nullable(value: DateTimeValue | null = null) {
         return new DateTime(value, { nullable: true });
     }
 
-    public static immutable(value: DateTimeString) {
+    public static immutable(value: DateTimeValue) {
         return new DateTime(value, { immutable: true });
     }
 }
@@ -96,7 +96,7 @@ function getFormatFromComponents(options: {
 }) {
     const { year, month, day, hour, minute, second, millisecond } = options;
 
-    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}Z` as DateTimeString;
+    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}.${millisecond.toString().padEnd(3, '0')}Z` as DateTimeValue;
 }
 
 function isValidFormat(value: string) {

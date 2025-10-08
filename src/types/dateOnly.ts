@@ -1,17 +1,17 @@
-import { DateOnlyString } from '@/utils/types.js';
+import { DateOnlyValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseString<
     TOptions,
-    DateOnlyString
+    DateOnlyValue
 > {
     public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
         if (this.options.nullable && this.value === null) {
             return null as TOptions['nullable'] extends true ? Date | null : Date;
         }
 
-        return new Date(toDateTimeString(this.value as DateOnlyString));
+        return new Date(toDateTimeString(this.value as DateOnlyValue));
     }
 
     protected modifier(value: unknown) {
@@ -20,7 +20,7 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         const matches = getComponents(valueString);
 
         if (!matches) {
-            return valueString as DateOnlyString;
+            return valueString as DateOnlyValue;
         }
 
         return getFormatFromComponents(matches);
@@ -56,14 +56,14 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         const dateString = date.toISOString();
         const dateStringWithoutTime = dateString.split('T')[0];
 
-        return new DateOnly(dateStringWithoutTime as DateOnlyString);
+        return new DateOnly(dateStringWithoutTime as DateOnlyValue);
     }
 
-    public static nullable(value: DateOnlyString | null = null) {
+    public static nullable(value: DateOnlyValue | null = null) {
         return new DateOnly(value, { nullable: true });
     }
 
-    public static immutable(value: DateOnlyString) {
+    public static immutable(value: DateOnlyValue) {
         return new DateOnly(value, { immutable: true });
     }
 }
@@ -91,7 +91,7 @@ function getComponents(value: string) {
 function getFormatFromComponents(options: { year: number; month: number; day: number }) {
     const { year, month, day } = options;
 
-    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}` as DateOnlyString;
+    return `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}` as DateOnlyValue;
 }
 
 function isValidFormat(value: string) {
