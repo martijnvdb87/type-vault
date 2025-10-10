@@ -6,3 +6,40 @@
 
 - ✅ Runtime and compile time validation
 - 🧪 Built-in test helpers for immutability and nullability
+
+## Supported types
+
+### 🎨 Colors
+
+- `ColorHex`
+- `ColorHsl`
+- `ColorOklch`
+- `ColorRgb`
+
+### 🕒 Temporal
+
+- `DateOnly`
+- `DateTime`
+- `Duration`
+- `Month`
+- `TimeOnly`
+- `Weekday`
+- `Year`
+
+### 🌐 Communication
+
+- `Email`
+- `PhoneNumber`
+
+### ✏️ Text & Numeric
+
+- `Float`
+- `Integer`
+- `Percentage`
+- `Text`
+- `Url`
+- `Uuid`
+
+### 🛠️ Utility
+
+- `Collection`
