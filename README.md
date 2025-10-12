@@ -53,39 +53,51 @@ console.log(immutable.value); // 'user@example.com'
 immutable.value = 'another@example.com'; // ❌ Throws error
 ```
 
-## Supported types
+## 🧰 Supported Types
 
-### 🎨 Colors
+Type Vault offers a rich set of validated, immutable types grouped by domain. Each type enforces strict formatting and value constraints at runtime.
 
-- `ColorHex`
-- `ColorHsl`
-- `ColorOklch`
-- `ColorRgb`
+### 🎨 Color Types
 
-### 🕒 Temporal
+For working with color values in various formats:
 
-- `DateOnly`
-- `DateTime`
-- `Duration`
-- `Month`
-- `TimeOnly`
-- `Weekday`
-- `Year`
+- `ColorHex` – Hexadecimal color code (e.g. `#fc0`, `#ffcc00` or `#ffcc00ff`)
+- `ColorRgb` – RGB color object (e.g. `rgb(255, 128, 0)`, `rgb(255 128 0 / 1)` or `rgb(255 128 0 / 100%)`)
+- `ColorHsl` – HSL color object (e.g. `hsl(360 0 0 / 1)` or `hsl(360deg 0% 0% / 100%)`)
+- `ColorOklch` – OKLCH color object (e.g. `oklch(70% 0.4 120deg / 25%)`, `oklch(70% 100% 120deg / 0.25)` or `oklch(0.7 0.4 120 / 25%)`)
 
-### 🌐 Communication
+### 🕒 Temporal Types
 
-- `Email`
-- `PhoneNumber`
+For representing and validating time-related values:
 
-### ✏️ Text & Numeric
+- `DateOnly` – ISO date string without time (e.g. `'2023-01-02'`)
+- `DateTime` – ISO UTC date-time string (e.g. `'2023-01-02T01:23:45.123Z'`)
+- `TimeOnly` – ISO time string without date (e.g. `'01:23:45.123'`)
+- `Duration` – ISO 8601 duration string (e.g. `'PT1H30M'`)
+- `Month` – Valid month name or number (e.g. `'january'` or `december`)
+- `Weekday` – Valid weekday name (e.g. `'monday'`)
+- `Year` – Valid four-digit year (e.g. `'2025'`)
 
-- `Float`
-- `Integer`
-- `Percentage`
-- `Text`
-- `Url`
-- `Uuid`
+### 🌐 Communication Types
 
-### 🛠️ Utility
+For validating contact and identity formats:
 
-- `Collection`
+- `Email` – RFC-compliant email address (e.g. `'user@example.com'`)
+- `PhoneNumber` – E.164 formatted phone number (e.g. `'+31612345678'`)
+
+### ✏️ Text & Numeric Types
+
+For structured text, numbers, and identifiers:
+
+- `Text` – Non-empty string with optional length constraints
+- `Integer` – Whole number (e.g. `42`)
+- `Float` – Decimal number (e.g. `3.14`)
+- `Percentage` – Decimal number between 0 and 1 (e.g. `0`, `0.5` or `1`)
+- `Url` – Valid absolute URL (e.g. `'https://example.com'`)
+- `Uuid` – RFC 4122 UUID string (e.g. `'550e8400-e29b-41d4-a716-446655440000'`)
+
+### 🛠️ Utility Types
+
+For advanced composition and collection handling:
+
+- `Collection` – Array wrapper with type validation
