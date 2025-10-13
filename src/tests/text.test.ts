@@ -6,7 +6,7 @@ import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Text class', () => {
-    const values = ['foo', 'bar', 'baz', 'Lorem ipsum'] as const;
+    const values = ['foo', 'bar', 'baz', 'Lorem ipsum', ''] as const;
 
     test('It sets the correct value', () => {
         for (const value of values) {

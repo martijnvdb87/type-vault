@@ -55,24 +55,24 @@ immutable.value = 'another@example.com'; // ❌ Throws error
 
 ## 🧰 Supported Types
 
-Type Vault offers a rich set of validated, immutable types grouped by domain. Each type enforces strict formatting and value constraints at runtime.
+Type Vault offers a rich set of validated. Each type enforces strict formatting and value constraints at runtime, and all values are stored in a normalized form to ensure consistency and predictability across your application.
 
 ### 🎨 Color Types
 
 For working with color values in various formats:
 
-- `ColorHex` – Hexadecimal color code (e.g. `#fc0`, `#ffcc00` or `#ffcc00ff`)
-- `ColorRgb` – RGB color object (e.g. `rgb(255, 128, 0)`, `rgb(255 128 0 / 1)` or `rgb(255 128 0 / 100%)`)
-- `ColorHsl` – HSL color object (e.g. `hsl(360 0 0 / 1)` or `hsl(360deg 0% 0% / 100%)`)
-- `ColorOklch` – OKLCH color object (e.g. `oklch(70% 0.4 120deg / 25%)`, `oklch(70% 100% 120deg / 0.25)` or `oklch(0.7 0.4 120 / 25%)`)
+- `ColorHex` – Hexadecimal color code (e.g. `'#ffcc00ff'`, `'#ffcc00'` or `'#fc0'`)
+- `ColorRgb` – RGB color object (e.g. `'rgb(255 128 0 / 100%)'`, `'rgb(255, 128, 0)'` or `'rgb(255 128 0 / 1)'`)
+- `ColorHsl` – HSL color object (e.g. `'hsl(360 0 0 / 1)'` or `'hsl(360deg 0% 0% / 100%)'`)
+- `ColorOklch` – OKLCH color object (e.g. `'oklch(70 0.4 120deg / 25%)'`, `'oklch(70% 100% 120deg / 0.25)'` or `'oklch(0.7 0.4 120 / 25%)'`)
 
 ### 🕒 Temporal Types
 
 For representing and validating time-related values:
 
-- `DateOnly` – ISO date string without time (e.g. `'2023-01-02'`)
-- `DateTime` – ISO UTC date-time string (e.g. `'2023-01-02T01:23:45.123Z'`)
-- `TimeOnly` – ISO time string without date (e.g. `'01:23:45.123'`)
+- `DateOnly` – ISO date string without time (e.g. `'2023-01-02'` or `'2023-1-2'`)
+- `DateTime` – ISO UTC date-time string (e.g. `'2023-01-02T01:23:45.123Z'` or `'2023-01-02T01:23:45Z'`)
+- `TimeOnly` – ISO time string without date (e.g. `'01:23:45.123'` or `'01:23:45'`)
 - `Duration` – ISO 8601 duration string (e.g. `'PT1H30M'`)
 - `Month` – Valid month name or number (e.g. `'january'` or `december`)
 - `Weekday` – Valid weekday name (e.g. `'monday'`)
@@ -89,7 +89,7 @@ For validating contact and identity formats:
 
 For structured text, numbers, and identifiers:
 
-- `Text` – Non-empty string with optional length constraints
+- `Text` – A valid text string (e.g. `'foo'`, `'Lorem ipsum dolor sit amet'` or `''`)
 - `Integer` – Whole number (e.g. `42`)
 - `Float` – Decimal number (e.g. `3.14`)
 - `Percentage` – Decimal number between 0 and 1 (e.g. `0`, `0.5` or `1`)
