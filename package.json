@@ -1,5 +1,5 @@
 {
-    "name": "typevault",
+    "name": "type-vault",
     "version": "0.1.0",
     "type": "module",
     "main": "dist/index.cjs.js",
