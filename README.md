@@ -127,9 +127,3 @@ For structured text, numbers, and identifiers:
 - `Percentage` – Decimal number between 0 and 1 (e.g. `0`, `0.5` or `1`)
 - `Url` – Valid absolute URL (e.g. `'https://example.com'`)
 - `Uuid` – RFC 4122 UUID string (e.g. `'550e8400-e29b-41d4-a716-446655440000'`)
-
-### 🛠️ Utility Types
-
-For advanced composition and collection handling:
-
-- `Collection` – Array wrapper with type validation
