@@ -263,7 +263,7 @@ describe('Collection class', () => {
                 new Integer(3),
             ]);
 
-            expect(collection.length()).toEqual(3);
+            expect(collection.length).toEqual(3);
         });
     });
 
@@ -280,7 +280,7 @@ describe('Collection class', () => {
             expect(item instanceof Integer).toBe(true);
             expect(item?.value).toBe(3);
 
-            expect(collection.length()).toEqual(2);
+            expect(collection.length).toEqual(2);
         });
     });
 
@@ -292,7 +292,7 @@ describe('Collection class', () => {
             collection.push(new Integer(2));
             collection.push(new Integer(3));
 
-            expect(collection.length()).toEqual(3);
+            expect(collection.length).toEqual(3);
         });
 
         test('It adds multiple items', () => {
@@ -300,7 +300,7 @@ describe('Collection class', () => {
 
             collection.push(new Integer(1), new Integer(2), new Integer(3));
 
-            expect(collection.length()).toEqual(3);
+            expect(collection.length).toEqual(3);
         });
 
         test('It throws an error if the item is not of the same type', () => {
@@ -354,7 +354,7 @@ describe('Collection class', () => {
             expect(firstItem instanceof Integer).toBe(true);
             expect(firstItem).toBe(item);
 
-            expect(collection.length()).toEqual(2);
+            expect(collection.length).toEqual(2);
         });
 
         test('It returns undefined if the collection is empty', () => {
@@ -405,7 +405,7 @@ describe('Collection class', () => {
             const removed = collection.splice(1, 1);
 
             expect(removed).toEqual([new Integer(2)]);
-            expect(collection.length()).toEqual(2);
+            expect(collection.length).toEqual(2);
         });
     });
 
@@ -441,7 +441,7 @@ describe('Collection class', () => {
             collection.unshift(new Integer(2));
             collection.unshift(new Integer(3));
 
-            expect(collection.length()).toEqual(3);
+            expect(collection.length).toEqual(3);
         });
     });
 

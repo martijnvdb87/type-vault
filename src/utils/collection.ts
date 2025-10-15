@@ -21,6 +21,10 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
         return this[typeSymbol];
     }
 
+    public get length() {
+        return this[valueSymbol].length;
+    }
+
     public concat(other: Collection<TType>) {
         if (this.type !== other.type) {
             throw new TypeVaultValidationError();
@@ -65,10 +69,6 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
 
     public map<TElement>(callback: (item: InstanceType<TType>) => TElement) {
         return this[valueSymbol].map<TElement>(callback);
-    }
-
-    public length() {
-        return this[valueSymbol].length;
     }
 
     public pop() {

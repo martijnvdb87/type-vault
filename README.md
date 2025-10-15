@@ -13,7 +13,7 @@
 
 Create a validated `Email` instance and access or update its value:
 
-```typescript
+```ts
 const email = new Email('user@example.com');
 console.log(email.value); // 'user@example.com'
 
@@ -26,7 +26,7 @@ console.log(email.value); // 'foo@bar.com'
 
 Use `.nullable()` or pass `{ nullable: true }` to allow `null` as a valid value:
 
-```typescript
+```ts
 const nullable = Email.nullable();
 // Or:
 const nullable = new Email(null, { nullable: true });
@@ -42,7 +42,7 @@ console.log(nullable.value); // 'user@example.com'
 
 Use `.immutable()` or pass `{ immutable: true }` to prevent value changes after initialization:
 
-```typescript
+```ts
 const immutable = Email.immutable('user@example.com');
 // Or:
 const immutable = new Email('user@example.com', { immutable: true });
@@ -52,6 +52,38 @@ console.log(immutable.value); // 'user@example.com'
 // Attempting to change the value throws a TypeVaultValidationError
 immutable.value = 'another@example.com'; // ❌ Throws error
 ```
+
+### 📦 Collection
+
+The `Collection` type lets you group validated Type Vault instances into a strongly typed, iterable array-like structure. It enforces type safety and exposes familiar array methods.
+
+#### ✅ Basic Usage
+
+```ts
+import { Collection, Email } from 'type-vault';
+
+const collection = new Collection(Email, [
+    new Email('foo@example.com'),
+    new Email('bar@example.com'),
+    new Email('baz@example.com'),
+]);
+
+console.log(collection.type); // typeof Email
+console.log(collection.length); // 3
+
+console.log(collection.toArray().map((e) => e.value));
+// ['foo@example.com', 'bar@example.com', 'baz@example.com']
+```
+
+#### 🧪 Supported Methods
+
+Collection instances support most native array methods, plus a few extras:
+
+Iteration & Search: `forEach`, `map`, `filter`, `find`, `findIndex`, `some`, `every`, `includes`, `indexOf`, `lastIndexOf`
+
+Mutation: `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`
+
+Inspection & Conversion: `length`, `toArray`, `toString`, `values`, `concat`, `reduce`
 
 ## 🧰 Supported Types
 
