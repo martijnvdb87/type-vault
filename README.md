@@ -14,6 +14,8 @@
 Create a validated `Email` instance and access or update its value:
 
 ```ts
+import { Email } from '@martijnvdb87/type-vault';
+
 const email = new Email('user@example.com');
 console.log(email.value); // 'user@example.com'
 
@@ -27,6 +29,8 @@ console.log(email.value); // 'foo@bar.com'
 Use `.nullable()` or pass `{ nullable: true }` to allow `null` as a valid value:
 
 ```ts
+import { Email } from '@martijnvdb87/type-vault';
+
 const nullable = Email.nullable();
 // Or:
 const nullable = new Email(null, { nullable: true });
@@ -43,6 +47,8 @@ console.log(nullable.value); // 'user@example.com'
 Use `.immutable()` or pass `{ immutable: true }` to prevent value changes after initialization:
 
 ```ts
+import { Email } from '@martijnvdb87/type-vault';
+
 const immutable = Email.immutable('user@example.com');
 // Or:
 const immutable = new Email('user@example.com', { immutable: true });
@@ -60,7 +66,7 @@ The `Collection` type lets you group validated Type Vault instances into a stron
 #### ✅ Basic Usage
 
 ```ts
-import { Collection, Email } from 'type-vault';
+import { Collection, Email } from '@martijnvdb87/type-vault';
 
 const collection = new Collection(Email, [
     new Email('foo@example.com'),
