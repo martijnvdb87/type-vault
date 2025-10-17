@@ -8,6 +8,34 @@
     "files": [
         "dist"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/martijnvdb87/type-vault.git"
+    },
+    "keywords": [
+        "typescript",
+        "validation",
+        "utility-types",
+        "type-safe",
+        "immutable",
+        "normalized-values",
+        "uuid",
+        "url",
+        "email",
+        "color",
+        "date-time",
+        "date-only",
+        "time-only",
+        "collection",
+        "value-object",
+        "runtime-validation",
+        "type-vault",
+        "data-modeling",
+        "strict-types",
+        "typed-collection"
+    ],
+    "author": "Martijn van den Bosch",
+    "license": "MIT",
     "scripts": {
         "build": "rollup -c",
         "format": "prettier --write .",
