@@ -5,7 +5,7 @@
 ## ✨ Features
 
 - ✅ Runtime and compile time validation
-- 🧪 Built-in test helpers for immutability and nullability
+- 🧪 Built-in helpers for immutability and nullability
 
 ## 🧑‍💻 How to use
 
