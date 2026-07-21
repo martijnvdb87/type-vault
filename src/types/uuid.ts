@@ -1,5 +1,5 @@
-import { randomUUID } from 'node:crypto';
 import { UuidValue } from '@/utils/types.js';
+import { randomUUID } from 'node:crypto';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 

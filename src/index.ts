@@ -25,11 +25,11 @@ export { Year } from './types/year.js';
 
 export { Collection } from './utils/collection.js';
 
-export { TypeVaultError } from './errors/typeVaultError.js';
-export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
 export { ImmutableValueError } from './errors/immutableValueError.js';
 export { InvalidPropertyError } from './errors/invalidPropertyError.js';
 export { InvalidTypeError } from './errors/invalidTypeError.js';
+export { TypeVaultError } from './errors/typeVaultError.js';
+export { TypeVaultValidationError } from './errors/typeVaultValidationError.js';
 
 export { BaseBoolean } from './types/baseBoolean.js';
 export { BaseNumber } from './types/baseNumber.js';

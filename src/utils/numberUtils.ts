@@ -6,9 +6,7 @@ export function assertClamp(value: number, options: { min: number; max: number }
     }
 
     if (value < options.min || value > options.max) {
-        throw new InvalidPropertyError(
-            `Value must be between ${options.min} and ${options.max}`
-        );
+        throw new InvalidPropertyError(`Value must be between ${options.min} and ${options.max}`);
     }
 
     return value;

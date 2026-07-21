@@ -41,7 +41,9 @@ export function valueTests<TType extends Type>(options: { type: TType; validValu
     });
 
     test('It throws when assertEquals is called with a different value', () => {
-        expect(() => new type(validValue).assertEquals(null)).toThrowError(TypeVaultValidationError);
+        expect(() => new type(validValue).assertEquals(null)).toThrowError(
+            TypeVaultValidationError
+        );
     });
 
     test('It returns true when isValid is called with a supported value', () => {
