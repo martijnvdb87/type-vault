@@ -3,7 +3,6 @@ import { DateOnly } from '@/types/dateOnly.js';
 import { DateOnlyValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('DateOnly class', () => {
@@ -68,9 +67,6 @@ describe('DateOnly class', () => {
             expect(date instanceof Date).toBe(true);
             expect(date.toISOString()).toBe(`${output}T00:00:00.000Z`);
         }
-
-        const nullable = DateOnly.nullable().toDate();
-        expect(nullable).toBeNull();
     });
 
     test('It return DateOnly from Date', () => {
@@ -84,7 +80,6 @@ describe('DateOnly class', () => {
 
     for (const { output: validValue } of values) {
         valueTests({ type: DateOnly, validValue });
-        nullableTests({ type: DateOnly, validValue, invalidValue: 'not-valid' });
         immutableTests({ type: DateOnly, validValue });
     }
 });

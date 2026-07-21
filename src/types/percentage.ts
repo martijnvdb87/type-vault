@@ -9,12 +9,4 @@ export class Percentage<TOptions extends TypeOption = TypeOption> extends BaseNu
     protected max(): number {
         return 1;
     }
-
-    public static nullable(value: number | null = null) {
-        return new Percentage(value, { nullable: true });
-    }
-
-    public static immutable(value: number) {
-        return new Percentage(value, { immutable: true });
-    }
 }

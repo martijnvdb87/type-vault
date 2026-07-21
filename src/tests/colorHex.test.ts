@@ -1,9 +1,10 @@
+import { ImmutableValueError } from '@/errors/immutableValueError.js';
+import { InvalidPropertyError } from '@/errors/invalidPropertyError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorHex } from '@/types/colorHex.js';
 import { ColorHexValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
@@ -109,7 +110,7 @@ describe('ColorHex class', () => {
 
     test('It can update the color values', () => {
         for (const { output, red, green, blue, alpha } of values) {
-            const color = ColorHex.nullable();
+            const color = new ColorHex('#00000000');
 
             color.red = red;
             color.green = green;
@@ -155,15 +156,15 @@ describe('ColorHex class', () => {
     test('It should throw an error if the value is out of allowed range', () => {
         const color = new ColorHex('#ffffffff');
 
-        expect(() => (color.red = 256)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.green = 256)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.blue = 256)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.alpha = 256)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.red = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.green = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.blue = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = 256)).toThrowError(InvalidPropertyError);
 
-        expect(() => (color.red = -1)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.green = -1)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.blue = -1)).toThrowError(TypeVaultValidationError);
-        expect(() => (color.alpha = -1)).toThrowError(TypeVaultValidationError);
+        expect(() => (color.red = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.green = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.blue = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = -1)).toThrowError(InvalidPropertyError);
 
         expect(color.value).toBe('#ffffffff');
     });
@@ -173,26 +174,25 @@ describe('ColorHex class', () => {
 
         expect(() => {
             instance.red = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
 
         expect(() => {
             instance.green = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
 
         expect(() => {
             instance.blue = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
 
         expect(() => {
             instance.alpha = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
 
         expect(instance.value).toBe('#00000000');
     });
 
     for (const { output } of values) {
         valueTests({ type: ColorHex, validValue: output });
-        nullableTests({ type: ColorHex, validValue: output, invalidValue: 'not-valid' });
         immutableTests({ type: ColorHex, validValue: output });
     }
 });

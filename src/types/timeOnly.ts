@@ -43,14 +43,6 @@ export class TimeOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
 
         return date.toISOString() === dateString;
     }
-
-    public static nullable(value: TimeOnlyValue | null = null) {
-        return new TimeOnly(value, { nullable: true });
-    }
-
-    public static immutable(value: TimeOnlyValue) {
-        return new TimeOnly(value, { immutable: true });
-    }
 }
 
 function toDateTimeString(value: string) {

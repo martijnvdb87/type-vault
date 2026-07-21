@@ -1,9 +1,9 @@
+import { InvalidPropertyError } from '@/errors/invalidPropertyError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorOklch } from '@/types/colorOklch.js';
 import { ColorOklchValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
@@ -85,7 +85,7 @@ describe('ColorOklch class', () => {
 
     test('It can update the color values', () => {
         for (const { output, lightness, chroma, hue, alpha } of values) {
-            const color = ColorOklch.nullable();
+            const color = new ColorOklch('oklch(0 0 0 / 0)');
 
             color.lightness = lightness;
             color.chroma = chroma;
@@ -131,15 +131,15 @@ describe('ColorOklch class', () => {
     test('It should throw an error if the value is out of allowed range', () => {
         const color = new ColorOklch('oklch(0 0 0)');
 
-        expect(() => (color.lightness = 101)).toThrowError();
-        expect(() => (color.chroma = 2)).toThrowError();
-        expect(() => (color.hue = 361)).toThrowError();
-        expect(() => (color.alpha = 101)).toThrowError();
+        expect(() => (color.lightness = 101)).toThrowError(InvalidPropertyError);
+        expect(() => (color.chroma = 2)).toThrowError(InvalidPropertyError);
+        expect(() => (color.hue = 361)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = 101)).toThrowError(InvalidPropertyError);
 
-        expect(() => (color.lightness = -1)).toThrowError();
-        expect(() => (color.chroma = -1)).toThrowError();
-        expect(() => (color.hue = -1)).toThrowError();
-        expect(() => (color.alpha = -1)).toThrowError();
+        expect(() => (color.lightness = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.chroma = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.hue = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = -1)).toThrowError(InvalidPropertyError);
     });
 
     test('It should throw an error if the value is not a valid color', () => {
@@ -154,7 +154,6 @@ describe('ColorOklch class', () => {
 
     for (const { output } of values) {
         valueTests({ type: ColorOklch, validValue: output });
-        nullableTests({ type: ColorOklch, validValue: output, invalidValue: 'not-valid' });
         immutableTests({ type: ColorOklch, validValue: output });
     }
 });

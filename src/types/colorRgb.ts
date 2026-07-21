@@ -94,14 +94,6 @@ export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
 
         this.value = numberToRgbString({ ...rgbToNumberValues(this.value), alpha });
     }
-
-    public static nullable(value: ColorRgbValue | null = null) {
-        return new ColorRgb(value, { nullable: true });
-    }
-
-    public static immutable(value: ColorRgbValue) {
-        return new ColorRgb(value, { immutable: true });
-    }
 }
 
 function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
@@ -125,8 +117,8 @@ function numberToRgbString<TOptions extends TypeOption = TypeOption>(options: {
     >;
 }
 
-function rgbToNumberValues(value: ColorRgbValue | null) {
-    const matches = String(value ?? '').match(regex.getValue);
+function rgbToNumberValues(value: ColorRgbValue) {
+    const matches = String(value).match(regex.getValue);
 
     if (matches === null) {
         return {

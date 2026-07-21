@@ -3,7 +3,6 @@ import { DateTime } from '@/types/dateTime.js';
 import { DateTimeValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('DateTime class', () => {
@@ -84,9 +83,6 @@ describe('DateTime class', () => {
             expect(date instanceof Date).toBe(true);
             expect(date.toISOString()).toBe(output);
         }
-
-        const nullable = DateTime.nullable().toDate();
-        expect(nullable).toBeNull();
     });
 
     test('It return DateTime from Date', () => {
@@ -100,11 +96,6 @@ describe('DateTime class', () => {
 
     for (const validValue of values.map(({ output }) => output)) {
         valueTests({ type: DateTime, validValue });
-        nullableTests({
-            type: DateTime,
-            validValue,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: DateTime, validValue });
     }
 });

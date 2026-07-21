@@ -1,3 +1,4 @@
+import { InvalidTypeError } from '@/errors/invalidTypeError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Float } from '@/types/float.js';
 import { Integer } from '@/types/integer.js';
@@ -48,7 +49,7 @@ describe('Collection class', () => {
             const other = new Collection(Float, [new Float(4), new Float(5), new Float(6)]);
 
             // @ts-expect-error Type error expected
-            expect(() => collection.concat(other)).toThrowError();
+            expect(() => collection.concat(other)).toThrowError(InvalidTypeError);
         });
     });
 

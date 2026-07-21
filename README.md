@@ -5,7 +5,16 @@
 ## ✨ Features
 
 - ✅ Runtime and compile time validation
-- 🧪 Built-in helpers for immutability and nullability
+- 🧪 Built-in helpers for immutability, equality checks, and validity checks
+- 🚨 Dedicated validation errors for immutable values, invalid properties, and invalid types
+
+## 📦 Installation
+
+Install the package using the following command:
+
+```bash
+npm install @martijnvdb87/type-vault
+```
 
 ## 🧑‍💻 How to use
 
@@ -24,24 +33,6 @@ email.value = 'foo@bar.com';
 console.log(email.value); // 'foo@bar.com'
 ```
 
-### ❓ Nullable Variant
-
-Use `.nullable()` or pass `{ nullable: true }` to allow `null` as a valid value:
-
-```ts
-import { Email } from '@martijnvdb87/type-vault';
-
-const nullable = Email.nullable();
-// Or:
-const nullable = new Email(null, { nullable: true });
-
-console.log(nullable.value); // null
-
-// Set a valid email later
-nullable.value = 'user@example.com';
-console.log(nullable.value); // 'user@example.com'
-```
-
 ### 🔒 Immutable Variant
 
 Use `.immutable()` or pass `{ immutable: true }` to prevent value changes after initialization:
@@ -55,9 +46,38 @@ const immutable = new Email('user@example.com', { immutable: true });
 
 console.log(immutable.value); // 'user@example.com'
 
-// Attempting to change the value throws a TypeVaultValidationError
+// Attempting to change the value throws an ImmutableValueError
 immutable.value = 'another@example.com'; // ❌ Throws error
 ```
+
+### 🔍 Equality & Validation
+
+Every type exposes shared comparison and validation helpers:
+
+```ts
+import { Email } from '@martijnvdb87/type-vault';
+
+const primary = new Email('user@example.com');
+const same = new Email('user@example.com');
+
+console.log(primary.equals(same)); // true
+primary.assertEquals(same); // does not throw
+
+console.log(Email.isValid('user@example.com')); // true
+console.log(Email.isValid(null)); // false
+```
+
+### 🚚 Migration
+
+Nullable values are no longer supported by Type Vault types.
+
+```ts
+import { Email } from '@martijnvdb87/type-vault';
+
+const email = input === null ? null : new Email(input);
+```
+
+Handle nullable values in application code before constructing Type Vault instances.
 
 ### 📦 Collection
 

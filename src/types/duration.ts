@@ -25,14 +25,6 @@ export class Duration<TOptions extends TypeOption = TypeOption> extends BaseStri
 
         return isValidFormat(value);
     }
-
-    public static nullable(value: DurationValue | null = null) {
-        return new Duration(value, { nullable: true });
-    }
-
-    public static immutable(value: DurationValue) {
-        return new Duration(value, { immutable: true });
-    }
 }
 
 function getComponents(value: string) {

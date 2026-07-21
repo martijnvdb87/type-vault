@@ -3,7 +3,6 @@ import { TimeOnly } from '@/types/timeOnly.js';
 import { TimeOnlyValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('TimeOnly class', () => {
@@ -71,10 +70,5 @@ describe('TimeOnly class', () => {
     });
 
     valueTests({ type: TimeOnly, validValue: '12:34:56.789' });
-    nullableTests({
-        type: TimeOnly,
-        validValue: '12:34:56.789',
-        invalidValue: 1,
-    });
     immutableTests({ type: TimeOnly, validValue: '12:34:56.789' });
 });

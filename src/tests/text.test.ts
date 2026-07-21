@@ -2,7 +2,6 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Text } from '@/types/text.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Text class', () => {
@@ -26,11 +25,6 @@ describe('Text class', () => {
 
     for (const validValue of values) {
         valueTests({ type: Text, validValue });
-        nullableTests({
-            type: Text,
-            validValue,
-            invalidValue: 1,
-        });
         immutableTests({ type: Text, validValue });
     }
 });

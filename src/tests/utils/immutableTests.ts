@@ -1,4 +1,4 @@
-import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
+import { ImmutableValueError } from '@/errors/immutableValueError.js';
 import { expect, test } from 'vitest';
 
 type TypeReturnValue = {
@@ -32,7 +32,7 @@ export function immutableTests<TType extends Type>(options: { type: TType; valid
         ]) {
             expect(() => {
                 instance.value = validValue;
-            }).toThrowError(TypeVaultValidationError);
+            }).toThrowError(ImmutableValueError);
         }
     });
 

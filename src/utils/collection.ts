@@ -1,4 +1,4 @@
-import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
+import { InvalidTypeError } from '@/errors/invalidTypeError.js';
 import { Type, TypeOption } from '@/types/type.js';
 
 export type CollectionOption = {
@@ -27,7 +27,7 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
 
     public concat(other: Collection<TType>) {
         if (this.type !== other.type) {
-            throw new TypeVaultValidationError();
+            throw new InvalidTypeError();
         }
 
         other.toArray().forEach((item) => this.push(item));
@@ -78,7 +78,7 @@ export class Collection<TType extends typeof Type<TypeOption, unknown>> {
     public push(...items: InstanceType<TType>[]) {
         for (const item of items) {
             if (!(item instanceof this.type)) {
-                throw new TypeVaultValidationError();
+                throw new InvalidTypeError();
             }
 
             this[valueSymbol].push(item);

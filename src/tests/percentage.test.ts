@@ -2,7 +2,6 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Percentage } from '@/types/percentage.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Percentage class', () => {
@@ -47,11 +46,6 @@ describe('Percentage class', () => {
 
     for (const validValue of values) {
         valueTests({ type: Percentage, validValue });
-        nullableTests({
-            type: Percentage,
-            validValue,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: Percentage, validValue });
     }
 });

@@ -6,11 +6,7 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
     TOptions,
     DateOnlyValue
 > {
-    public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
-        if (this.options.nullable && this.value === null) {
-            return null as TOptions['nullable'] extends true ? Date | null : Date;
-        }
-
+    public toDate(): Date {
         return new Date(toDateTimeString(this.value as DateOnlyValue));
     }
 
@@ -57,14 +53,6 @@ export class DateOnly<TOptions extends TypeOption = TypeOption> extends BaseStri
         const dateStringWithoutTime = dateString.split('T')[0];
 
         return new DateOnly(dateStringWithoutTime as DateOnlyValue);
-    }
-
-    public static nullable(value: DateOnlyValue | null = null) {
-        return new DateOnly(value, { nullable: true });
-    }
-
-    public static immutable(value: DateOnlyValue) {
-        return new DateOnly(value, { immutable: true });
     }
 }
 

@@ -3,7 +3,6 @@ import { Weekday } from '@/types/weekday.js';
 import { WeekdayValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Weekday class', () => {
@@ -43,11 +42,6 @@ describe('Weekday class', () => {
 
     for (const weekday of weekdays) {
         valueTests({ type: Weekday, validValue: weekday.value });
-        nullableTests({
-            type: Weekday,
-            validValue: weekday.value,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: Weekday, validValue: weekday.value });
     }
 });

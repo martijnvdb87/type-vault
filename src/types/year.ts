@@ -9,12 +9,4 @@ export class Year<TOptions extends TypeOption = TypeOption> extends BaseNumber<T
     protected max(): number {
         return 9999;
     }
-
-    public static nullable(value: number | null = null) {
-        return new Year(value, { nullable: true });
-    }
-
-    public static immutable(value: number) {
-        return new Year(value, { immutable: true });
-    }
 }

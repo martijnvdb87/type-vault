@@ -3,7 +3,6 @@ import { Duration } from '@/types/duration.js';
 import { DurationValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Duration class', () => {
@@ -96,11 +95,6 @@ describe('Duration class', () => {
 
     for (const validValue of values.map(({ output }) => output)) {
         valueTests({ type: Duration, validValue });
-        nullableTests({
-            type: Duration,
-            validValue,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: Duration, validValue });
     }
 });

@@ -1,8 +1,8 @@
+import { ImmutableValueError } from '@/errors/immutableValueError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Integer } from '@/types/integer.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Integer class', () => {
@@ -99,19 +99,17 @@ describe('Integer class', () => {
         expect(() => {
             // @ts-expect-error Type error expected
             integer.value = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
     });
 
     test('It throws an error if the value is changed when immutable', () => {
         const instance = Integer.immutable(0);
 
         expect(() => {
-            // @ts-expect-error Type error expected
             instance.value = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
     });
 
     valueTests({ type: Integer, validValue: 42 });
-    nullableTests({ type: Integer, validValue: 42, invalidValue: 'not-valid' });
     immutableTests({ type: Integer, validValue: 42 });
 });

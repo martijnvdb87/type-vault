@@ -41,12 +41,4 @@ export class Weekday<TOptions extends TypeOption = TypeOption> extends BaseStrin
             return weekday === value.toLowerCase();
         });
     }
-
-    public static nullable(value: WeekdayValue | null = null) {
-        return new Weekday(value, { nullable: true });
-    }
-
-    public static immutable(value: WeekdayValue) {
-        return new Weekday(value, { immutable: true });
-    }
 }

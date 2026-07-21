@@ -51,12 +51,4 @@ export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
             return month === value.toLowerCase();
         });
     }
-
-    public static nullable(value: MonthValue | null = null) {
-        return new Month(value, { nullable: true });
-    }
-
-    public static immutable(value: MonthValue) {
-        return new Month(value, { immutable: true });
-    }
 }

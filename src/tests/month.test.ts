@@ -3,7 +3,6 @@ import { Month } from '@/types/month.js';
 import { MonthValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Month class', () => {
@@ -48,11 +47,6 @@ describe('Month class', () => {
 
     for (const month of months) {
         valueTests({ type: Month, validValue: month.value });
-        nullableTests({
-            type: Month,
-            validValue: month.value,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: Month, validValue: month.value });
     }
 });

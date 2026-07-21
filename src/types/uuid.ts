@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { UuidValue } from '@/utils/types.js';
 import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
@@ -21,14 +22,6 @@ export class Uuid<TOptions extends TypeOption = TypeOption> extends BaseString<
     }
 
     public static random() {
-        return new Uuid(crypto.randomUUID());
-    }
-
-    public static nullable(value: UuidValue | null = null) {
-        return new Uuid(value, { nullable: true });
-    }
-
-    public static immutable(value: UuidValue) {
-        return new Uuid(value, { immutable: true });
+        return new Uuid(randomUUID());
     }
 }

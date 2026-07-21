@@ -2,7 +2,6 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Float } from '@/types/float.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Float class', () => {
@@ -85,11 +84,6 @@ describe('Float class', () => {
 
     for (const validValue of values) {
         valueTests({ type: Float, validValue });
-        nullableTests({
-            type: Float,
-            validValue,
-            invalidValue: 'not-valid',
-        });
         immutableTests({ type: Float, validValue });
     }
 });

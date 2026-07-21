@@ -86,20 +86,12 @@ export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
 
         this.value = valuesToHslString({ ...matchValueFormat(this.value), alpha });
     }
-
-    public static nullable(value: ColorHslValue | null = null) {
-        return new ColorHsl(value, { nullable: true });
-    }
-
-    public static immutable(value: ColorHslValue) {
-        return new ColorHsl(value, { immutable: true });
-    }
 }
 
-function matchValueFormat(value: string | null) {
-    const match = matchAbsoluteFormat(value ?? '');
+function matchValueFormat(value: string) {
+    const match = matchAbsoluteFormat(value);
 
-    if (match === null || value === null) {
+    if (match === null) {
         return {
             hue: 0,
             saturation: 0,
@@ -196,7 +188,10 @@ function valuesToHslString<TOptions extends TypeOption = TypeOption>(options: {
     lightness: number;
     alpha: number;
 }) {
-    const { hue, saturation, lightness, alpha } = options;
+    const hue = assertClamp(options.hue, { min: 0, max: 360 });
+    const saturation = assertClamp(options.saturation, { min: 0, max: 100 });
+    const lightness = assertClamp(options.lightness, { min: 0, max: 100 });
+    const alpha = assertClamp(options.alpha, { min: 0, max: 100 });
 
     return `hsl(${hue}deg ${saturation}% ${lightness}% / ${alpha}%)` as SetTypeValue<
         TOptions,

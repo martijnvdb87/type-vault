@@ -3,7 +3,6 @@ import { PhoneNumber } from '@/types/phoneNumber.js';
 import { PhoneNumberValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('PhoneNumber class', () => {
@@ -35,11 +34,6 @@ describe('PhoneNumber class', () => {
 
     for (const validValue of values) {
         valueTests({ type: PhoneNumber, validValue });
-        nullableTests({
-            type: PhoneNumber,
-            validValue,
-            invalidValue: 1,
-        });
         immutableTests({ type: PhoneNumber, validValue });
     }
 });

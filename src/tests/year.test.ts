@@ -1,8 +1,8 @@
+import { ImmutableValueError } from '@/errors/immutableValueError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Year } from '@/types/year.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Year class', () => {
@@ -61,19 +61,17 @@ describe('Year class', () => {
         expect(() => {
             // @ts-expect-error Type error expected
             year.value = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
     });
 
     test('It throws an error if the value is changed when immutable', () => {
         const instance = Year.immutable(0);
 
         expect(() => {
-            // @ts-expect-error Type error expected
             instance.value = 1;
-        }).toThrowError(TypeVaultValidationError);
+        }).toThrowError(ImmutableValueError);
     });
 
     valueTests({ type: Year, validValue: 42 });
-    nullableTests({ type: Year, validValue: 42, invalidValue: 'not-valid' });
     immutableTests({ type: Year, validValue: 42 });
 });

@@ -42,12 +42,4 @@ export class Email<TOptions extends TypeOption = TypeOption> extends BaseString<
             return false;
         }
     }
-
-    public static nullable(value: EmailPattern | null = null) {
-        return new Email(value, { nullable: true });
-    }
-
-    public static immutable(value: EmailPattern) {
-        return new Email(value, { immutable: true });
-    }
 }

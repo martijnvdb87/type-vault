@@ -6,11 +6,7 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
     TOptions,
     DateTimeValue
 > {
-    public toDate(): TOptions['nullable'] extends true ? Date | null : Date {
-        if (this.options.nullable && this.value === null) {
-            return null as TOptions['nullable'] extends true ? Date | null : Date;
-        }
-
+    public toDate(): Date {
         return new Date(this.value as DateTimeValue);
     }
 
@@ -54,14 +50,6 @@ export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseStri
 
     public static fromDate(date: Date) {
         return new DateTime(date.toISOString() as DateTimeValue);
-    }
-
-    public static nullable(value: DateTimeValue | null = null) {
-        return new DateTime(value, { nullable: true });
-    }
-
-    public static immutable(value: DateTimeValue) {
-        return new DateTime(value, { immutable: true });
     }
 }
 

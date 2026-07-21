@@ -2,7 +2,6 @@ import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { Email } from '@/types/email.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Email class', () => {
@@ -49,10 +48,5 @@ describe('Email class', () => {
     });
 
     valueTests({ type: Email, validValue: 'foo@example.com' });
-    nullableTests({
-        type: Email,
-        validValue: 'foo@example.com',
-        invalidValue: 'not-valid',
-    });
     immutableTests({ type: Email, validValue: 'foo@example.com' });
 });

@@ -3,7 +3,6 @@ import { Uuid } from '@/types/uuid.js';
 import { UuidValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 describe('Uuid class', () => {
@@ -51,7 +50,6 @@ describe('Uuid class', () => {
         .flat()
         .forEach((validValue) => {
             valueTests({ type: Uuid, validValue });
-            nullableTests({ type: Uuid, validValue, invalidValue: 'not-valid' });
             immutableTests({ type: Uuid, validValue });
         });
 });

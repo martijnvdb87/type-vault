@@ -13,14 +13,6 @@ export class PhoneNumber<TOptions extends TypeOption = TypeOption> extends BaseS
 
         return isValidFormat(value);
     }
-
-    public static nullable(value: PhoneNumberValue | null = null) {
-        return new PhoneNumber(value, { nullable: true });
-    }
-
-    public static immutable(value: PhoneNumberValue) {
-        return new PhoneNumber(value, { immutable: true });
-    }
 }
 
 function isValidFormat(value: string) {

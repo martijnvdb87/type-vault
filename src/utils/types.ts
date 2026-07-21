@@ -104,9 +104,14 @@ export type UuidValue = `${string}-${string}-${string}-${string}-${string}`;
 
 export type ColorHexValue = `#${string}`;
 
+type ColorRgbLegacyAlpha = '' | `,${number}`;
+type ColorRgbModernAlpha = '' | ` / ${number}` | ` / ${number}%` | `/${number}` | `/${number}%`;
+
 export type ColorRgbValue =
-    | `rgb${'a' | ''}(${number},${number},${number}${`,${number}` | ''})`
-    | `rgb${'a' | ''}(${number} ${number} ${number}${`/${number}` | ''})`;
+    | `rgb(${number},${number},${number}${ColorRgbLegacyAlpha})`
+    | `rgba(${number},${number},${number}${ColorRgbLegacyAlpha})`
+    | `rgb(${number} ${number} ${number}${ColorRgbModernAlpha})`
+    | `rgba(${number} ${number} ${number}${ColorRgbModernAlpha})`;
 
 export type ColorHslValue =
     `hsl${'a' | ''}(${number}${'deg' | ''}${',' | ' '}${number}${'%' | ''}${',' | ' '}${number}${'%' | ''}${`${`${' ' | ''}/${' ' | ''}` | ','}${number}${'%' | ''}` | ''})`;

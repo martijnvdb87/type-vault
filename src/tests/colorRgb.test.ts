@@ -1,9 +1,9 @@
+import { InvalidPropertyError } from '@/errors/invalidPropertyError.js';
 import { TypeVaultValidationError } from '@/errors/typeVaultValidationError.js';
 import { ColorRgb } from '@/types/colorRgb.js';
 import { ColorRgbValue } from '@/utils/types.js';
 import { describe, expect, test } from 'vitest';
 import { immutableTests } from './utils/immutableTests.js';
-import { nullableTests } from './utils/nullableTests.js';
 import { valueTests } from './utils/valueTests.js';
 
 const values = [
@@ -134,7 +134,7 @@ describe('ColorRgb class', () => {
 
     test('It can update the color values', () => {
         for (const { output, red, green, blue, alpha } of values) {
-            const color = ColorRgb.nullable();
+            const color = new ColorRgb('rgb(0 0 0 / 0%)');
 
             color.red = red;
             color.green = green;
@@ -187,15 +187,15 @@ describe('ColorRgb class', () => {
     test('It should throw an error if the value is out of allowed range', () => {
         const color = new ColorRgb('rgb(0 0 0 / 0)');
 
-        expect(() => (color.red = 256)).toThrowError();
-        expect(() => (color.green = 256)).toThrowError();
-        expect(() => (color.blue = 256)).toThrowError();
-        expect(() => (color.alpha = 101)).toThrowError();
+        expect(() => (color.red = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.green = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.blue = 256)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = 101)).toThrowError(InvalidPropertyError);
 
-        expect(() => (color.red = -1)).toThrowError();
-        expect(() => (color.green = -1)).toThrowError();
-        expect(() => (color.blue = -1)).toThrowError();
-        expect(() => (color.alpha = -1)).toThrowError();
+        expect(() => (color.red = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.green = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.blue = -1)).toThrowError(InvalidPropertyError);
+        expect(() => (color.alpha = -1)).toThrowError(InvalidPropertyError);
     });
 
     test('It should throw an error if the value is not a valid color', () => {
@@ -210,7 +210,6 @@ describe('ColorRgb class', () => {
 
     for (const { output } of values) {
         valueTests({ type: ColorRgb, validValue: output });
-        nullableTests({ type: ColorRgb, validValue: output, invalidValue: 'not-valid' });
         immutableTests({ type: ColorRgb, validValue: output });
     }
 });

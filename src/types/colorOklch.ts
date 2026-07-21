@@ -68,14 +68,6 @@ export class ColorOklch<TOptions extends TypeOption = TypeOption> extends Color<
 
         this.value = valuesToString({ ...matchValueFormat(this.value), alpha });
     }
-
-    public static nullable(value: ColorOklchValue | null = null) {
-        return new ColorOklch(value, { nullable: true });
-    }
-
-    public static immutable(value: ColorOklchValue) {
-        return new ColorOklch(value, { immutable: true });
-    }
 }
 
 function getMatchFromString(value: string) {
@@ -85,10 +77,10 @@ function getMatchFromString(value: string) {
     return value.match(pattern);
 }
 
-function matchValueFormat(value: string | null) {
-    const match = matchAbsoluteFormat(value ?? '');
+function matchValueFormat(value: string) {
+    const match = matchAbsoluteFormat(value);
 
-    if (match === null || value === null) {
+    if (match === null) {
         return {
             lightness: 0,
             chroma: 0,
@@ -178,7 +170,10 @@ function valuesToString<TOptions extends TypeOption = TypeOption>(options: {
     hue: number;
     alpha: number;
 }) {
-    const { lightness, chroma, hue, alpha } = options;
+    const lightness = assertClamp(options.lightness, { min: 0, max: 100 });
+    const chroma = assertClamp(options.chroma, { min: 0, max: 1 });
+    const hue = assertClamp(options.hue, { min: 0, max: 360 });
+    const alpha = assertClamp(options.alpha, { min: 0, max: 100 });
 
     return `oklch(${lightness}% ${chroma} ${hue}deg / ${alpha}%)` as SetTypeValue<
         TOptions,

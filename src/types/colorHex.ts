@@ -88,14 +88,6 @@ export class ColorHex<TOptions extends TypeOption = TypeOption> extends Color<
     public getNormalizedAlpha() {
         return this.alpha / 2.55;
     }
-
-    public static nullable(value: ColorHexValue | null = null) {
-        return new ColorHex(value, { nullable: true });
-    }
-
-    public static immutable(value: ColorHexValue) {
-        return new ColorHex(value, { immutable: true });
-    }
 }
 
 function numberToHex(number: number) {
@@ -128,16 +120,7 @@ function numberToHexString<TOptions extends TypeOption = TypeOption>(options: {
     return `#${parts.join('')}` as SetTypeValue<TOptions, ColorHexValue>;
 }
 
-function hexToNumberValues(value: ColorHexValue | null) {
-    if (value === null) {
-        return {
-            red: 0,
-            green: 0,
-            blue: 0,
-            alpha: 0,
-        };
-    }
-
+function hexToNumberValues(value: ColorHexValue) {
     return {
         red: hexToNumber(value.slice(1, 3)),
         green: hexToNumber(value.slice(3, 5)),
