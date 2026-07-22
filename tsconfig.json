@@ -5,7 +5,9 @@
         "paths": {
             "@/*": ["./src/*"]
         },
+        "rootDir": "src",
         "declaration": true,
+        "declarationDir": "dist",
         "strict": true,
         "esModuleInterop": true,
         "moduleResolution": "nodenext"
