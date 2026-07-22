@@ -8,7 +8,7 @@ export type CollectionOption = {
 const typeSymbol = Symbol('typ');
 const valueSymbol = Symbol('value');
 
-export class Collection<TType extends typeof Type<TypeOption, unknown>> {
+export class Collection<TType extends typeof Type<unknown, TypeOption>> {
     protected [typeSymbol]: TType;
     protected [valueSymbol]: InstanceType<TType>[] = [];
 

@@ -7,7 +7,7 @@ export type TypeOption = {
     immutable?: boolean;
 };
 
-export type TypeValue<TOptions extends TypeOption, TValue> = [TOptions] extends [TypeOption]
+export type TypeValue<TValue, TOptions extends TypeOption> = [TOptions] extends [TypeOption]
     ? TValue
     : TValue;
 
@@ -18,30 +18,30 @@ export type SetTypeValue<TOptions extends TypeOption, TValue> = TOptions['immuta
 const valueSymbol = Symbol('value');
 const optionsSymbol = Symbol('options');
 
-type TypeConstructor<TInstance extends Type<TypeOption, unknown>> = new (
+type TypeConstructor<TInstance extends Type<unknown, TypeOption>> = new (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     options?: TypeOption
 ) => TInstance;
 
-export abstract class Type<TOption extends TypeOption, TValue> {
-    declare protected [valueSymbol]: TypeValue<TOption, TValue>;
+export abstract class Type<TValue, TOption extends TypeOption = TypeOption> {
+    declare protected [valueSymbol]: TypeValue<TValue, TOption>;
     protected [optionsSymbol]: TypeOption;
 
-    public constructor(value: TypeValue<TOption, TValue>, options?: TOption) {
+    public constructor(value: TypeValue<TValue, TOption>, options?: TOption) {
         this[optionsSymbol] = options ?? { immutable: false };
 
         this.value = value as SetTypeValue<TOption, TValue>;
     }
 
-    public static immutable<TConstructor extends TypeConstructor<Type<TypeOption, unknown>>>(
+    public static immutable<TConstructor extends TypeConstructor<Type<unknown, TypeOption>>>(
         this: TConstructor,
         value: ConstructorParameters<TConstructor>[0]
     ): InstanceType<TConstructor> {
         return new this(value, { immutable: true }) as InstanceType<TConstructor>;
     }
 
-    public static isValid<TConstructor extends TypeConstructor<Type<TypeOption, unknown>>>(
+    public static isValid<TConstructor extends TypeConstructor<Type<unknown, TypeOption>>>(
         this: TConstructor,
         value: unknown
     ): boolean {
@@ -62,7 +62,7 @@ export abstract class Type<TOption extends TypeOption, TValue> {
         return this[optionsSymbol];
     }
 
-    public get value(): TypeValue<TOption, TValue> {
+    public get value(): TypeValue<TValue, TOption> {
         return this.dangerouslyModifyGetValue(this[valueSymbol]);
     }
 
@@ -102,26 +102,26 @@ export abstract class Type<TOption extends TypeOption, TValue> {
         return this.value?.toString() ?? '';
     }
 
-    public toJSON(): TypeValue<TOption, TValue> {
+    public toJSON(): TypeValue<TValue, TOption> {
         return this.value;
     }
 
-    public valueOf(): TypeValue<TOption, TValue> {
+    public valueOf(): TypeValue<TValue, TOption> {
         return this.value;
     }
 
-    protected modifier(value: unknown): TypeValue<TOption, TValue> {
-        return value as TypeValue<TOption, TValue>;
+    protected modifier(value: unknown): TypeValue<TValue, TOption> {
+        return value as TypeValue<TValue, TOption>;
     }
 
     protected dangerouslyModifyGetValue(
-        value: TypeValue<TOption, TValue>
-    ): TypeValue<TOption, TValue> {
+        value: TypeValue<TValue, TOption>
+    ): TypeValue<TValue, TOption> {
         return value;
     }
 
     protected dangerouslyModifySetValue(value: unknown) {
-        return value as TypeValue<TOption, TValue>;
+        return value as TypeValue<TValue, TOption>;
     }
 
     protected assertMutable() {

@@ -3,8 +3,8 @@ import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class DateTime<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    DateTimeValue
+    DateTimeValue,
+    TOptions
 > {
     public toDate(): Date {
         return new Date(this.value as DateTimeValue);

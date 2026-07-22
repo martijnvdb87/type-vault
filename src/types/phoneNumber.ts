@@ -3,8 +3,8 @@ import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class PhoneNumber<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    PhoneNumberValue
+    PhoneNumberValue,
+    TOptions
 > {
     protected validate(value: string): boolean {
         if (!super.validate(value)) {

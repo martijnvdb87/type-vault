@@ -11,8 +11,8 @@ const regex = {
 } as const;
 
 export class ColorRgb<TOptions extends TypeOption = TypeOption> extends Color<
-    TOptions,
-    ColorRgbValue
+    ColorRgbValue,
+    TOptions
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {

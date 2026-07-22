@@ -4,8 +4,8 @@ import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Uuid<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    UuidValue
+    UuidValue,
+    TOptions
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {

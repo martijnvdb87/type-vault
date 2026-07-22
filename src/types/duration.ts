@@ -3,8 +3,8 @@ import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Duration<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    DurationValue
+    DurationValue,
+    TOptions
 > {
     protected modifier(value: unknown) {
         const valueString = `${value}`;

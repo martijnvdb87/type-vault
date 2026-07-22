@@ -4,8 +4,8 @@ import { Color } from './color.js';
 import { SetTypeValue, TypeOption } from './type.js';
 
 export class ColorHsl<TOptions extends TypeOption = TypeOption> extends Color<
-    TOptions,
-    ColorHslValue
+    ColorHslValue,
+    TOptions
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {

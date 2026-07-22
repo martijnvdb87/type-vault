@@ -13,8 +13,8 @@ const weekdays = [
 ] as const;
 
 export class Weekday<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    WeekdayValue | Capitalize<WeekdayValue>
+    WeekdayValue | Capitalize<WeekdayValue>,
+    TOptions
 > {
     public static Monday = new Weekday(weekdays[0]);
     public static Tuesday = new Weekday(weekdays[1]);

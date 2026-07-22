@@ -18,8 +18,8 @@ const months = [
 ] as const;
 
 export class Month<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    MonthValue | Capitalize<MonthValue>
+    MonthValue | Capitalize<MonthValue>,
+    TOptions
 > {
     public static January = new Month(months[0]);
     public static February = new Month(months[1]);

@@ -3,8 +3,8 @@ import { BaseString } from './baseString.js';
 import { TypeOption } from './type.js';
 
 export class Email<TOptions extends TypeOption = TypeOption> extends BaseString<
-    TOptions,
-    EmailPattern
+    EmailPattern,
+    TOptions
 > {
     protected validate(value: unknown): boolean {
         if (!super.validate(value)) {
